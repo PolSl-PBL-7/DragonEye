@@ -213,3 +213,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Weights and Biases run info
+wandb/
