@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 wandb = "*"
+tensorflow = { version = "*", platform_system = "!= 'Darwin'" }
+atomicwrites = "*"
 
 [dev-packages]
 debugpy = "*"
