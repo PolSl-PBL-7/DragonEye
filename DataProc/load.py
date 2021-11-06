@@ -16,8 +16,9 @@ class VideoLoader(object):
         pass
 
 class LocalLoader(VideoLoader):
-    def load(self) -> np.array:
+    def load(self) -> np.ndarray:
         return sk.vread(self.filepath)
+
 
 class WANDBLoader(VideoLoader):
     def load(self) -> np.array:
