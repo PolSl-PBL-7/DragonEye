@@ -1,0 +1,4 @@
+scikit-video
+wandb
+mypy
+ffmpeg
