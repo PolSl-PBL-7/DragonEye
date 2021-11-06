@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 
-MINIFORGE_3_URL=https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
+ARCH=$(uname -m)
+SYSTEM=$(uname -s)
+
+if [[ $SYSTEM != "Darwin" ]]; then
+    echo "System not supported!"
+    exit 1
+fi
+
+if [[ $ARCH == "arm64" ]]; then
+    MINIFORGE_3_URL=https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
+elif [[ $ARCH == "x86_64" ]]; then
+    MINIFORGE_3_URL=https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-x86_64.sh
+else
+    echo "System not supported!"
+    exit 1
+fi
 
 function install {
     curl -sSL $MINIFORGE_3_URL > tmp.sh
