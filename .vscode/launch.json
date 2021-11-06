@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File", // requires ms-python.python extension
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Attach", // requires ms-python.python extension
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "127.0.0.1",
+                "port": 5678
+            }
+            /**
+             * Additionally your script must contain the following lines:
+             *
+             *     import debugpy
+             *     debugpy.listen(5678)
+             *     debugpy.wait_for_client()
+             */
+        },
+    ]
+}

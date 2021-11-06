@@ -1,0 +1,72 @@
+kind: pipeline
+type: docker
+name: commitlint
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: commit message validation
+  image: node:lts-alpine
+  commands:
+  - npm install --save-dev @commitlint/cli
+  - npm install --save-dev @commitlint/config-conventional @commitlint/cli
+  - npx commitlint --from $DRONE_COMMIT_BEFORE --to $DRONE_COMMIT_AFTER
+  trigger:
+    event:
+      include:
+      - push
+      - pull_request
+---
+kind: pipeline
+type: docker
+name: static
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: static type checking
+  image: python:3.9-alpine
+  commands:
+  - pip install mypy
+  - mypy .
+  trigger:
+    event:
+      include:
+      - push
+      - pull_request
+- name: flake8 code validation
+  image: python:3.9-alpine
+  commands:
+  - pip install flake8
+  - flake8
+  trigger:
+    event:
+      include:
+      - push
+      - pull_request
+---
+kind: pipeline
+type: docker
+name: test
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+- name: run tests
+  image: python:3.9-alpine
+  commands:
+  - cat alpine.depends | xargs apk add # installing required dependencies
+  - pip install pipenv
+  - pipenv install --system --deploy --ignore-pipfile --dev
+  - pytest
+  trigger:
+    event:
+      include:
+      - push
+      - pull_request
