@@ -216,3 +216,6 @@ dmypy.json
 
 # Weights and Biases run info
 wandb/
+DataProc/tests/test_data/videos/15.avi
+.gitignore
+DataProc/tests/test_data/videos/16.avi

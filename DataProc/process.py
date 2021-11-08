@@ -1,8 +1,11 @@
 from typing import Tuple
+from tensorflow.python.data.ops.dataset_ops import BatchDataset
+
 import numpy as np
 import tensorflow as tf
 
-class VideoProcessor(object):
+
+class VideoProcessor:
     shape: Tuple[int, int]
     time_window: int
     batch_size: int
@@ -24,7 +27,15 @@ class VideoProcessor(object):
         self.batch_size = batch_size
         self.padding = padding
     
-    def process(self, vid: np.ndarray) -> np.ndarray:
+    def process(self, vid: np.ndarray) -> BatchDataset:
+        """Method for applying preprocessing per recording.
+
+        Args:
+            vid (np.ndarray): Video in the form of numpy array, of shape (frames, height, width, channels)
+
+        Returns:
+            BatchDataset: Tensorflow Dataset
+        """
         vid_resized = tf.image.resize(vid, self.shape)
         vid_windowed_and_batched = tf.keras.utils.timeseries_dataset_from_array(vid_resized, None, self.time_window, 1, 1, self.batch_size)
         return vid_windowed_and_batched

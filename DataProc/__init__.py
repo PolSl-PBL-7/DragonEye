@@ -1,4 +1,4 @@
 __version__ = "0.0.1"
-from DataProc.load import *
-from DataProc.process import *
-from DataProc.sinks import *
+from DataProc.source import LocalVideoSource, LocalTFDataSource
+from DataProc.process import VideoProcessor
+from DataProc.sinks import LocalTFRecordSink
