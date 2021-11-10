@@ -14,3 +14,8 @@ If you used `install.ps1` you can load `profile.ps1` by issuing command:
 ```powershell
 . profile.ps1
 ```
+
+If you want to export path to use it inside PyCharm or VSCode, then run:
+```powershell
+profile.ps1 -envfile "windows.env" -export
+```
