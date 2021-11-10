@@ -154,6 +154,7 @@ function Install-CudaToolkit {
     )
 
     Prepare
+    IsAdmin
 
     if (!(Test-Path -Path "$tmp\$output")) {
         Write-Host "Downloading CUDA Toolkit..."
@@ -192,6 +193,7 @@ function Install-cuDNN {
     )
 
     Prepare
+    IsAdmin
 
     if (!(Test-Path -Path "$tmp\$output")) {
         Write-Host "Downloading cuDNN..."
@@ -220,10 +222,11 @@ function Install-ffmpeg {
     param (
         [string] $tmp = "C:\tmp",
         [string] $output = "ffmpeg.7z",
-        [string] $target = "C:\bin\ffmpeg"
+        [string] $target = "C:\Program Files\ffmpeg"
     )
 
     Prepare
+    IsAdmin
 
     if (!(Test-Path -Path "$tmp\$output")) {
         Write-Host "Downloading ffmpeg..."
@@ -251,6 +254,8 @@ function Install-All {
     param (
         [string] $tmp = "C:\tmp"
     )
+
+    IsAdmin
 
     explain -m "Now we will perform the installation process for CUDA Toolkit"
     Install-CudaToolkit -tmp $tmp -no_restart $true
