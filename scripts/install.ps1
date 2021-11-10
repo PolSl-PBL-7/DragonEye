@@ -206,7 +206,7 @@ function Install-cuDNN {
     Write-Host "Installing cuDNN..."
     explain -m "Now we will extract cuDNN from $tmp\$output and install it into $target"
     if (!$dry_run) {
-        Expand-Archive "$tmp\$output" -Force
+        Expand-Archive "$tmp\$output" -DestinationPath "$tmp\cudnn" -Force
         Copy-Item "$tmp\cudnn\cuda\bin" -Destination "$target\bin" -Recurse -Force
         Copy-Item "$tmp\cudnn\cuda\include" -Destination "$target\include" -Recurse -Force
         Copy-Item "$tmp\cudnn\cuda\lib\x64" -Destination "$target\lib\x64" -Recurse -Force
