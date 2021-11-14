@@ -216,3 +216,5 @@ dmypy.json
 
 # Weights and Biases run info
 wandb/
+
+*.env
