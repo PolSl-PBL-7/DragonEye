@@ -10,7 +10,8 @@ steps:
 - name: flake8 code validation
   image: python:3.9-alpine
   commands:
-  - make prerequisite-flake-ci flake
+  - pip install flake8
+  - flake8
   trigger:
     event:
       include:
