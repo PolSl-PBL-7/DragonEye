@@ -21,6 +21,8 @@ steps:
   image: python:3.9
   commands:
   - make prerequisite-ci mypy
+  environment:
+    PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
@@ -40,6 +42,8 @@ steps:
   image: python:3.9
   commands:
   - make prerequisite-ci test
+  environment:
+    PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
