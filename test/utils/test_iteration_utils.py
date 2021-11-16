@@ -12,7 +12,7 @@ def test_incorrect_lengths():
     result = False
     try:
         result = check_equal_lengths((1, 2, 3), (2, 3))
-    except Exception() as ex:
+    except Exception:
         pass
     if result:
         pytest.fail("Not equal lengths of input args but function did not return error")
@@ -21,6 +21,6 @@ def test_incorrect_lengths():
 def test_not_iterables():
     try:
         check_equal_lengths((1, 2, 3), 4)
-    except:
+    except Exception:
         return
     pytest.fail("All args have to be iterables")

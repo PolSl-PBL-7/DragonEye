@@ -1,4 +1,4 @@
-from typing import Sequence, Callable
+from typing import Sequence, Callable, Optional, List, Any
 
 import tensorflow as tf
 from tensorflow import keras
@@ -32,14 +32,14 @@ class ChongTayEncoder(keras.layers.Layer):
         self.conv_layers = [Conv3D(filters=n, kernel_size=(ks, ks, 1), strides=(stride, stride, 1))
                             for n, ks, stride in zip(n_filters, filter_sizes, strides)]
         self.activation = activation
+
+        self.bn: Optional[List[Any]] = None
         if add_batchnorm:
             self.bn = [BatchNormalization() for i in range(len(filter_sizes))]
-        else:
-            self.bn = False
+
+        self.dropout: Optional[List[Any]] = None
         if dropout:
             self.dropout = [Dropout(dropout) for i in range(len(filter_sizes))]
-        else:
-            self.dropout = False
 
     def call(self, input):
 
@@ -63,7 +63,7 @@ class ChongTayConvLstmBottleneckBlock(keras.layers.Layer):
                  strides: Sequence = (1, 1, 1), padding: str = 'same', dropout: float = 0.,
                  recurrent_dropout: float = 0., activation: Callable = tf.nn.relu, do_permute: bool = True):
         """
-        
+
         Parameters
         ----------
         filter_sizes: sequence of ConvLSTM filter sizes
@@ -121,14 +121,14 @@ class ChongTayDecoder(keras.layers.Layer):
         self.conv_layers = [Conv3DTranspose(filters=n, kernel_size=(ks, ks, 1), strides=(stride, stride, 1))
                             for n, ks, stride in zip(n_filters, filter_sizes, strides)]
         self.activation = activation
+
+        self.bn: Optional[List[Any]] = None
         if add_batchnorm:
             self.bn = [BatchNormalization() for i in range(len(filter_sizes))]
-        else:
-            self.bn = False
+
+        self.dropout: Optional[List[Any]] = None
         if dropout:
             self.dropout = [Dropout(dropout) for i in range(len(filter_sizes))]
-        else:
-            self.dropout = False
 
     def call(self, input):
 

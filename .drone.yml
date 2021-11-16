@@ -10,8 +10,7 @@ steps:
 - name: flake8 code validation
   image: python:3.9-alpine
   commands:
-  - pip install flake8
-  - flake8
+  - make prerequisite-flake-ci flake
   trigger:
     event:
       include:
@@ -20,12 +19,7 @@ steps:
 - name: static type checking
   image: python:3.9
   commands:
-  - apt-get update -y
-  - cat debian.depends | xargs apt-get install -y # installing required dependencies
-  - pip install pipenv
-  - sh -c ./scripts/replace.sh # replace tensorflow
-  - pipenv install --system --deploy --ignore-pipfile --dev
-  - mypy .
+  - make prerequisite-ci mypy
   trigger:
     event:
       include:
@@ -44,12 +38,7 @@ steps:
 - name: run tests
   image: python:3.9
   commands:
-  - apt-get update -y
-  - cat debian.depends | xargs apt-get install -y # installing required dependencies
-  - pip install pipenv
-  - sh -c ./scripts/replace.sh # replace tensorflow
-  - pipenv install --system --deploy --ignore-pipfile --dev
-  - pytest
+  - make prerequisite-ci test
   trigger:
     event:
       include:
