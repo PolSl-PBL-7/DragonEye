@@ -1,4 +1,4 @@
-PYTHONPATH=.
+PYTHONPATH:=.:${PYTHONPATH}
 
 .PHONY: prerequisite-ci
 prerequisite-ci:
