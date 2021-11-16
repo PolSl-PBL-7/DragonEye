@@ -8,10 +8,6 @@ prerequisite-ci:
 	sh -c ./scripts/replace.sh
 	pipenv install --system --deploy --ignore-pipfile --dev
 
-.PHONY: prerequisite-flake-ci
-prerequisite-flake-ci:
-	pip install flake8
-
 .PHONY: test
 test:
 	pytest .
