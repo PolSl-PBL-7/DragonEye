@@ -10,7 +10,7 @@ function install {
     source ~/miniforge3/bin/activate
 
     conda install -c apple tensorflow-deps --force-reinstall
-    python3 -m pip install tensorflow-macos
+    python3 -m pip install tensorflow-macos=="2.7.*"
     python3 -m pip install tensorflow-metal
     python3 -m pip install pipenv
 }
