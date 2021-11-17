@@ -18,7 +18,7 @@ mypy:
 
 .PHONY: freeze
 freeze:
-	pip freeze | grep -v "^tensorflow" > ./requirements.txt
+	pip list --format=freeze | grep -v "^tensorflow" > ./requirements.txt
 	git add ./requirements.txt
 
 .PHONY: local-ci

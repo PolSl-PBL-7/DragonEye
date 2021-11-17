@@ -4,11 +4,10 @@ OS=$(uname -s)
 
 if [[ "$OS" == "Darwin" ]];
 then
-    sh -c ./scripts/install-miniforge.sh 
-
     source ~/miniforge3/bin/activate
 
-    conda create --no-default-packages -n DragonEye
+    cat macos.depends | xargs brew install
+
 elif [[ "$OS" == "Linux" ]];
 then
     OS_TYPE=$(cat /etc/issue.net)

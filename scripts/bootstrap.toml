@@ -8,9 +8,29 @@
   command = "pip install"
   package = "tensorflow-metal"
 
+  [[Darwin.x86_64]]
+  command = "pip install"
+  package = "six"
+  version = "~=1.15.4"
+
+  [[Darwin.x86_64]]
+  command = "pip install"
+  package = "typing-extensions"
+  version = "~=3.7.4"
+
   [[Darwin.arm64]]
   command = "conda install -c apple"
   package = "tensorflow-deps"
+
+  [[Darwin.arm64]]
+  command = "pip install"
+  package = "six"
+  version = "~=1.15.4"
+
+  [[Darwin.arm64]]
+  command = "pip install"
+  package = "typing-extensions"
+  version = "~=3.7.4"
 
   [[Darwin.arm64]]
   command = "pip install"
