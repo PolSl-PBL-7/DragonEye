@@ -18,8 +18,18 @@ mypy:
 
 .PHONY: freeze
 freeze:
-	pip list --format=freeze | grep -v "^tensorflow" > ./requirements.txt
+	pip list --format=freeze \
+		| grep -v "^tensorflow" \
+		> ./requirements.txt
 	git add ./requirements.txt
+
+.PHONY: freeze-conda
+freeze-conda:
+	conda env export > environment.yml
+	python3 ./scripts/parse-yml-to-txt.py \
+		| grep -v "^tensorflow" \
+		> requirements.txt
+	rm environment.yml
 
 .PHONY: local-ci
 local-ci:
