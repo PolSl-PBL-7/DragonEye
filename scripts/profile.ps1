@@ -11,7 +11,7 @@ $env:PATH += ";C:\tools\cuda\bin"
 
 function Export-Path
 {
-    echo $env:PATH | Tee-Object "$envfile"
+    echo PATH=`"$env:PATH`" | Tee-Object "$envfile"
 }
 
 if ($export) {
