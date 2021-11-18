@@ -1,0 +1,6 @@
+wandb
+flake8
+mypy
+pytest
+tensor-annotations-tensorflow-stubs
+types-toml

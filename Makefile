@@ -2,12 +2,7 @@ PYTHONPATH:=.:${PYTHONPATH}
 
 .PHONY: prerequisite-ci
 prerequisite-ci:
-	apt-get update -y
-	cat debian.depends | xargs apt-get install -y
-	sh -c ./scripts/install-non-depends.sh
-	pip install pipenv
-	sh -c ./scripts/replace.sh
-	pipenv install --system --deploy --ignore-pipfile --dev
+	./scripts/bootstrap-ci.sh
 
 .PHONY: test
 test:
@@ -20,3 +15,12 @@ flake:
 .PHONY: mypy
 mypy:
 	python -m mypy .
+
+.PHONY: freeze
+freeze:
+	pip freeze | grep -v "^tensorflow" > ./requirements.txt
+	git add ./requirements.txt
+
+.PHONY: local-ci
+local-ci:
+	docker build --rm .
