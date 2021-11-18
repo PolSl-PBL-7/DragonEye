@@ -216,5 +216,6 @@ dmypy.json
 
 # Weights and Biases run info
 wandb/
-
+*.avi
+!data/processing/tests/test_videos/*.avi
 *.env

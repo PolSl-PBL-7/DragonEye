@@ -7,6 +7,9 @@ name = "pypi"
 wandb = "*"
 tensorflow = { version = "*", platform_system = "!= 'Darwin'" }
 atomicwrites = "*"
+numpy = "*"
+scikit-video = "*"
+jupyter = "*"
 absl-py = "*"
 
 [dev-packages]
