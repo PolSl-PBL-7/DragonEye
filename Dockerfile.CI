@@ -4,12 +4,10 @@ RUN mkdir /work
 COPY . /work
 WORKDIR /work
 
-RUN make prerequisite-ci
+RUN make deps-ci
 
 RUN make flake
 
 RUN make mypy
 
 RUN make test
-
-RUN pip freeze

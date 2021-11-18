@@ -20,7 +20,7 @@ steps:
 - name: static type checking
   image: python:3.9
   commands:
-  - make prerequisite-ci mypy
+  - make deps-ci mypy
   environment:
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
@@ -40,7 +40,7 @@ steps:
 - name: run tests
   image: python:3.9
   commands:
-  - make prerequisite-ci test
+  - make deps-ci test
   environment:
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:

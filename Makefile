@@ -1,8 +1,13 @@
-PYTHONPATH:=.:${PYTHONPATH}
+#################
+# CONFIGURATION #
+#################
 
-.PHONY: prerequisite-ci
-prerequisite-ci:
-	./scripts/bootstrap-ci.sh
+PYTHONPATH:=.:${PYTHONPATH}
+DEV_CONTAINER:="dragoneye:dev-local"
+
+###########
+# TESTING #
+###########
 
 .PHONY: test
 test:
@@ -15,6 +20,30 @@ flake:
 .PHONY: mypy
 mypy:
 	python -m mypy .
+
+.PHONY: autopep
+autopep:
+	find . -name "*.py" \
+		| xargs python3 -m autopep8 --in-place
+
+.PHONY: local-ci
+local-ci:
+	docker build \
+		--file ./Dockerfile.CI \
+		--rm \
+		.
+
+###########################
+# DEPENDENCIES MANAGEMENT #
+###########################
+
+.PHONY: deps-ci
+deps-ci:
+	./scripts/bootstrap-ci.sh
+
+.PHONY: deps
+deps:
+	./scripts/bootstrap-container.sh
 
 .PHONY: freeze
 freeze:
@@ -30,7 +59,3 @@ freeze-conda:
 		| grep -v "^tensorflow" \
 		> requirements.txt
 	rm environment.yml
-
-.PHONY: local-ci
-local-ci:
-	docker build --rm .
