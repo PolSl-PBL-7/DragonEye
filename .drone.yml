@@ -20,16 +20,12 @@ steps:
 - name: static type checking
   image: python:3.9
   commands:
-  - apt-get update -y
-  - cat debian.depends | xargs apt-get install -y # installing required dependencies
-  - pip install pipenv
-  - sh -c ./scripts/replace.sh # replace tensorflow
-  - pipenv install --system --deploy --ignore-pipfile --dev
-  - mypy .
+  - make prerequisite-ci mypy
+  environment:
+    PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
-      - push
       - pull_request
 ---
 kind: pipeline
@@ -44,14 +40,10 @@ steps:
 - name: run tests
   image: python:3.9
   commands:
-  - apt-get update -y
-  - cat debian.depends | xargs apt-get install -y # installing required dependencies
-  - pip install pipenv
-  - sh -c ./scripts/replace.sh # replace tensorflow
-  - pipenv install --system --deploy --ignore-pipfile --dev
-  - pytest
+  - make prerequisite-ci test
+  environment:
+    PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
-      - push
       - pull_request
