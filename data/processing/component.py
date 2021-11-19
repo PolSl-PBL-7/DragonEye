@@ -30,13 +30,20 @@ class DataProcessing:
         pass
 
     def __call__(self, config: DataProcessingConfig):
-        """[summary]
+        """ Method for loading files from specified folder and processing them into dingle ConcatenateDataset
 
         Args:
-            config (DataProcessingConfig): [description]
+            source (Source): data loader of class source
+            source_config (SourceConfig): config tuple for source
+            processor (VideoProcessor, optional): processor of class VideoProcessor, performs operations on numpy arrays and return tf dataset
+            processor_config (ProcessorConfig, optional): configuration tuple for processor
+            sink (Sink, optional): class
+            sink_config (SinkConfig, optional): configuration tuple for class responsible for saving
+            input (Union[Sequence, Path], optional): path to the input folder
+            video_extentions (Iterable[str]): all compatible video extentions
 
         Returns:
-            [type]: [description]
+            (ConcatenateDataset): Concatenated dataset of all selected videos
         """
         # Data loading from different sources
         if isinstance(config.source, LocalVideoSource):
