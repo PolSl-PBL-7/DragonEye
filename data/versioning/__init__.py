@@ -1,2 +1,1 @@
-import data.versioning.configs
-import data.versioning.handler
+import data.versioning.versioner
