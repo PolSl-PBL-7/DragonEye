@@ -8,6 +8,6 @@ RUN make deps
 
 RUN make flake
 
-RUN make mypy
+# RUN make mypy
 
 RUN make test

@@ -17,17 +17,17 @@ steps:
       include:
       - push
       - pull_request
-- name: static type checking
-  image: python:3.9
-  commands:
-  - make deps mypy
-  environment:
-    PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
-  trigger:
-    event:
-      include:
-      - push
-      - pull_request
+# - name: static type checking
+#   image: python:3.9
+#   commands:
+#   - make deps mypy
+#   environment:
+#     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
+#   trigger:
+#     event:
+#       include:
+#       - push
+#       - pull_request
 ---
 kind: pipeline
 type: docker
