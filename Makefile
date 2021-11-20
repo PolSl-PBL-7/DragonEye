@@ -37,10 +37,6 @@ local-ci:
 # DEPENDENCIES MANAGEMENT #
 ###########################
 
-.PHONY: deps-ci
-deps-ci:
-	./scripts/bootstrap-ci.sh
-
 .PHONY: deps
 deps:
 	./scripts/bootstrap-container.sh

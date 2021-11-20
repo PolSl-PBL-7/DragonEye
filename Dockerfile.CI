@@ -4,7 +4,7 @@ RUN mkdir /work
 COPY . /work
 WORKDIR /work
 
-RUN make deps-ci
+RUN make deps
 
 RUN make flake
 
