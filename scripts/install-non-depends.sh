@@ -13,7 +13,14 @@ else
 fi
 
 # determine architecture
-ARCH=$(uname -p)
+# uname -p sometimes returns `unknown` in docker, thus using python
+# and heredoc
+ARCH=$(python3 <<EOF
+import platform as p
+print(p.machine())
+EOF
+)
+
 
 function install_bazel {
     if [[ "$ARCH" == "aarch64" ]]
@@ -29,6 +36,8 @@ function install_bazel {
     # move it to the target location and set executble bits
     $SUDO mv bazel /bin/bazel
     $SUDO chmod +x /bin/bazel
+
+    bazel
 }
 
 install_bazel
