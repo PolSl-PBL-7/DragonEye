@@ -20,12 +20,13 @@ steps:
 - name: static type checking
   image: python:3.9
   commands:
-  - make deps-ci mypy
+  - make deps mypy
   environment:
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
+      - push
       - pull_request
 ---
 kind: pipeline
@@ -40,10 +41,11 @@ steps:
 - name: run tests
   image: python:3.9
   commands:
-  - make deps-ci test
+  - make deps test
   environment:
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
   trigger:
     event:
       include:
+      - push
       - pull_request
