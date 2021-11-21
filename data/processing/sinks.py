@@ -7,7 +7,6 @@ from tensorflow.python.data.ops.dataset_ops import ConcatenateDataset
 
 
 class SinkConfig(NamedTuple):
-    dataset: tf.data.Dataset 
     path: str
 
 class Sink(ABC):
@@ -28,4 +27,4 @@ class LocalTFDatasetSink(Sink):
         pass
 
     def __call__(self, dataset: ConcatenateDataset, config: SinkConfig):
-        tf.data.experimental.save(config.dataset.unbatch(), config.path)
+        tf.data.experimental.save(dataset.unbatch(), config.path)
