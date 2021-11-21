@@ -2,6 +2,7 @@
 
 1. [Prerequisites](#prerequisites)
 1. [Bootstraping developement environment](#bootstraping-developement-environment)
+1. [Using container with CUDA support](#using-container-with-cuda-support)
 1. [Updating requirements.txt](#updating-requirements.txt)
 1. [Static code analysis](#static-code-analysis)
 1. [Running tests](#running-tests)
@@ -89,6 +90,59 @@ If you used `install.ps1` you can load `profile.ps1` by issuing command:
 If you want to export path to use it inside PyCharm or VSCode, then run:
 ```powershell
 .\scripts\profile.ps1 -envfile "windows.env" -export
+```
+
+## Using container with CUDA support
+
+If you want to run the *devcontainer* with support for CUDA acceleration, make sure you have all necessary setup done on your PC:
+
+- **For Windows Users**: follow [WSL user guide by NVidia](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)
+- **For Linux Users**: follow [NVidia container toolkit install guide by NVidia](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
+
+After that, uncomment `"runArgs": [ "--gpus=all" ],` in `devcontainer/devcontainer.json`, the resulting file should look like this:
+
+```jsonc
+{
+    "name": "Python 3",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "args": {
+            "VARIANT": "3.9",
+            "NODE_VERSION": "none"
+        }
+    },
+    "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+        "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+        "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+        "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+        "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+        "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+        "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+        "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+        "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker",
+    ],
+    "forwardPorts": [
+        8000
+    ],
+    "remoteUser": "vscode",
+    "features": {
+        "docker-from-docker": "latest"
+    },
+    "mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "runArgs": [ "--gpus=all" ],
+}
 ```
 
 ## Updating `requirements.txt`
