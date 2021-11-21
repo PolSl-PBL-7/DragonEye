@@ -9,15 +9,11 @@ else
     SUDO="sudo"
 fi
 
+wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
+$SUDO mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
+wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda-repo-wsl-ubuntu-11-2-local_11.2.0-1_amd64.deb
+$SUDO dpkg -i cuda-repo-wsl-ubuntu-11-2-local_11.2.0-1_amd64.deb
+rm -f cuda-repo-wsl-ubuntu-11-2-local_11.2.0-1_amd64.deb
+$SUDO apt-key add /var/cuda-repo-wsl-ubuntu-11-2-local/7fa2af80.pub
 $SUDO apt-get update
-$SUDO apt-get install -y --no-install-recommends \
-        linux-headers-amd64 \
-        software-properties-common
-
-$SUDO apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/debian10/x86_64/7fa2af80.pub
-$SUDO add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/debian10/x86_64/ /"
-$SUDO add-apt-repository contrib
-$SUDO add-apt-repository non-free
-
-$SUDO apt-get update
-$SUDO apt-get install -y --no-install-recommends cuda-11-2
+$SUDO apt-get -y install cuda

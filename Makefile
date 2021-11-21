@@ -17,9 +17,9 @@ test:
 flake:
 	python -m flake8
 
-.PHONY: mypy
-mypy:
-	python -m mypy .
+# .PHONY: mypy
+# mypy:
+# 	python -m mypy .
 
 .PHONY: autopep
 autopep:
@@ -43,7 +43,7 @@ install-cuda:
 
 .PHONY: deps
 deps:
-	./scripts/bootstrap-container.sh
+	./scripts/bootstrap.sh
 
 .PHONY: freeze
 freeze:
@@ -51,11 +51,3 @@ freeze:
 		| grep -v "^tensorflow" \
 		> ./requirements.txt
 	git add ./requirements.txt
-
-.PHONY: freeze-conda
-freeze-conda:
-	conda env export > environment.yml
-	python3 ./scripts/parse-yml-to-txt.py \
-		| grep -v "^tensorflow" \
-		> requirements.txt
-	rm environment.yml
