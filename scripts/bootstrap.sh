@@ -18,7 +18,7 @@ then
     if [[ "$OS_TYPE" == *"Debian"* || "$OS_TYPE" == *"Ubuntu"* ]]
     then
         sudo apt-get update -y
-        cat debian.depends | sudo xargs apt-get install -y
+        cat debian.depends | sudo xargs apt-get install -y --no-install-recommends
         sh -c ./scripts/install-non-depends.sh
     else
         echo "OS not supported"

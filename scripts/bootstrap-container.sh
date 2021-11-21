@@ -13,7 +13,7 @@ fi
 $SUDO apt-get update -y
 
 # install all dependencies
-cat debian.depends | $SUDO xargs apt-get install -y
+cat debian.depends | $SUDO xargs apt-get install -y --no-install-recommends
 
 # install dependencies that are not found inside 
 # any repository by default
