@@ -39,7 +39,7 @@ local-ci:
 
 .PHONY: install-cuda
 install-cuda:
-	./scripts-install-cuda.sh
+	./scripts/install-cuda.sh
 	nvidia-smi
 
 .PHONY: deps
