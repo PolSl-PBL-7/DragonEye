@@ -37,6 +37,11 @@ local-ci:
 # DEPENDENCIES MANAGEMENT #
 ###########################
 
+.PHONY: install-cuda
+install-cuda:
+	./scripts-install-cuda.sh
+	nvidia-smi
+
 .PHONY: deps
 deps:
 	./scripts/bootstrap-container.sh
