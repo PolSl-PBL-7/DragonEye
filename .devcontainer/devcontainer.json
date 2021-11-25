@@ -3,10 +3,6 @@
     "build": {
         "dockerfile": "Dockerfile",
         "context": "..",
-        "args": {
-            "VARIANT": "3.9",
-            "NODE_VERSION": "none"
-        }
     },
     "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",

@@ -11,15 +11,15 @@ DEV_CONTAINER:="dragoneye:dev-local"
 
 .PHONY: test
 test:
-	python -m pytest .
+	python3 -m pytest .
 
 .PHONY: flake
 flake:
-	python -m flake8
+	python3 -m flake8
 
 # .PHONY: mypy
 # mypy:
-# 	python -m mypy .
+# 	python3 -m mypy .
 
 .PHONY: autopep
 autopep:
@@ -47,7 +47,7 @@ deps:
 
 .PHONY: freeze
 freeze:
-	pip list --format=freeze \
+	python3 -m pip list --format=freeze \
 		| grep -v "^tensorflow" \
 		> ./requirements.txt
 	git add ./requirements.txt
