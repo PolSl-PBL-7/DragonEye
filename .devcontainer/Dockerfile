@@ -22,7 +22,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 ENV PIPX_HOME=/usr/local/py-utils \
     PIPX_BIN_DIR=/usr/local/py-utils/bin
 ENV PATH=${PATH}:${PIPX_BIN_DIR}
-ENV PYTHON_VERSION="3.9.9"
+ENV PYTHON_VERSION="3.9.5"
 RUN bash /tmp/library-scripts/python-debian.sh "${PYTHON_VERSION}" "/opt/python3" "${PIPX_HOME}" "${USERNAME}" \ 
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
