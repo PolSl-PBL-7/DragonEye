@@ -1,5 +1,6 @@
 from typing import NamedTuple
 from abc import ABC, abstractmethod
+from inference import anomaly_score
 
 from inference.anomaly_score import AnomalyScore, AnomalyScoreHeuristic, AnomalyScoreConfig
 import tensorflow as tf
@@ -21,11 +22,16 @@ class Predictor:
         self.anomaly_score = config.anomaly_score
     
     def __call__(self, dataset):
-        anomaly_scores = tf.data.Dataset()
+        
+        anomaly_scores = None
         for batch in dataset:
-            predictions = self.reconstruction_model.predict(dataset)
+            predictions = self.reconstruction_model.predict(batch)
+
             scores = self.anomaly_score(batch, predictions)
-            anomaly_scores.concatenate(scores)
+            if anomaly_scores:
+                anomaly_scores = anomaly_scores.concatenate(tf.data.Dataset.from_tensor_slices(scores))
+            else:
+                anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
         
         return anomaly_scores
 
