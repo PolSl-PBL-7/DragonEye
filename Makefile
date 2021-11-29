@@ -1,22 +1,53 @@
-PYTHONPATH:=.:${PYTHONPATH}
+#################
+# CONFIGURATION #
+#################
 
-.PHONY: prerequisite-ci
-prerequisite-ci:
-	apt-get update -y
-	cat debian.depends | xargs apt-get install -y
-	sh -c ./scripts/install-non-depends.sh
-	pip install pipenv
-	sh -c ./scripts/replace.sh
-	pipenv install --system --deploy --ignore-pipfile --dev
+PYTHONPATH:=.:${PYTHONPATH}
+DEV_CONTAINER:="dragoneye:dev-local"
+
+###########
+# TESTING #
+###########
 
 .PHONY: test
 test:
-	python -m pytest .
+	python3 -m pytest .
 
 .PHONY: flake
 flake:
-	python -m flake8
+	python3 -m flake8
 
-.PHONY: mypy
-mypy:
-	python -m mypy .
+# .PHONY: mypy
+# mypy:
+# 	python3 -m mypy .
+
+.PHONY: autopep
+autopep:
+	find . -name "*.py" \
+		| xargs python3 -m autopep8 --in-place
+
+.PHONY: local-ci
+local-ci:
+	docker build \
+		--file ./Dockerfile.CI \
+		--rm \
+		.
+
+###########################
+# DEPENDENCIES MANAGEMENT #
+###########################
+
+.PHONY: install-cuda
+install-cuda:
+	./scripts/install-cuda.sh
+
+.PHONY: deps
+deps:
+	./scripts/bootstrap.sh
+
+.PHONY: freeze
+freeze:
+	python3 -m pip list --format=freeze \
+		| grep -v "^tensorflow" \
+		> ./requirements.txt
+	git add ./requirements.txt
