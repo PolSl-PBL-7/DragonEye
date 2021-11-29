@@ -34,5 +34,3 @@ class Predictor:
                 anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
         
         return anomaly_scores
-
-
