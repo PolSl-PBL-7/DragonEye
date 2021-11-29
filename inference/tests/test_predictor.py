@@ -59,5 +59,8 @@ def test_full_experiment():
         anomaly_score=anomaly_score
         )
     predictor = Predictor(predictor_config)
-
     scores = predictor(dataset)
+
+    for input, score in tf.data.Dataset.zip((dataset, scores)).take(2):
+        assert input.shape, (16, 3, 127, 127, 3)
+        assert score.shape, (16, 1)
