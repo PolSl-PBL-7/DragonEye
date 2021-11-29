@@ -21,7 +21,7 @@ def test_instance():
 
     dataset = data_processing(config=data_processing_config)
 
-    assert isinstance(dataset, ConcatenateDataset)
+    assert(isinstance(dataset, ConcatenateDataset))
 
 
 def test_shape():
