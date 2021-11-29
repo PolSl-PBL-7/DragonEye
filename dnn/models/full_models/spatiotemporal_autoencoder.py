@@ -1,4 +1,4 @@
-from typing import Sequence, Callable, NamedTuple, Tuple, Optional
+from typing import Sequence, Callable, NamedTuple
 
 import tensorflow as tf
 
