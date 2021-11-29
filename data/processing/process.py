@@ -1,4 +1,4 @@
-from typing import Tuple, NamedTuple, Optional
+from typing import Tuple, NamedTuple
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 
 import numpy as np
