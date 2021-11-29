@@ -1,0 +1,16 @@
+[Linux]
+x86_64 = "default"
+
+  [[Linux.aarch64]]
+  command = "pip install"
+  package = "tensorflow-aarch64"
+  version = ">=2.7.*"
+  url = "https://snapshots.linaro.org/ldcg/python-cache/"
+
+[Windows]
+AMD64 = "default"
+
+[[default]]
+command = "pip install"
+package = "tensorflow"
+version = ">=2.7.*"

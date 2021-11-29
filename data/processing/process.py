@@ -4,6 +4,7 @@ from tensorflow.python.data.ops.dataset_ops import BatchDataset
 import numpy as np
 import tensorflow as tf
 
+
 class ProcessorConfig(NamedTuple):
     shape: Tuple[int, int] = (227, 227)
     time_window: int = 10
@@ -19,7 +20,7 @@ class VideoProcessor:
 
     def __init__(self, config: ProcessorConfig):
         """
-        Object used to adjust shape, create time windows and batch data. 
+        Object used to adjust shape, create time windows and batch data.
         In the future it may be extended with different masks/filters.
 
         Args:
@@ -28,11 +29,11 @@ class VideoProcessor:
             batch_size (int, optional): Number of examples/time windows per batch of data. Defaults to 128.
             padding (str, optional): Version of padding that should be used on time dimension. Options: 'zero'; 'none'. Defaults to 'zero'.
         """
-        self.shape=config.shape
-        self.time_window=config.time_window
-        self.batch_size=config.batch_size
-        self.padding=config.padding
-    
+        self.shape = config.shape
+        self.time_window = config.time_window
+        self.batch_size = config.batch_size
+        self.padding = config.padding
+
     def __call__(self, vid: np.ndarray) -> BatchDataset:
         """Method for applying preprocessing per recording.
 
@@ -42,6 +43,6 @@ class VideoProcessor:
         Returns:
             BatchDataset: Tensorflow Dataset
         """
-        vid_resized=tf.image.resize(vid, self.shape)
-        vid_windowed_and_batched=tf.keras.utils.timeseries_dataset_from_array(vid_resized, None, self.time_window, 1, 1, self.batch_size)
+        vid_resized = tf.image.resize(vid, self.shape)
+        vid_windowed_and_batched = tf.keras.utils.timeseries_dataset_from_array(vid_resized, None, self.time_window, 1, 1, self.batch_size)
         return vid_windowed_and_batched
