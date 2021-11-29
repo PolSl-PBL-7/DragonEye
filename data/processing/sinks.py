@@ -9,15 +9,17 @@ from tensorflow.python.data.ops.dataset_ops import ConcatenateDataset
 class SinkConfig(NamedTuple):
     path: str
 
+
 class Sink(ABC):
 
     @abstractmethod
     def __init__(self):
         pass
-    
+
     @abstractmethod
     def __call__(self, config: SinkConfig):
         raise NotImplementedError
+
 
 class LocalTFDatasetSink(Sink):
     def __init__(self):

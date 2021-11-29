@@ -20,7 +20,8 @@ class TestSetup:
 
         """
 
-        if path.exists(dataset_path): pass
+        if path.exists(dataset_path):
+            pass
         else:
             handler = WandbDatasetHandler()
             config = wandb_config
