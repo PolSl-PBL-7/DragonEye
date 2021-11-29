@@ -43,6 +43,7 @@ class WandbDatasetHandler(DatasetHandler):
         artifact.download(dataset_config.path)
         return 0
 
+
 if __name__ == "__main__":
     db = WandbDatasetHandler()
     config = DatasetConfig("avenue-experiments", "polsl-pbl-7", "test", "avenue-dataset", "./dataset")

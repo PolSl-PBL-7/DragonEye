@@ -221,3 +221,4 @@ wandb/
 !inference/tests/test_videos/*.avi
 *.env
 *.ipynb
+*.DS_Store
