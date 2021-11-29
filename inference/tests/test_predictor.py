@@ -1,3 +1,5 @@
+import pytest
+
 import tensorflow as tf
 from pathlib import Path
 
@@ -24,7 +26,8 @@ def test_full_experiment():
         except RuntimeError as e:
             # Memory growth must be set before GPUs have been initialized
             print(e)
-
+    else:
+        pytest.fail("No gpu")
     # dataset preparation
     source_config = SourceConfig(batch_size=8, fps = 5)
     source = LocalVideoSource(source_config)
