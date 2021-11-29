@@ -1,4 +1,4 @@
-from typing import Sequence, Callable, NamedTuple
+from typing import Sequence, Callable, NamedTuple, Tuple, Optional
 
 import tensorflow as tf
 
@@ -8,6 +8,7 @@ from dnn.models.conv.blocks import ChongTayEncoder, ChongTayConvLstmBottleneckBl
 
 
 class ModelConfig(NamedTuple):
+    permute_input: bool = True,
 
     filter_sizes_encoder: Sequence = (11, 5)
     n_filters_encoder: Sequence = (128, 64)
@@ -35,6 +36,8 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
     def __init__(self, config: ModelConfig):
         super(SpatioTemporalAutoencoder, self).__init__()
         self.model = tf.keras.Sequential()
+        if config.permute_input:
+            self.model.add(tf.keras.layers.Permute((2, 3, 1, 4)))
         self.model.add(ChongTayEncoder(
             filter_sizes=config.filter_sizes_encoder,
             strides=config.strides_encoder,
@@ -60,6 +63,8 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
             add_batchnorm=config.add_batchnorm_decoder,
             activation=config.activation
         ))
+        if config.permute_input:
+            self.model.add(tf.keras.layers.Permute((3, 1, 2, 4)))
 
     def call(self, input):
         return self.model(input)
