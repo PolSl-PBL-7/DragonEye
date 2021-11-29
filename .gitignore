@@ -218,4 +218,5 @@ dmypy.json
 wandb/
 *.avi
 !data/processing/tests/test_videos/*.avi
+!inference/tests/test_videos/*.avi
 *.env
