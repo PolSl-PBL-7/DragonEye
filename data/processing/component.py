@@ -10,6 +10,7 @@ from data.processing.sinks import Sink, LocalTFDatasetSink, SinkConfig
 
 import glob
 
+
 class DataProcessingConfig(NamedTuple):
     source: Source
     source_config: SourceConfig
@@ -23,9 +24,10 @@ class DataProcessingConfig(NamedTuple):
 
 class DataProcessing:
     """
-    Object that is responsible for running data processing logic, 
+    Object that is responsible for running data processing logic,
     based on configuration.
     """
+
     def __init__(self) -> None:
         pass
 
@@ -44,7 +46,7 @@ class DataProcessing:
             if isinstance(config.input, Path):
                 video_paths = [
                     config.input.glob(f"*.{extention}") for extention in config.video_extentions
-                    ]
+                ]
                 video_paths = list(itertools.chain.from_iterable(video_paths))
             else:
                 video_paths = config.input
@@ -52,16 +54,15 @@ class DataProcessing:
         elif isinstance(config.source, LocalTFDataSource) and isinstance(config.input, Path):
             return config.source(
                 config.input,
-                    )
+            )
 
         else:
             return
-        
+
         data = []
         for path in video_paths:
             vid = config.source(path)
             data.append(vid)
-        
 
         # For each video Processor is called
         processed_data = []
@@ -70,13 +71,12 @@ class DataProcessing:
                 vid_processed = config.processor(vid) if config.processor else Dataset(vid)
                 processed_data.append(vid_processed)
 
-
         # Concatenating single videos to one tf dataset, and saving it with choosen Sink
         if len(processed_data) > 0:
             dataset = processed_data[0]
             for x in processed_data[1:]:
                 dataset = dataset.concatenate(x)
-            config.sink(dataset = dataset, config=config.sink_config) if config.sink and config.sink_config else None
+            config.sink(dataset=dataset, config=config.sink_config) if config.sink and config.sink_config else None
             return dataset
-        
+
         return
