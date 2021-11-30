@@ -1,12 +1,9 @@
-import pytest
-
 import tensorflow as tf
 from pathlib import Path
 
 from data.processing.component import DataProcessing, DataProcessingConfig
 from data.processing.source import LocalVideoSource, SourceConfig
 from data.processing.process import VideoProcessor, ProcessorConfig
-
 from inference import Predictor, PredictorConfig, AnomalyScoreConfig, AnomalyScoreHeuristic
 from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, ModelConfig
 
@@ -27,8 +24,7 @@ def test_full_experiment():
         except RuntimeError as e:
             # Memory growth must be set before GPUs have been initialized
             print(e)
-    else:
-        pytest.fail("No gpu")
+
     # dataset preparation
     source_config = SourceConfig(batch_size=8, fps = 5)
     source = LocalVideoSource(source_config)
