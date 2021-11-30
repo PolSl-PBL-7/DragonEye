@@ -13,9 +13,9 @@ DEV_CONTAINER:="dragoneye:dev-local"
 test:
 	python3 -m pytest .
 
-.PHONY: flake
-flake:
-	python3 -m flake8
+# .PHONY: flake
+# flake:
+# 	python3 -m flake8
 
 # .PHONY: mypy
 # mypy:
