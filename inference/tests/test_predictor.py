@@ -5,7 +5,7 @@ from data.processing.component import DataProcessing, DataProcessingConfig
 from data.processing.source import LocalVideoSource, SourceConfig
 from data.processing.process import VideoProcessor, ProcessorConfig
 from inference import Predictor, PredictorConfig, AnomalyScoreConfig, AnomalyScoreHeuristic
-from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, ModelConfig
+from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, SpatioTemporalAutoencoderConfig
 
 CURDIR = Path(__file__).parents[0]
 dataset_path = CURDIR / "test_videos"
@@ -41,7 +41,7 @@ def test_full_experiment():
     train_dataset = tf.data.Dataset.zip((dataset, dataset))
 
     # model setup
-    model_config = ModelConfig(strides_encoder=(2, 2), strides_decoder=(2, 2))
+    model_config = SpatioTemporalAutoencoderConfig(strides_encoder=(2, 2), strides_decoder=(2, 2))
     model = SpatioTemporalAutoencoder(model_config)
     model.compile(loss='mse', optimizer='adam')
     model.fit(train_dataset, epochs=1)

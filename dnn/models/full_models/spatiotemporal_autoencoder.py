@@ -4,10 +4,7 @@ import tensorflow as tf
 
 from dnn.models.conv.blocks import ChongTayEncoder, ChongTayConvLstmBottleneckBlock, ChongTayDecoder
 
-# TODO: change config name, add __init__
-
-
-class ModelConfig(NamedTuple):
+class SpatioTemporalAutoencoderConfig(NamedTuple):
 
     filter_sizes_encoder: Sequence = (11, 5)
     n_filters_encoder: Sequence = (128, 64)
@@ -32,7 +29,7 @@ class ModelConfig(NamedTuple):
 
 
 class SpatioTemporalAutoencoder(tf.keras.Model):
-    def __init__(self, config: ModelConfig):
+    def __init__(self, config: SpatioTemporalAutoencoderConfig):
         super(SpatioTemporalAutoencoder, self).__init__()
         self.model = tf.keras.Sequential()
         self.model.add(ChongTayEncoder(
@@ -60,6 +57,23 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
             add_batchnorm=config.add_batchnorm_decoder,
             activation=config.activation
         ))
+    
+    @classmethod
+    def create_from_configs(cls, model_config, compile_config):
+        from dnn.training.losses import losses
+        from dnn.training.metrics import metrics
+        from dnn.training.optimizers import optimizers
+
+        model = cls(model_config)
+        model.compile(
+            loss = losses[compile_config.loss](**compile_config.loss_params),
+            optimizer = optimizers[compile_config.optimizer](**compile_config.optimizer_params),
+            metrics = [metrics[key] for key in compile_config.metrics]
+        )
+        return model
 
     def call(self, input):
         return self.model(input)
+
+    def __name__(self):
+        return 'spatiotemporal_autoencoder'
