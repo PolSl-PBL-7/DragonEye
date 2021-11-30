@@ -21,7 +21,7 @@ def initialize_logger(output_dir, args_dict):
                         format = "%(asctime)s.%(msecs)03d %(levelname)s %(message)s",
                         datefmt="%Y-%m-%d %H:%M:%S"
                         )
-    for arg_dict_name, arg_dict in arg_dict.items():
-        for arg, value in vars(arg_dict).items():
+    for arg_dict_name, arg_dict in args_dict.items():
+        for arg, value in arg_dict.items():
             logging.info(f"{arg_dict_name} - Argument {arg}: {value}")
 

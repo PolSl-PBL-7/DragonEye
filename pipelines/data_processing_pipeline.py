@@ -10,6 +10,7 @@ import os
 
 import tensorflow as tf
 
+from utils.logging_utils import initialize_logger
 
 def data_processing_pipeline(
     versioner_params: dict,
@@ -51,6 +52,10 @@ if __name__ == "__main__":
 
     main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
 
+    sink_params = {
+        'path': main_path / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
+    }
+
     versioner_params = {
         'project_name': 'avenue-experiments',
         'entity': 'polsl-pbl-7',
@@ -72,17 +77,23 @@ if __name__ == "__main__":
         'shape': (64, 64),
         'time_window': 5,
         'batch_size': 32
-    }
-
-    sink_params = {
-        'path': main_path / 'datasets' / 'avenue-dataset' /'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
-    }
+    } 
 
     pipeline_params = {
-        'input': main_path / 'avenue-dataset' / 'training-videos',
+        'input': main_path / 'datasets' / 'training_videos',
         'video_extentions': ['mp4', 'avi', 'mov']
     }
     
+    initialize_logger(output_dir=sink_params['path'], args_dict=
+    {
+        'source_params' : source_params,
+        'versioner_params' : versioner_params,
+        'processor_params' : processor_params,
+        'pipeline_params' : pipeline_params,
+        'sink_params' : sink_params
+    }
+    )
+
     config = data_processing_pipeline(
         versioner_params=versioner_params,
         source_params=source_params,
