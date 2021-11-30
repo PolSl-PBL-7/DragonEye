@@ -222,3 +222,5 @@ wandb/
 *.env
 *.ipynb
 *.DS_Store
+
+datasets
