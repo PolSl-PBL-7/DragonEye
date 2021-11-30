@@ -61,7 +61,7 @@ if __name__ == "__main__":
         'entity': 'polsl-pbl-7',
         'job_type': 'test',
         'dataset_name': 'avenue-dataset',
-        'dataset_path':  main_path / 'datasets',
+        'dataset_path':  main_path / 'datasets'/ 'avenue-dataset',
         'type': 'folder',
         'tag': 'latest',
         'artifact_type': 'dataset',
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     } 
 
     pipeline_params = {
-        'input': main_path / 'datasets' / 'training_videos',
+        'input': main_path / 'datasets' / 'avenue-dataset' /'training_videos',
         'video_extentions': ['mp4', 'avi', 'mov']
     }
     
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     }
     )
 
-    config = data_processing_pipeline(
+    data_processing_pipeline(
         versioner_params=versioner_params,
         source_params=source_params,
         processor_params=processor_params,
