@@ -12,14 +12,14 @@ def test_instance():
     config = SourceConfig()
     source = LocalVideoSource(config=config)
     video = source(path=dataset_path / '15.avi')
-    assert (isinstance(video, np.ndarray))
+    assert isinstance(video, np.ndarray)
 
 
 def test_non_null():
     config = SourceConfig()
     source = LocalVideoSource(config=config)
     video = source(path=dataset_path / '15.avi')
-    assert (video.shape[0] > 1)
+    assert video.shape[0] > 1
 
 
 def test_fps():

@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import NamedTuple, Optional, Sequence,  Union
+from typing import NamedTuple, Optional, Sequence, Union
 import ast
 
 from tensorflow._api.v2 import data
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 from pathlib import Path
 
-import skvideo.io as sk 
+import skvideo.io as sk
 import wandb
 import numpy as np
 import tensorflow as tf
@@ -30,6 +30,7 @@ class Source(ABC):
 
 class LocalVideoSource(Source):
     """Source that loads single local video"""
+
     def __init__(self, config: SourceConfig) -> None:
         super().__init__()
         self.config = config
@@ -39,14 +40,15 @@ class LocalVideoSource(Source):
         if self.config.fps:
             video_fps = sk.ffprobe(str(path))['video']['@avg_frame_rate']
             frames, seconds = [int(x) for x in video_fps.split("/")]
-            video_fps = frames/seconds
+            video_fps = frames / seconds
             if self.config.fps < video_fps:
-                vid = vid[::int(video_fps/self.config.fps)]
+                vid = vid[::int(video_fps / self.config.fps)]
         return vid
 
 
 class LocalTFDataSource(Source):
     """Source that loads single tf dataset"""
+
     def __init__(self) -> None:
         super().__init__()
 
