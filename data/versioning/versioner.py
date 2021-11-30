@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Tuple, NamedTuple, Optional, Union
-from pathlib import  Path
+from pathlib import Path
 
 import wandb
 
@@ -75,6 +75,3 @@ class WandbDatasetVersioner(DatasetVersioner):
         artifact.download(str(dataset_config.dataset_path))
         run.finish()
         wandb.finish()
-
-
-

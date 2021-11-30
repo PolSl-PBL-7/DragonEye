@@ -29,4 +29,4 @@ class LocalTFDatasetSink(Sink):
         pass
 
     def __call__(self, dataset: ConcatenateDataset, config: SinkConfig):
-        tf.data.experimental.save(dataset.unbatch(), config.path)
+        tf.data.experimental.save(dataset=dataset.unbatch(), path=str(config.path))

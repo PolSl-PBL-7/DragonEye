@@ -1,3 +1,4 @@
+import filecmp
 from os import path
 from pathlib import Path
 from data.versioning.versioner import WandbDatasetVersioner, VersioningConfig
@@ -5,8 +6,6 @@ from data.versioning.versioner import WandbDatasetVersioner, VersioningConfig
 CURDIR = Path(__file__).parents[2]
 dataset_path_read = CURDIR / "tests/test_videos"
 dataset_path_write = CURDIR / "tests/test_versioner_output"
-
-import filecmp
 
 
 def test_loading_file_exists():

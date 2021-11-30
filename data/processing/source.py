@@ -49,12 +49,13 @@ class LocalVideoSource(Source):
 class LocalTFDataSource(Source):
     """Source that loads single tf dataset"""
 
-    def __init__(self) -> None:
+    def __init__(self, config: SourceConfig) -> None:
+        self.config = config
         super().__init__()
 
-    def __call__(self, path: Union[str, Path], config: SourceConfig) -> BatchDataset:
+    def __call__(self, path: Union[str, Path]) -> BatchDataset:
         dataset = tf.data.experimental.load(str(path))
-        if config.batch_size:
-            return dataset.batch(config.batch_size)
+        if self.config.batch_size:
+            return dataset.batch(self.config.batch_size)
         else:
             return dataset
