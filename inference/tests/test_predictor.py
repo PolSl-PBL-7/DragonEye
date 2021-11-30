@@ -4,7 +4,6 @@ from pathlib import Path
 from data.processing.component import DataProcessing, DataProcessingConfig
 from data.processing.source import LocalVideoSource, SourceConfig
 from data.processing.process import VideoProcessor, ProcessorConfig
-
 from inference import Predictor, PredictorConfig, AnomalyScoreConfig, AnomalyScoreHeuristic
 from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, ModelConfig
 

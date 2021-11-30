@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 
 import tensorflow as tf
 
+
 def heuristic_anomaly_score(input, output): 
     abnormality_scores = tf.math.sqrt(tf.math.reduce_sum(tf.math.square(input - output), axis = (1, 2, 3, 4)))
     print(abnormality_scores.shape)
@@ -11,8 +12,10 @@ def heuristic_anomaly_score(input, output):
     print(abnormality_scores.shape)
     return tf.reshape(abnormality_scores, (1, *abnormality_scores.shape, 1))
 
+
 class AnomalyScoreConfig(NamedTuple):
     pass
+
 
 class AnomalyScore(ABC):
     """
