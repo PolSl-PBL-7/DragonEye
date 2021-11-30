@@ -69,14 +69,14 @@ if __name__ == '__main__':
     }
 
     source_params = {
-        'batch_size': 32, 
+        'batch_size': 16, 
         'fps': 5
     }
 
-    wandb.init(project="trainings", entity="polsl-pbl-7", config={**pipeline_params, **compile_params, **model_params, **source_params}) 
+    wandb.init(project="trainings", entity="polsl-pbl-7", magic = True, config={**pipeline_params, **compile_params, **model_params, **source_params}) 
 
     training_params = {
-        'callbacks' : [WandbCallback()],
+        'callbacks' : [WandbCallback(monitor="loss")],
         'epochs': 20
     }
 
