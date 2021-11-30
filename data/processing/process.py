@@ -27,9 +27,9 @@ class VideoProcessor:
             time_window (int, optional): Nuber of frames per example. Defaults to 10.
             batch_size (int, optional): Number of examples/time windows per batch of data. Defaults to 128.
         """
-        self.shape=config.shape
-        self.time_window=config.time_window
-        self.batch_size=config.batch_size
+        self.shape = config.shape
+        self.time_window = config.time_window
+        self.batch_size = config.batch_size
 
     def __call__(self, vid: np.ndarray) -> BatchDataset:
         """Method for applying preprocessing per recording.
