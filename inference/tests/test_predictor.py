@@ -8,7 +8,8 @@ from inference import Predictor, PredictorConfig, AnomalyScoreConfig, AnomalySco
 from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, ModelConfig
 
 CURDIR = Path(__file__).parents[0]
-dataset_path = CURDIR/"test_videos"
+dataset_path = CURDIR / "test_videos"
+
 
 def test_full_experiment():
 
@@ -26,7 +27,7 @@ def test_full_experiment():
             print(e)
 
     # dataset preparation
-    source_config = SourceConfig(batch_size=8, fps = 5)
+    source_config = SourceConfig(batch_size=8, fps=5)
     source = LocalVideoSource(source_config)
 
     data_processing = DataProcessing()
@@ -35,8 +36,7 @@ def test_full_experiment():
     processor = VideoProcessor(processor_config)
 
     data_processing_config = DataProcessingConfig(source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
-    dataset = data_processing(config = data_processing_config)
-
+    dataset = data_processing(config=data_processing_config)
 
     for batch in dataset.take(1):
         assert(batch.shape == (processor_config.batch_size, processor_config.time_window, *processor_config.shape, 3))
@@ -44,10 +44,10 @@ def test_full_experiment():
     train_dataset = tf.data.Dataset.zip((dataset, dataset))
 
     # model setup
-    model_config = ModelConfig(strides_encoder=(2, 2), strides_decoder = (2, 2))
+    model_config = ModelConfig(strides_encoder=(2, 2), strides_decoder=(2, 2))
     model = SpatioTemporalAutoencoder(model_config)
-    model.compile(loss = 'mse', optimizer='adam')
-    model.fit(train_dataset, epochs = 1)
+    model.compile(loss='mse', optimizer='adam')
+    model.fit(train_dataset, epochs=1)
 
     # predictor setup
     anomaly_score_config = AnomalyScoreConfig()
@@ -56,7 +56,7 @@ def test_full_experiment():
     predictor_config = PredictorConfig(
         reconstruction_model=model,
         anomaly_score=anomaly_score
-        )
+    )
     predictor = Predictor(predictor_config)
     scores = predictor(dataset)
 
