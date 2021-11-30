@@ -15,6 +15,11 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+*.avi
+!data/processing/tests/test_videos/*.avi
+!inference/tests/test_videos/*.avi
+*.env
+*.ipynb
 
 # AWS User-specific
 .idea/**/aws.xml

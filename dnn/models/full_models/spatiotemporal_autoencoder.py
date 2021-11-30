@@ -4,6 +4,8 @@ import tensorflow as tf
 
 from dnn.models.conv.blocks import ChongTayEncoder, ChongTayConvLstmBottleneckBlock, ChongTayDecoder
 
+# TODO: change config name, add __init__
+
 
 class ModelConfig(NamedTuple):
 
