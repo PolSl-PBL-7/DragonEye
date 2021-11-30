@@ -33,5 +33,5 @@
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
     ],
-    // "runArgs": [ "--gpus=all" ],
+    "runArgs": [ "--gpus=all" ],
 }
