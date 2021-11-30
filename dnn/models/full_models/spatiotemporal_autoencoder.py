@@ -4,8 +4,11 @@ import tensorflow as tf
 
 from dnn.models.conv.blocks import ChongTayEncoder, ChongTayConvLstmBottleneckBlock, ChongTayDecoder
 
+# TODO: change config name, add __init__
+
 
 class ModelConfig(NamedTuple):
+
     filter_sizes_encoder: Sequence = (11, 5)
     n_filters_encoder: Sequence = (128, 64)
     strides_encoder: Sequence = (4, 2)

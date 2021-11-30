@@ -29,7 +29,7 @@ class ChongTayEncoder(keras.layers.Layer):
         if not check_equal_lengths(filter_sizes, n_filters, strides):
             raise Exception("All iterable arguments should be of equal length")
         super(ChongTayEncoder, self).__init__()
-        self.conv_layers = [Conv3D(filters=n, kernel_size=(ks, ks, 1), strides=(stride, stride, 1))
+        self.conv_layers = [Conv3D(filters=n, kernel_size=(1, ks, ks), strides=(1, stride, stride))
                             for n, ks, stride in zip(n_filters, filter_sizes, strides)]
         self.activation = activation
 
@@ -61,7 +61,7 @@ class ChongTayConvLstmBottleneckBlock(keras.layers.Layer):
 
     def __init__(self, filter_sizes: Sequence = (3, 3, 3), n_filters: Sequence = (64, 32, 64),
                  strides: Sequence = (1, 1, 1), padding: str = 'same', dropout: float = 0.,
-                 recurrent_dropout: float = 0., activation: Callable = tf.nn.relu, do_permute: bool = True):
+                 recurrent_dropout: float = 0., activation: Callable = tf.nn.relu, do_permute: bool = False):
         """
 
         Parameters
@@ -118,7 +118,7 @@ class ChongTayDecoder(keras.layers.Layer):
         if not check_equal_lengths(filter_sizes, n_filters, strides):
             raise Exception("All iterable arguments should be of equal length")
         super(ChongTayDecoder, self).__init__()
-        self.conv_layers = [Conv3DTranspose(filters=n, kernel_size=(ks, ks, 1), strides=(stride, stride, 1))
+        self.conv_layers = [Conv3DTranspose(filters=n, kernel_size=(1, ks, ks), strides=(1, stride, stride))
                             for n, ks, stride in zip(n_filters, filter_sizes, strides)]
         self.activation = activation
 
