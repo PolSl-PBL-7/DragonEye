@@ -5,5 +5,5 @@ ignore =
 exclude = 
     .git,
     __pycache__,
-    dist
+    venv
 max-complexity = 10
