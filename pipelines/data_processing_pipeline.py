@@ -12,13 +12,14 @@ import tensorflow as tf
 
 from utils.logging_utils import initialize_logger
 
+
 def data_processing_pipeline(
     versioner_params: dict,
     source_params: dict,
     processor_params: dict,
     sink_params: dict,
     pipeline_params: dict
-    ):
+):
 
     db = WandbDatasetVersioner()
     config = VersioningConfig(**versioner_params)
@@ -31,7 +32,6 @@ def data_processing_pipeline(
     processor_config = ProcessorConfig(**processor_params)
     processor = VideoProcessor(processor_config)
 
-
     sink_config = SinkConfig(**sink_params)
     sink_tf = LocalTFDatasetSink()
 
@@ -43,9 +43,9 @@ def data_processing_pipeline(
         sink=sink_tf,
         sink_config=sink_config,
         **pipeline_params
-        )
+    )
     data_processing = DataProcessing()
-    datasets = data_processing(config = data_processing_config)
+    datasets = data_processing(config=data_processing_config)
 
 
 if __name__ == "__main__":
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         'entity': 'polsl-pbl-7',
         'job_type': 'test',
         'dataset_name': 'avenue-dataset',
-        'dataset_path':  main_path / 'datasets'/ 'avenue-dataset',
+        'dataset_path': main_path / 'datasets' / 'avenue-dataset',
         'type': 'folder',
         'tag': 'latest',
         'artifact_type': 'dataset',
@@ -77,20 +77,19 @@ if __name__ == "__main__":
         'shape': (64, 64),
         'time_window': 5,
         'batch_size': 32
-    } 
+    }
 
     pipeline_params = {
-        'input': main_path / 'datasets' / 'avenue-dataset' /'training_videos',
+        'input': main_path / 'datasets' / 'avenue-dataset' / 'training_videos',
         'video_extentions': ['mp4', 'avi', 'mov']
     }
-    
-    initialize_logger(output_dir=sink_params['path'], args_dict=
-    {
-        'source_params' : source_params,
-        'versioner_params' : versioner_params,
-        'processor_params' : processor_params,
-        'pipeline_params' : pipeline_params,
-        'sink_params' : sink_params
+
+    initialize_logger(output_dir=sink_params['path'], args_dict={
+        'source_params': source_params,
+        'versioner_params': versioner_params,
+        'processor_params': processor_params,
+        'pipeline_params': pipeline_params,
+        'sink_params': sink_params
     }
     )
 

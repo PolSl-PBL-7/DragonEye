@@ -50,7 +50,7 @@ class LocalTFDataSource(Source):
     """Source that loads single tf dataset"""
 
     def __init__(self, config: SourceConfig) -> None:
-        self.config = config 
+        self.config = config
         super().__init__()
 
     def __call__(self, path: Union[str, Path]) -> BatchDataset:
