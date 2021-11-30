@@ -12,6 +12,8 @@ import tensorflow as tf
 
 from utils.logging_utils import initialize_logger
 
+import tensorflow as tf
+
 
 def data_processing_pipeline(
     versioner_params: dict,
