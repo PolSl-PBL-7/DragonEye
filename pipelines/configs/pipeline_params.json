@@ -1,0 +1,4 @@
+{
+    "input": "data/tests/test_videos/",
+    "video_extentions": ["mp4", "avi", "mov"]
+}

@@ -47,12 +47,13 @@ class DataProcessing:
         Returns:
             (ConcatenateDataset): Concatenated dataset of all selected videos
         """
+        print(config.source)
         # Data loading from different sources
         if isinstance(config.source, LocalVideoSource):
-
-            if isinstance(config.input, Path):
+            if isinstance(config.input, Path) or isinstance(config.input, str):
+                input_path = Path(config.input)
                 video_paths = [
-                    config.input.glob(f"*.{extention}") for extention in config.video_extentions
+                    input_path.glob(f"*.{extention}") for extention in config.video_extentions
                 ]
                 video_paths = list(itertools.chain.from_iterable(video_paths))
             else:
@@ -67,6 +68,9 @@ class DataProcessing:
             return
 
         data = []
+        print("VIDEO PATHS:\n\n\n\n\n")
+        print(video_paths)
+        print("\n\n\n\n\n")
         for path in video_paths:
             vid = config.source(path)
             data.append(vid)

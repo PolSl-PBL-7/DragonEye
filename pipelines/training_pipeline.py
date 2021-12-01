@@ -15,6 +15,8 @@ from wandb.keras import WandbCallback
 
 from utils.logging_utils import initialize_logger
 
+NAME = "training_pipeline"
+
 def training_pipeline(pipeline_params: dict, compile_params: dict, model_params: dict, source_params: dict, training_params: dict):
     
     gpus = tf.config.list_physical_devices('GPU')
