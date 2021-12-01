@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
     training_params = {
         'callbacks': [WandbCallback(monitor="loss")],
-        'epochs': 50
+        'epochs': 2
     }
 
     initialize_logger(
