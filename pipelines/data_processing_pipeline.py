@@ -5,7 +5,6 @@ from data import VersioningConfig, WandbDatasetVersioner,\
     DataProcessing, DataProcessingConfig
 
 from pathlib import Path
-from datetime import datetime
 import os
 
 import tensorflow as tf
@@ -51,11 +50,12 @@ def data_processing_pipeline(
 
 
 if __name__ == "__main__":
+    from datetime import datetime
 
     main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
 
     sink_params = {
-        'path': main_path / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
+        'path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
     }
 
     versioner_params = {
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         'entity': 'polsl-pbl-7',
         'job_type': 'test',
         'dataset_name': 'avenue-dataset',
-        'dataset_path': main_path / 'datasets' / 'avenue-dataset',
+        'dataset_path': main_path / 'experiments' / 'datasets' / 'avenue-dataset',
         'type': 'folder',
         'tag': 'latest',
         'artifact_type': 'dataset',
@@ -82,7 +82,7 @@ if __name__ == "__main__":
     }
 
     pipeline_params = {
-        'input': main_path / 'datasets' / 'avenue-dataset' / 'training_videos',
+        'input': main_path / 'experiments' / 'datasets' / 'avenue-dataset' / 'training_videos',
         'video_extentions': ['mp4', 'avi', 'mov']
     }
 

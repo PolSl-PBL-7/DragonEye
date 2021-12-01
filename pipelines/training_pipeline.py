@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import pickle
 
 from typing import NamedTuple
 
@@ -44,16 +45,25 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
     train_dataset = tf.data.Dataset.zip((dataset, dataset))
     history = model.fit(train_dataset, **training_params)
 
+    if pipeline_params['model_path']:
+        model.save(str(pipeline_params['model_path'] / 'model'))
+        with open(f"{str(pipeline_params['model_path'])}/history", 'wb') as f:
+            pickle.dump(history, f)
+
     return model, history
 
 
 if __name__ == '__main__':
+    from datetime import datetime
 
     project_dir = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
 
     pipeline_params = {
-        'dataset_path': project_dir / r'datasets/tf_datasets/avenue_dataset_training_11-30-2021-21-06-25',
-        'model': SpatioTemporalAutoencoder.__class__.__name__
+        'dataset_path': project_dir / r'experiments\datasets\tf_datasets\avenue_dataset_training_12-01-2021-11-51-02',
+        'shuffle_dataset': True,
+        'model_type': 'reconstruction',
+        'model': SpatioTemporalAutoencoder.__class__.__name__,
+        'model_path': project_dir / 'experiments' /'models' / SpatioTemporalAutoencoder.__class__.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
     }
 
     compile_params = {
@@ -78,17 +88,19 @@ if __name__ == '__main__':
 
     training_params = {
         'callbacks': [WandbCallback(monitor="loss")],
-        'epochs': 20
+        'epochs': 2
     }
 
-    # initialize_logger(output_dir=sink_params['path'], args_dict={
-    #     'source_params': source_params,
-    #     'pipeline_params': pipeline_params,
-    #     'training_params' : training_params,
-    #     'model_params' : model_params,
-    #     'compile_params' : compile_params
-    # }
-    # )
+    initialize_logger(
+        output_dir=pipeline_params['model_path'], 
+        args_dict={
+            'source_params': source_params,
+            'pipeline_params': pipeline_params,
+            'training_params' : training_params,
+            'model_params' : model_params,
+            'compile_params' : compile_params
+        }
+    )
 
     history, model = training_pipeline(
         pipeline_params=pipeline_params,

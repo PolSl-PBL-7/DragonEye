@@ -20,6 +20,7 @@
 !inference/tests/test_videos/*.avi
 *.env
 *.ipynb
+experiments
 
 # AWS User-specific
 .idea/**/aws.xml
