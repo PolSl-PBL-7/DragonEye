@@ -17,5 +17,5 @@ class CompileConfig(NamedTuple):
 
 
 model_builder = {
-    SpatioTemporalAutoencoder.__class__.__name__: SpatioTemporalAutoencoder.create_from_configs
+    SpatioTemporalAutoencoder.__name__: SpatioTemporalAutoencoder.create_from_configs
 }

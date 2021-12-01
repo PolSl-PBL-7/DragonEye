@@ -62,8 +62,8 @@ if __name__ == '__main__':
         'dataset_path': project_dir / r'experiments\datasets\tf_datasets\avenue_dataset_training_12-01-2021-11-51-02',
         'shuffle_dataset': True,
         'model_type': 'reconstruction',
-        'model': SpatioTemporalAutoencoder.__class__.__name__,
-        'model_path': project_dir / 'experiments' /'models' / SpatioTemporalAutoencoder.__class__.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
+        'model': SpatioTemporalAutoencoder.__name__,
+        'model_path': project_dir / 'experiments' /'models' / SpatioTemporalAutoencoder.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
     }
 
     compile_params = {
