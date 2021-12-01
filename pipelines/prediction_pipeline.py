@@ -1,8 +1,8 @@
 from pathlib import Path
 import os
 
-from DragonEye.inference import anomaly_score, predictor
-from DragonEye.inference.anomaly_score import AnomalyScore
+from inference import anomaly_score, predictor
+from inference.anomaly_score import AnomalyScore
 from inference import Predictor, PredictorConfig, AnomalyScoreHeuristic, AnomalyScoreConfig
 from data import LocalTFDataSource, SourceConfig, LocalTFDatasetSink, SinkConfig
 
@@ -12,7 +12,7 @@ import tensorflow as tf
 def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeline_params):
 
     # get reconstruction model
-    model = tf.keras.models.load_model(pipeline_params['model_path'])
+    model = tf.keras.models.load_model(str(pipeline_params['model_path'] / 'model'))
 
     # get dataset
     source_config = SourceConfig(**source_params)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     anomaly_score_params = {}
 
-    sink_params = sink_params = {
+    sink_params = {
         'path': main_path / 'experiments' / 'predictions' / f'avenue_dataset_train_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
     }
 
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     }
 
     prediction_pipeline(
-        source_params=sink_params,
+        source_params=source_params,
         anomaly_score_params=anomaly_score_params,
         sink_params=sink_params,
         pipeline_params=pipeline_params
