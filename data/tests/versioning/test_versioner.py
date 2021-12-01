@@ -15,7 +15,7 @@ def test_loading_file_exists():
     db = WandbDatasetVersioner()
     config = VersioningConfig(type='file', dataset_path=dataset_path_write, dataset_name='test_dataset')
     db.load_dataset(config)
-    assert Path(dataset_path_write / '16.avi').exists()
+    assert Path(dataset_path_write / '15.avi').exists()
 
 
 def test_loading_file_content_comparison():
