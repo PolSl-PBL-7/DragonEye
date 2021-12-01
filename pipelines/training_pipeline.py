@@ -56,14 +56,14 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
 if __name__ == '__main__':
     from datetime import datetime
 
-    project_dir = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
+    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[1]
 
     pipeline_params = {
-        'dataset_path': project_dir / r'experiments\datasets\tf_datasets\avenue_dataset_training_12-01-2021-11-51-02',
+        'dataset_path': main_path / 'experiments' / 'datasets'/ 'tf_datasets'/ 'avenue_dataset_training_12-01-2021-11-51-02',
         'shuffle_dataset': True,
         'model_type': 'reconstruction',
         'model': SpatioTemporalAutoencoder.__name__,
-        'model_path': project_dir / 'experiments' /'models' / SpatioTemporalAutoencoder.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
+        'model_path': main_path / 'experiments' /'models' / SpatioTemporalAutoencoder.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
     }
 
     compile_params = {
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     training_params = {
         'callbacks': [WandbCallback(monitor="loss")],
-        'epochs': 2
+        'epochs': 50
     }
 
     initialize_logger(

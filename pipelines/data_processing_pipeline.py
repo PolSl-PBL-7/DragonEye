@@ -32,7 +32,7 @@ def data_processing_pipeline(
     processor = VideoProcessor(processor_config)
 
     sink_config = SinkConfig(**sink_params)
-    sink_tf = LocalTFDatasetSink()
+    sink_tf = LocalTFDatasetSink(sink_config)
 
     data_processing_config = DataProcessingConfig(
         source=source,
@@ -52,7 +52,7 @@ def data_processing_pipeline(
 if __name__ == "__main__":
     from datetime import datetime
 
-    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
+    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[1]
 
     sink_params = {
         'path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
