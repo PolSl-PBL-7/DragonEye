@@ -1,0 +1,34 @@
+{
+    "pipeline_params" : {
+        "dataset_path": "experiments/datasets/tf_datasets/avenue_dataset_training/12-01-2021-21-34-17",
+        "shuffle_dataset": true,
+        "model_type": "reconstruction",
+        "model": "SpatioTemporalAutoencoder",
+        "add_date_to_model_path": true,
+        "model_path": "experiments/models/SpatioTemporalAutoencoder",
+        "project": "trainings",
+        "entity": "polsl-pbl-7",
+        "magic": true
+        },
+
+    "compile_params" : {
+        "optimizer_params": {},
+        "loss_params": {},
+        "loss": "mse",
+        "optimizer": "adam",
+        "metric_list": ["mse", "msle", "mape"]
+        },
+
+    "model_params" : {
+        "strides_encoder": [1, 1],
+        "strides_decoder": [1, 1]
+        },
+
+    "source_params" : {
+        "batch_size": 4
+        },
+    "training_params" : {
+            "callbacks": ["wandb_training_loss_callback"],
+            "epochs": 40
+        }
+    }

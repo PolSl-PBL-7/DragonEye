@@ -92,6 +92,3 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
 
     def call(self, input):
         return self.model(input)
-
-    def __name__(self):
-        return 'spatiotemporal_autoencoder'

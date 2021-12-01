@@ -14,7 +14,7 @@ import tensorflow as tf
 
 class SourceConfig(NamedTuple):
     batch_size: Optional[int] = None
-    fps: int = None
+    fps: Optional[int] = None
 
 
 class Source(ABC):

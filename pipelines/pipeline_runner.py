@@ -14,6 +14,9 @@ import logging
 
 current_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
+
+
+
 class PipelineType(Enum):
 
     data_processing_pipeline = data_processing_pipeline.NAME
@@ -44,11 +47,19 @@ def get_pipeline_by_type(pipeline_type: PipelineType):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--pipeline_type', type=PipelineType, choices=list(PipelineType))
-    parser.add_argument('-c', '--config_folder', type=str, default=current_dir/'configs')
+    parser.add_argument('-c', '--config_folder', type=str, default=None)
+    parser.add_argument('-j', '--config_json', type=str, default=None)
+
+
     args = parser.parse_args()
 
-    config_folder_path = args.config_folder
-    config_dict = build_config_dict(config_folder_path)
+    if args.config_folder is not None:
+        config_dict = build_config_dict(args.config_folder)
+    elif args.config_json is not None:
+        config_dict = Json.load(args.config_json)
+    else:
+        raise Exception("No config folder or config json provided")
+
     
     logging_dict = {"pipeline_runner_args" : {'pipeline_type':args.pipeline_type, 'config_folder':args.config_folder}}
     logging_dict.update(config_dict)
@@ -59,4 +70,3 @@ if __name__ == "__main__":
     print(config_dict)
     pipeline(**config_dict)
     logging.log(logging.INFO, f"Pipeline finished running")
-

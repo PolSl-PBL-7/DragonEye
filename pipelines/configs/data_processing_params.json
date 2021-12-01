@@ -1,0 +1,29 @@
+{
+    "pipeline_params": {
+        "input": "experiments/datasets/avenue-dataset/training_videos",
+        "video_extentions": ["mp4", "avi", "mov"]
+        },
+    "sink_params": {
+        "path": "experiments/datasets/tf_datasets/avenue_dataset_training"
+        },
+    "versioner_params": {
+        "project_name": "avenue-experiments",
+        "entity": "polsl-pbl-7",
+        "job_type": "test",
+        "dataset_name": "avenue-dataset",
+        "dataset_path": "datasets/avenue-dataset",
+        "type": "folder",
+        "tag": "latest",
+        "artifact_type": "dataset",
+        "experiment_name": "test"
+        },
+    "source_params": {
+        "batch_size": 4,
+        "fps": 5
+        },
+    "processor_params": {
+        "shape": [64, 64],
+        "time_window": 5,
+        "batch_size": 4
+        }
+    }

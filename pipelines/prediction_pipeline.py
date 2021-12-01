@@ -8,6 +8,8 @@ from data import LocalTFDataSource, SourceConfig, LocalTFDatasetSink, SinkConfig
 
 import tensorflow as tf
 
+NAME = "prediction_pipeline"
+
 
 def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeline_params):
 

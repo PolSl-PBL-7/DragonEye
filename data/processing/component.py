@@ -47,7 +47,6 @@ class DataProcessing:
         Returns:
             (ConcatenateDataset): Concatenated dataset of all selected videos
         """
-        print(config.source)
         # Data loading from different sources
         if isinstance(config.source, LocalVideoSource):
             if isinstance(config.input, Path) or isinstance(config.input, str):
@@ -68,9 +67,6 @@ class DataProcessing:
             return
 
         data = []
-        print("VIDEO PATHS:\n\n\n\n\n")
-        print(video_paths)
-        print("\n\n\n\n\n")
         for path in video_paths:
             vid = config.source(path)
             data.append(vid)
@@ -89,7 +85,7 @@ class DataProcessing:
             for x in processed_data[1:]:
                 dataset = dataset.concatenate(x)
             config.sink(
-                dataset=dataset, config=config.sink_config) if config.sink and config.sink_config else None
+                dataset=dataset) if config.sink and config.sink_config else None
             return dataset
 
         return
