@@ -22,11 +22,13 @@ class Sink(ABC):
 
 
 class LocalTFDatasetSink(Sink):
-    def __init__(self):
+    def __init__(self, config: SinkConfig):
         """
         Sink object that is used to return processed dataset locally as tfrecord
         """
+        self.config = config
         pass
 
-    def __call__(self, dataset: ConcatenateDataset, config: SinkConfig):
-        tf.data.experimental.save(dataset=dataset.unbatch(), path=str(config.path))
+    def __call__(self, dataset: ConcatenateDataset):
+        tf.data.experimental.save(
+            dataset=dataset.unbatch(), path=str(self.config.path))

@@ -5,15 +5,11 @@ from data import VersioningConfig, WandbDatasetVersioner,\
     DataProcessing, DataProcessingConfig
 
 from pathlib import Path
-from datetime import datetime
 import os
-import pipelines
 
 import tensorflow as tf
 
 from utils.logging_utils import initialize_logger
-
-NAME = 'data_processing_pipeline'
 
 
 def data_processing_pipeline(
@@ -23,12 +19,6 @@ def data_processing_pipeline(
     sink_params: dict,
     pipeline_params: dict
 ):
-    print(versioner_params)
-    print(source_params)
-    print(processor_params)
-    print(sink_params)
-    print(pipeline_params)
-    
     db = WandbDatasetVersioner()
     config = VersioningConfig(**versioner_params)
     db.load_dataset(config)
@@ -41,7 +31,7 @@ def data_processing_pipeline(
     processor = VideoProcessor(processor_config)
 
     sink_config = SinkConfig(**sink_params)
-    sink_tf = LocalTFDatasetSink()
+    sink_tf = LocalTFDatasetSink(sink_config)
 
     data_processing_config = DataProcessingConfig(
         source=source,
@@ -53,15 +43,18 @@ def data_processing_pipeline(
         **pipeline_params
     )
     data_processing = DataProcessing()
-    datasets = data_processing(config=data_processing_config)
+    dataset = data_processing(config=data_processing_config)
+
+    return dataset
 
 
 if __name__ == "__main__":
+    from datetime import datetime
 
-    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[0]
+    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[1]
 
     sink_params = {
-        'path': main_path / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
+        'path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / f'avenue_dataset_training_{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
     }
 
     versioner_params = {
@@ -69,7 +62,7 @@ if __name__ == "__main__":
         'entity': 'polsl-pbl-7',
         'job_type': 'test',
         'dataset_name': 'avenue-dataset',
-        'dataset_path': main_path / 'datasets' / 'avenue-dataset',
+        'dataset_path': main_path / 'experiments' / 'datasets' / 'avenue-dataset',
         'type': 'folder',
         'tag': 'latest',
         'artifact_type': 'dataset',
@@ -77,18 +70,18 @@ if __name__ == "__main__":
     }
 
     source_params = {
-        'batch_size': 16,
+        'batch_size': 32,
         'fps': 5
     }
 
     processor_params = {
         'shape': (64, 64),
         'time_window': 5,
-        'batch_size': 16
+        'batch_size': 32
     }
 
     pipeline_params = {
-        'input': main_path / 'datasets' / 'avenue-dataset' / 'training_videos',
+        'input': main_path / 'experiments' / 'datasets' / 'avenue-dataset' / 'training_videos',
         'video_extentions': ['mp4', 'avi', 'mov']
     }
 

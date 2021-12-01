@@ -30,4 +30,5 @@ def test_shape():
 
     video = source(path=dataset_path / '15.avi')
     for batch in processor(video).take(1):
-        assert(batch.shape == (processor_config.batch_size, processor_config.time_window, *processor_config.shape, 3))
+        assert(batch.shape == (processor_config.batch_size,
+               processor_config.time_window, *processor_config.shape, 3))

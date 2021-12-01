@@ -30,8 +30,9 @@ class Predictor:
 
             scores = self.anomaly_score(batch, predictions)
             if anomaly_scores:
-                anomaly_scores = anomaly_scores.concatenate(tf.data.Dataset.from_tensor_slices(scores))
+                anomaly_scores = anomaly_scores.concatenate(
+                    tf.data.Dataset.from_tensor_slices(scores))
             else:
                 anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
 
-        return dataset, anomaly_scores
+        return anomaly_scores

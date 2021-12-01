@@ -17,7 +17,8 @@ def test_instance():
     data_processing = DataProcessing()
     processor_config = ProcessorConfig()
     processor = VideoProcessor(processor_config)
-    data_processing_config = DataProcessingConfig(source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
+    data_processing_config = DataProcessingConfig(
+        source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
 
     dataset = data_processing(config=data_processing_config)
 
@@ -30,8 +31,10 @@ def test_shape():
     data_processing = DataProcessing()
     processor_config = ProcessorConfig()
     processor = VideoProcessor(processor_config)
-    data_processing_config = DataProcessingConfig(source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
+    data_processing_config = DataProcessingConfig(
+        source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
 
     dataset = data_processing(config=data_processing_config)
     for batch in dataset.take(1):
-        assert(batch.shape == (processor_config.batch_size, processor_config.time_window, *processor_config.shape, 3))
+        assert(batch.shape == (processor_config.batch_size,
+               processor_config.time_window, *processor_config.shape, 3))
