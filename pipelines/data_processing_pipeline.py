@@ -12,8 +12,6 @@ import tensorflow as tf
 
 from utils.logging_utils import initialize_logger
 
-import tensorflow as tf
-
 
 def data_processing_pipeline(
     versioner_params: dict,
@@ -47,7 +45,9 @@ def data_processing_pipeline(
         **pipeline_params
     )
     data_processing = DataProcessing()
-    datasets = data_processing(config=data_processing_config)
+    dataset = data_processing(config=data_processing_config)
+
+    return dataset
 
 
 if __name__ == "__main__":

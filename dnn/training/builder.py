@@ -13,7 +13,7 @@ class CompileConfig(NamedTuple):
     loss_params: dict = {}
     loss: str = 'mse'
     optimizer: str = 'adam'
-    metrics: List[str] = ['mse', 'msle', 'mape']
+    metric_list: List[str] = ['mse', 'msle', 'mape']
 
 
 model_builder = {

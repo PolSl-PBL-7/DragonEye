@@ -61,7 +61,7 @@ if __name__ == '__main__':
         'loss_params': {},
         'loss': 'mse',
         'optimizer': 'adam',
-        'metrics': ['mse', 'msle', 'mape']
+        'metric_list': ['mse', 'msle', 'mape']
     }
 
     model_params = {

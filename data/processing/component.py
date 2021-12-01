@@ -83,7 +83,7 @@ class DataProcessing:
             dataset = processed_data[0]
             for x in processed_data[1:]:
                 dataset = dataset.concatenate(x)
-            config.sink(dataset = dataset, config=config.sink_config) if config.sink and config.sink_config else None
+            config.sink(dataset=dataset, config=config.sink_config) if config.sink and config.sink_config else None
             return dataset
 
         return

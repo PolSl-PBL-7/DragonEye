@@ -56,4 +56,4 @@ def test_full_experiment():
     )
     predictor = Predictor(predictor_config)
 
-    scores = predictor(dataset)
+    predictor(dataset)
