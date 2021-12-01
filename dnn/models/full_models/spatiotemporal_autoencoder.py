@@ -70,7 +70,8 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
         model = cls(model_config)
         model.compile(
             loss=losses[compile_config.loss](**compile_config.loss_params),
-            optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
+            optimizer=optimizers[compile_config.optimizer](
+                **compile_config.optimizer_params),
             metrics=[metrics[key] for key in compile_config.metric_list]
         )
         return model

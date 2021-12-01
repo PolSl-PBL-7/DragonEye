@@ -21,7 +21,8 @@ def test_full_experiment():
             for gpu in gpus:
                 tf.config.experimental.set_memory_growth(gpu, True)
                 logical_gpus = tf.config.list_logical_devices('GPU')
-                print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+                print(len(gpus), "Physical GPUs,", len(
+                    logical_gpus), "Logical GPUs")
         except RuntimeError as e:
             # Memory growth must be set before GPUs have been initialized
             print(e)
@@ -32,16 +33,19 @@ def test_full_experiment():
 
     data_processing = DataProcessing()
 
-    processor_config = ProcessorConfig(shape=(127, 127), time_window=3, batch_size=16)
+    processor_config = ProcessorConfig(
+        shape=(127, 127), time_window=3, batch_size=16)
     processor = VideoProcessor(processor_config)
 
-    data_processing_config = DataProcessingConfig(source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
+    data_processing_config = DataProcessingConfig(
+        source=source, source_config=source_config, input=dataset_path, processor=processor, processor_config=processor_config)
     dataset = data_processing(config=data_processing_config)
 
     train_dataset = tf.data.Dataset.zip((dataset, dataset))
 
     # model setup
-    model_config = SpatioTemporalAutoencoderConfig(strides_encoder=(2, 2), strides_decoder=(2, 2))
+    model_config = SpatioTemporalAutoencoderConfig(
+        strides_encoder=(2, 2), strides_decoder=(2, 2))
     model = SpatioTemporalAutoencoder(model_config)
     model.compile(loss='mse', optimizer='adam')
     model.fit(train_dataset, epochs=1)

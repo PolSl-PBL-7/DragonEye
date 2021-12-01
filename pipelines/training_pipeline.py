@@ -26,7 +26,8 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
             for gpu in gpus:
                 tf.config.experimental.set_memory_growth(gpu, True)
                 logical_gpus = tf.config.list_logical_devices('GPU')
-                print(len(gpus), "Physical GPUs,", len(logical_gpus), "Logical GPUs")
+                print(len(gpus), "Physical GPUs,", len(
+                    logical_gpus), "Logical GPUs")
         except RuntimeError as e:
             # Memory growth must be set before GPUs have been initialized
             print(e)
@@ -59,11 +60,11 @@ if __name__ == '__main__':
     main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[1]
 
     pipeline_params = {
-        'dataset_path': main_path / 'experiments' / 'datasets'/ 'tf_datasets'/ 'avenue_dataset_training_12-01-2021-11-51-02',
+        'dataset_path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / 'avenue_dataset_training_12-01-2021-11-51-02',
         'shuffle_dataset': True,
         'model_type': 'reconstruction',
         'model': SpatioTemporalAutoencoder.__name__,
-        'model_path': main_path / 'experiments' /'models' / SpatioTemporalAutoencoder.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
+        'model_path': main_path / 'experiments' / 'models' / SpatioTemporalAutoencoder.__name__ / datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")
     }
 
     compile_params = {
@@ -84,7 +85,8 @@ if __name__ == '__main__':
         'fps': 5
     }
 
-    wandb.init(project="trainings", entity="polsl-pbl-7", magic=True, config={**pipeline_params, **compile_params, **model_params, **source_params})
+    wandb.init(project="trainings", entity="polsl-pbl-7", magic=True,
+               config={**pipeline_params, **compile_params, **model_params, **source_params})
 
     training_params = {
         'callbacks': [WandbCallback(monitor="loss")],
@@ -92,13 +94,13 @@ if __name__ == '__main__':
     }
 
     initialize_logger(
-        output_dir=pipeline_params['model_path'], 
+        output_dir=pipeline_params['model_path'],
         args_dict={
             'source_params': source_params,
             'pipeline_params': pipeline_params,
-            'training_params' : training_params,
-            'model_params' : model_params,
-            'compile_params' : compile_params
+            'training_params': training_params,
+            'model_params': model_params,
+            'compile_params': compile_params
         }
     )
 

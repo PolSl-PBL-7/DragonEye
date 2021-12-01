@@ -15,7 +15,8 @@ def test_incorrect_lengths():
     except Exception:
         pass
     if result:
-        pytest.fail("Not equal lengths of input args but function did not return error")
+        pytest.fail(
+            "Not equal lengths of input args but function did not return error")
 
 
 def test_not_iterables():

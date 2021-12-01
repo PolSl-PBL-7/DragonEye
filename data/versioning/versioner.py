@@ -47,7 +47,8 @@ class WandbDatasetVersioner(DatasetVersioner):
         """
         run = wandb.init(project=dataset_config.project_name, entity=dataset_config.entity,
                          name=dataset_config.experiment_name, job_type=dataset_config.job_type)
-        artifact = wandb.Artifact(dataset_config.dataset_name, type=dataset_config.artifact_type)
+        artifact = wandb.Artifact(
+            dataset_config.dataset_name, type=dataset_config.artifact_type)
 
         if dataset_config.type == 'folder':
             artifact.add_dir(str(dataset_config.dataset_path))
@@ -71,7 +72,8 @@ class WandbDatasetVersioner(DatasetVersioner):
 
         run = wandb.init(project=dataset_config.project_name, entity=dataset_config.entity,
                          name=dataset_config.experiment_name, job_type=dataset_config.job_type)
-        artifact = run.use_artifact(f'{dataset_config.dataset_name}:{dataset_config.tag}')
+        artifact = run.use_artifact(
+            f'{dataset_config.dataset_name}:{dataset_config.tag}')
         artifact.download(str(dataset_config.dataset_path))
         run.finish()
         wandb.finish()

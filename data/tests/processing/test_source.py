@@ -39,5 +39,6 @@ def test_fps():
     frames, seconds = [int(x) for x in video_fps.split("/")]
     video_fps = frames / seconds
 
-    fps_ratio = video_without_altered_fps.shape[0] / video_with_altered_fps.shape[0]
+    fps_ratio = video_without_altered_fps.shape[0] / \
+        video_with_altered_fps.shape[0]
     assert fps_ratio in ClosedRange(fps - 1, fps + 1)

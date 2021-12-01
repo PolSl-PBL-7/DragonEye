@@ -8,6 +8,7 @@ from data import LocalTFDataSource, SourceConfig, LocalTFDatasetSink, SinkConfig
 
 import tensorflow as tf
 
+
 def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeline_params):
 
     # get reconstruction model
@@ -36,6 +37,7 @@ def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeli
     sink(scores)
     return scores
 
+
 if __name__ == "__main__":
     from datetime import datetime
     from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder
@@ -54,8 +56,8 @@ if __name__ == "__main__":
     }
 
     pipeline_params = {
-        'model_path': main_path / 'experiments' /'models' / SpatioTemporalAutoencoder.__name__ / '12-01-2021-14-32-50',
-        'dataset_path': main_path / 'experiments' / 'datasets'/ 'tf_datasets'/ 'avenue_dataset_training_12-01-2021-11-51-02'
+        'model_path': main_path / 'experiments' / 'models' / SpatioTemporalAutoencoder.__name__ / '12-01-2021-14-32-50',
+        'dataset_path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / 'avenue_dataset_training_12-01-2021-11-51-02'
     }
 
     prediction_pipeline(
