@@ -5,18 +5,12 @@ import tensorflow as tf
 
 
 def heuristic_anomaly_score(input, output):
-<<<<<<< HEAD
-    abnormality_scores = tf.math.sqrt(tf.math.reduce_sum(tf.math.square(input - output), axis=(1, 2, 3, 4)))
-    minimum, maximum = tf.math.reduce_min(abnormality_scores), tf.math.reduce_max(abnormality_scores)
-    abnormality_scores = tf.math.divide(tf.math.subtract(abnormality_scores, minimum), maximum)
-=======
     abnormality_scores = tf.math.sqrt(tf.math.reduce_sum(
         tf.math.square(input - output), axis=(1, 2, 3, 4)))
     minimum, maximum = tf.math.reduce_min(
         abnormality_scores), tf.math.reduce_max(abnormality_scores)
     abnormality_scores = tf.math.divide(
         tf.math.subtract(abnormality_scores, minimum), maximum)
->>>>>>> 2dfedc49cd2fb7fc1018090782bc4f1f36e1af57
     return tf.reshape(abnormality_scores, (1, *abnormality_scores.shape, 1))
 
 
