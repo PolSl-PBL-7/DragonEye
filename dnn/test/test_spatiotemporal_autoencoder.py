@@ -1,10 +1,10 @@
 import tensorflow as tf
 
-from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, ModelConfig
+from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder
 
 
 def test_default_autoencoder():
-    config = ModelConfig()
+    config = SpatioTemporalAutoencoderConfig()
     model = SpatioTemporalAutoencoder(config)
     x = tf.random.normal((1, 10, 227, 227, 1))
     out = model(x)
