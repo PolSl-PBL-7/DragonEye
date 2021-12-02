@@ -18,12 +18,12 @@
         "experiment_name": "test"
         },
     "source_params": {
-        "batch_size": 4,
+        "batch_size": 8,
         "fps": 5
         },
     "processor_params": {
-        "shape": [64, 64],
+        "shape": [227,227],
         "time_window": 5,
-        "batch_size": 4
+        "batch_size": 8
         }
     }

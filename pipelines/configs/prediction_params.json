@@ -7,7 +7,7 @@
         "path": "experiments/predictions/avenue_dataset/training"
         },
     "source_params": {
-        "batch_size": 16
+        "batch_size": 8
         },
     "anomaly_score_params": {}
     }
