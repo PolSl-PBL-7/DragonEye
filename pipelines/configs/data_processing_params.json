@@ -11,7 +11,7 @@
         "entity": "polsl-pbl-7",
         "job_type": "test",
         "dataset_name": "avenue-dataset",
-        "dataset_path": "datasets/avenue-dataset",
+        "dataset_path": "experiments/datasets/avenue-dataset",
         "type": "folder",
         "tag": "latest",
         "artifact_type": "dataset",
