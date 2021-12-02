@@ -7,6 +7,7 @@ from dnn.training.optimizers import optimizers
 
 from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, SpatioTemporalAutoencoderConfig
 
+
 class CompileConfig(NamedTuple):
     optimizer_params: dict = {}
     loss_params: dict = {}

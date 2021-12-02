@@ -32,6 +32,6 @@ class LocalTFDatasetSink(Sink):
         pass
 
     def __call__(self, dataset: ConcatenateDataset):
-        path = str(self.config.path) + f'/{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}' if self.config.add_date_to_path else  str(self.config.path)
+        path = str(self.config.path) + f'/{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}' if self.config.add_date_to_path else str(self.config.path)
         tf.data.experimental.save(
             dataset=dataset.unbatch(), path=path)

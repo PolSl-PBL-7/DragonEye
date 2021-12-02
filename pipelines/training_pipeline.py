@@ -21,9 +21,8 @@ from utils.logging_utils import initialize_logger
 
 NAME = "training_pipeline"
 
+
 def training_pipeline(pipeline_params: dict, compile_params: dict, model_params: dict, source_params: dict, training_params: dict):
-
-
 
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
@@ -56,17 +55,15 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
             wandb.init(project=pipeline_params['project'],
                        entity=pipeline_params['entity'],
                        magic=pipeline_params['magic'])
-   
+
     training_params['callbacks'] = [callback if not isinstance(callback, str) else get_callback_by_name(callback) for callback in training_params['callbacks']]
 
-
-        
     history = model.fit(train_dataset, **training_params)
 
     model_path = str(pipeline_params['model_path'])
     if pipeline_params['add_date_to_model_path']:
         model_path += f'/{datetime.now().strftime(r"%m-%d-%Y-%H-%M-%S")}'
-    
+
     if pipeline_params['model_path']:
         model.save(model_path + '/model')
         with open(model_path + '/history', 'wb') as f:

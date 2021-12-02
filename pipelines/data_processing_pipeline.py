@@ -14,6 +14,7 @@ from utils.logging_utils import initialize_logger
 
 NAME = "data_processing_pipeline"
 
+
 def data_processing_pipeline(
     versioner_params: dict,
     source_params: dict,
