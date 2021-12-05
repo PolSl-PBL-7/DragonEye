@@ -1,28 +1,20 @@
-from pathlib import Path
-import os
-import pickle
-from datetime import datetime
-
-from typing import NamedTuple
-
-import tensorflow as tf
-
-from dnn.training.builder import CompileConfig, model_builder
-from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder
-
-from data import LocalTFDataSource, SourceConfig
-
-from utils.callbacks import CallbackName, get_callback_by_name
-
-import wandb
-from wandb.keras import WandbCallback
-
-from utils.logging_utils import initialize_logger
-
 NAME = "training_pipeline"
 
 
 def training_pipeline(pipeline_params: dict, compile_params: dict, model_params: dict, source_params: dict, training_params: dict):
+
+    from dnn.training.builder import CompileConfig, model_builder
+    from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder
+    from data import LocalTFDataSource, SourceConfig
+
+    import tensorflow as tf
+
+    import wandb
+    from wandb.keras import WandbCallback
+
+    from utils.callbacks import CallbackName, get_callback_by_name
+    from datetime import datetime
+    import pickle
 
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
@@ -70,63 +62,3 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
             pickle.dump(history, f)
 
     return model, history
-
-
-if __name__ == '__main__':
-    from datetime import datetime
-
-    main_path = Path(os.path.dirname(os.path.realpath(__file__))).parents[1]
-
-    pipeline_params = {
-        'dataset_path': main_path / 'experiments' / 'datasets' / 'tf_datasets' / 'avenue_dataset_training_12-01-2021-11-51-02',
-        'shuffle_dataset': True,
-        'model_type': 'reconstruction',
-        'model': SpatioTemporalAutoencoder.__name__,
-        'add_date_to_model_path': True,
-        'model_path': main_path / 'experiments' / 'models' / SpatioTemporalAutoencoder.__name__
-    }
-
-    compile_params = {
-        'optimizer_params': {},
-        'loss_params': {},
-        'loss': 'mse',
-        'optimizer': 'adam',
-        'metric_list': ['mse', 'msle', 'mape']
-    }
-
-    model_params = {
-        'strides_encoder': (1, 1),
-        'strides_decoder': (1, 1)
-    }
-
-    source_params = {
-        'batch_size': 16,
-        'fps': 5
-    }
-
-    wandb.init(project="trainings", entity="polsl-pbl-7", magic=True,
-               config={**pipeline_params, **compile_params, **model_params, **source_params})
-
-    training_params = {
-        'callbacks': [WandbCallback(monitor="loss")],
-        'epochs': 2
-    }
-
-    initialize_logger(
-        output_dir=pipeline_params['model_path'],
-        args_dict={
-            'source_params': source_params,
-            'pipeline_params': pipeline_params,
-            'training_params': training_params,
-            'model_params': model_params,
-            'compile_params': compile_params
-        }
-    )
-
-    history, model = training_pipeline(
-        pipeline_params=pipeline_params,
-        compile_params=compile_params,
-        model_params=model_params,
-        source_params=source_params,
-        training_params=training_params
-    )
