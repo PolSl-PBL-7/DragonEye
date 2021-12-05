@@ -44,6 +44,8 @@ steps:
   - make deps test
   environment:
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
+    WANDB_API_KEY:
+      from_secret: WANDB_API_KEY
   trigger:
     event:
       include:

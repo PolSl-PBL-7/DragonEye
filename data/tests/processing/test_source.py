@@ -12,14 +12,14 @@ def test_instance():
     config = SourceConfig()
     source = LocalVideoSource(config=config)
     video = source(path=dataset_path / '15.avi')
-    assert (isinstance(video, np.ndarray))
+    assert isinstance(video, np.ndarray)
 
 
 def test_non_null():
     config = SourceConfig()
     source = LocalVideoSource(config=config)
     video = source(path=dataset_path / '15.avi')
-    assert (video.shape[0] > 1)
+    assert video.shape[0] > 1
 
 
 def test_fps():
@@ -39,5 +39,6 @@ def test_fps():
     frames, seconds = [int(x) for x in video_fps.split("/")]
     video_fps = frames / seconds
 
-    fps_ratio = video_without_altered_fps.shape[0] / video_with_altered_fps.shape[0]
+    fps_ratio = video_without_altered_fps.shape[0] / \
+        video_with_altered_fps.shape[0]
     assert fps_ratio in ClosedRange(fps - 1, fps + 1)

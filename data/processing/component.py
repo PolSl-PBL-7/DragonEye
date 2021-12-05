@@ -32,20 +32,27 @@ class DataProcessing:
         pass
 
     def __call__(self, config: DataProcessingConfig):
-        """[summary]
+        """ Method for loading files from specified folder and processing them into dingle ConcatenateDataset
 
         Args:
-            config (DataProcessingConfig): [description]
+            source (Source): data loader of class source
+            source_config (SourceConfig): config tuple for source
+            processor (VideoProcessor, optional): processor of class VideoProcessor, performs operations on numpy arrays and return tf dataset
+            processor_config (ProcessorConfig, optional): configuration tuple for processor
+            sink (Sink, optional): class
+            sink_config (SinkConfig, optional): configuration tuple for class responsible for saving
+            input (Union[Sequence, Path], optional): path to the input folder
+            video_extentions (Iterable[str]): all compatible video extentions
 
         Returns:
-            [type]: [description]
+            (ConcatenateDataset): Concatenated dataset of all selected videos
         """
         # Data loading from different sources
         if isinstance(config.source, LocalVideoSource):
-
-            if isinstance(config.input, Path):
+            if isinstance(config.input, Path) or isinstance(config.input, str):
+                input_path = Path(config.input)
                 video_paths = [
-                    config.input.glob(f"*.{extention}") for extention in config.video_extentions
+                    input_path.glob(f"*.{extention}") for extention in config.video_extentions
                 ]
                 video_paths = list(itertools.chain.from_iterable(video_paths))
             else:
@@ -68,7 +75,8 @@ class DataProcessing:
         processed_data = []
         if config.processor and config.processor_config:
             for vid in data:
-                vid_processed = config.processor(vid) if config.processor else Dataset(vid)
+                vid_processed = config.processor(
+                    vid) if config.processor else Dataset(vid)
                 processed_data.append(vid_processed)
 
         # Concatenating single videos to one tf dataset, and saving it with choosen Sink
@@ -76,7 +84,8 @@ class DataProcessing:
             dataset = processed_data[0]
             for x in processed_data[1:]:
                 dataset = dataset.concatenate(x)
-            config.sink(dataset=dataset, config=config.sink_config) if config.sink and config.sink_config else None
+            config.sink(
+                dataset=dataset) if config.sink and config.sink_config else None
             return dataset
 
         return
