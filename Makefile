@@ -23,8 +23,7 @@ flake:
 
 .PHONY: autopep
 autopep:
-	find . -name "*.py" \
-		| xargs python3 -m autopep8 --in-place
+	autopep8 --in-place --recursive .
 
 .PHONY: local-ci
 local-ci:
@@ -40,6 +39,10 @@ local-ci:
 .PHONY: install-cuda
 install-cuda:
 	./scripts/install-cuda.sh
+
+.PHONY: install-container-toolkit
+install-container-toolkit:
+	./scripts/install-container-toolkit.sh
 
 .PHONY: deps
 deps:
