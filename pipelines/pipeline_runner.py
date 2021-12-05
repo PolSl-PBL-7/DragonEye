@@ -63,7 +63,7 @@ if __name__ == "__main__":
     initialize_logger(current_dir / '..' / 'logging' / 'log.log', logging_dict)
 
     pipeline = get_pipeline_by_type(args.pipeline_type)
-    logging.log(logging.INFO, f"Running pipeline")
+    logging.log(logging.INFO, "Running pipeline")
     print(config_dict)
     pipeline(**config_dict)
-    logging.log(logging.INFO, f"Pipeline finished running")
+    logging.log(logging.INFO, "Pipeline finished running")
