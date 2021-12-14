@@ -1,6 +1,7 @@
 ## DragonEye
 
 1. [Prerequisites](#prerequisites)
+1. [Running dev container](#running-dev-container)
 1. [Bootstraping developement environment](#bootstraping-developement-environment)
 1. [Updating requirements.txt](#updating-requirements.txt)
 1. [Static code analysis](#static-code-analysis)
@@ -11,13 +12,72 @@
 ### Linux
 
 1. One of officially supported distros:
-    - Debian Bullseye;
     - Ubuntu 20.04 LTS;
-    - Pop!_OS 20.04 LTS;
     - WSL Ubuntu 20.04 LTS;
 1. Installed Python, version 3.9;
 1. Installed Docker;
 1. Installed GNU Make;
+
+
+## Running dev container
+
+This repository is configured to have ability to live inside dev container (using [Visual Studio Code](https://code.visualstudio.com)).
+
+### Prerequisites
+
+1. *NVidia Container Toolkit* can be installed using `make install-container-toolkit` or using official guides linked in the sections below.
+1. If you don't have NVidia GPU, you still can use dev container, but make sure to comment out the following line in the `.devcontainer/devcontainer.json`:
+
+```json
+    "runArgs": [ "--gpus=all" ],
+```
+
+#### Linux (Ubuntu 20.04 LTS)
+
+*This guid might work for other Ubuntu based distros, but there were issues with installing NVidia Container Toolkit on Pop!_OS*
+
+1. Installed VSCode
+1. Newest driver (use at least version `470.86`)
+1. Installed Docker Desktop
+1. Installed [NVidia Container Toolkit](https://docs.nvidia.cřom/datacenter/cloud-native/container-toolkit/install-guide.html)
+
+#### Windows
+
+1. Installed VSCode
+1. Newest GPU driver (use at least version `497.09`)
+1. Installed Ubuntu 20.04 LTS distro
+1. Installed Docker Desktop
+1. Installed [NVidia Container Toolkit for WSL](https://docs.nvidia.com/cuda/wsl-user-guide/index.html#ch05-running-containers)
+
+Make sure that you enabled Docker integration with *Ubuntu 20.04 LTS* WSL distro: 
+
+![docker-desktop-settings](./docs/resources/docker-desktop-settings.png)
+
+### Remote Developement extension
+
+1. In Visual Studio Code, install *Remote Developement* extension
+    1. Open Visual Studio Code
+    1. From the left menu bar select extensions
+    1. Search for `ms-vscode-remote.vscode-remote-extensionpack`
+    1. Install it
+
+![remote-dev-extension](./docs/resources/remote-dev-extension.png)
+
+### Reopen in dev container
+
+If all previous steps were finished successfully, you should be able to reopen Visual Studio Code and see the following prompt in right bottom corner of Visual Studio Code:
+
+![reopen-in-container](./docs/resources/reopen-in-container.png)
+
+Click button labeled *Reopen in Container* and wait for the Contianer to build. This might take some time.
+
+### Done
+
+If all steps were finished with success, you should see this in your left corner:
+
+![in-devcontainer](/docs/resources/in-devcontainer.png)
+
+You can now proceed to next section - [Bootstraping developement environment](#bootstraping-developement-environment).
 
 ## Bootstraping developement environment
 
@@ -30,14 +90,8 @@ The general flow of bootstraping looks like this:
 If you want to have your environment set with default libraries hassle free and easy, simply run the following command from root of the project:
 
 ```bash
-./scripts/bootstrap.sh
+make deps
 ```
-
----
-
-## Using WSL with CUDA support
-
-TODO: make install-cuda, driver 510 or grater
 
 ## Updating `requirements.txt`
 
