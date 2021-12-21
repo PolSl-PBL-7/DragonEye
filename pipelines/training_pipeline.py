@@ -12,7 +12,7 @@ def training_pipeline(
     versioner_params: dict = None,
     processor_params: dict = None,
     sink_params: dict = None
-    ):
+):
 
     from dnn.training.builder import CompileConfig, model_builder
     from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder

@@ -63,7 +63,7 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
 
     def call(self, input):
         return self.model(input)
-    
+
     @classmethod
     def create_from_configs(cls, model_config, compile_config):
         from dnn.training.losses import losses
