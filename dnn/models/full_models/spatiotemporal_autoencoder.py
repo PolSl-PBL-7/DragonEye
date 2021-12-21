@@ -61,6 +61,9 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
             activation=config.activation
         ))
 
+    def call(self, input):
+        return self.model(input)
+
     @classmethod
     def create_from_configs(cls, model_config, compile_config):
         from dnn.training.losses import losses
@@ -71,6 +74,6 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
         model.compile(
             loss=losses[compile_config.loss](**compile_config.loss_params),
             optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
-            metrics=[metrics[key] for key in compile_config.metrics]
+            metrics=[metrics[key] for key in compile_config.metric_list]
         )
         return model

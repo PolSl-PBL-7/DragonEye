@@ -5,8 +5,8 @@ def data_processing_pipeline(
     versioner_params: dict,
     source_params: dict,
     processor_params: dict,
-    sink_params: dict,
-    pipeline_params: dict
+    pipeline_params: dict,
+    sink_params: dict = None
 ):
     from data import VersioningConfig, WandbDatasetVersioner,\
         LocalVideoSource, LocalTFDataSource, SourceConfig,\
@@ -25,8 +25,12 @@ def data_processing_pipeline(
     processor_config = ProcessorConfig(**processor_params)
     processor = VideoProcessor(processor_config)
 
-    sink_config = SinkConfig(**sink_params)
-    sink_tf = LocalTFDatasetSink(sink_config)
+    if sink_params:
+        sink_config = SinkConfig(**sink_params)
+        sink_tf = LocalTFDatasetSink(sink_config)
+    else:
+        sink_config = None
+        sink_tf = None
 
     data_processing_config = DataProcessingConfig(
         source=source,

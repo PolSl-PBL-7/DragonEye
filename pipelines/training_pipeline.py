@@ -1,11 +1,23 @@
 NAME = "training_pipeline"
 
 
-def training_pipeline(pipeline_params: dict, compile_params: dict, model_params: dict, source_params: dict, training_params: dict):
+def training_pipeline(
+    pipeline_params: dict,
+    compile_params: dict,
+    model_params: dict,
+    source_params: dict,
+    training_params: dict,
+    data_processing_pipeline_params:
+    dict = None,
+    versioner_params: dict = None,
+    processor_params: dict = None,
+    sink_params: dict = None
+):
 
     from dnn.training.builder import CompileConfig, model_builder
     from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder
     from data import LocalTFDataSource, SourceConfig
+    from pipelines.data_processing_pipeline import data_processing_pipeline
 
     import tensorflow as tf
 
@@ -29,9 +41,19 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
             # Memory growth must be set before GPUs have been initialized
             print(e)
 
-    source_config = SourceConfig(**source_params)
-    source = LocalTFDataSource(source_config)
-    dataset = source(pipeline_params['dataset_path'])
+    if data_processing_pipeline_params and versioner_params and processor_params:
+        dataset = data_processing_pipeline(
+            versioner_params=versioner_params,
+            source_params=source_params,
+            processor_params=processor_params,
+            pipeline_params=data_processing_pipeline_params,
+            sink_params=sink_params)
+    else:
+        source_config = SourceConfig(**source_params)
+        source = LocalTFDataSource(source_config)
+        dataset = source(pipeline_params['dataset_path'])
+
+    train_dataset = tf.data.Dataset.zip((dataset, dataset))
 
     compile_config = CompileConfig(**compile_params)
     model_config = SpatioTemporalAutoencoderConfig(**model_params)
@@ -39,8 +61,6 @@ def training_pipeline(pipeline_params: dict, compile_params: dict, model_params:
         model_config=model_config,
         compile_config=compile_config
     )
-
-    train_dataset = tf.data.Dataset.zip((dataset, dataset))
 
     for callback in training_params['callbacks']:
         if callback == CallbackName.wandb_training_loss.value:
