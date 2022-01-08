@@ -77,3 +77,16 @@ class WandbDatasetVersioner(DatasetVersioner):
         artifact.download(str(dataset_config.dataset_path))
         run.finish()
         wandb.finish()
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input_folder', type=str, default=None)
+    parser.add_argument('-n', '--dataset_name', type=str, default=None)
+
+    args = parser.parse_args()
+
+    config = VersioningConfig(dataset_path=args.input_folder, dataset_name=args.dataset_name)
+    versioner = WandbDatasetVersioner()
+    versioner.save_dataset(config)
