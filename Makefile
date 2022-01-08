@@ -2,6 +2,9 @@
 # CONFIGURATION #
 #################
 
+include .version.env
+export
+
 PYTHONPATH:=.:${PYTHONPATH}
 DEV_CONTAINER:="dragoneye:dev-local"
 
@@ -30,6 +33,24 @@ local-ci:
 	docker build \
 		--file ./Dockerfile.CI \
 		--rm \
+		.
+
+#################
+# DOCKER IMAGES #
+#################
+
+.PHONY: prepare-builder
+prepare-builder:
+	docker buildx create --use
+
+.PHONY: build-ci-base-container
+build-ci-base-container:
+	docker buildx build \
+		--file=Dockerfile.CI-Base \
+		--tag=shanduur/dragoneye-ci-base:latest \
+		--tag=shanduur/dragoneye-ci-base:${CI_VERSION} \
+		--platform=linux/amd64,linux/arm64 \
+		--push \
 		.
 
 ###########################

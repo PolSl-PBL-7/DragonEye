@@ -1,0 +1,9 @@
+FROM python:3.9
+
+RUN mkdir /work
+COPY . /work
+WORKDIR /work
+
+ENV SKIP=false
+
+RUN make deps
