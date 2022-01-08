@@ -6,4 +6,4 @@ WORKDIR /work
 
 ENV SKIP=false
 
-RUN make deps
+RUN ./scripts/bootstrap.sh
