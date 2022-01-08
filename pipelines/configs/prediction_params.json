@@ -1,13 +1,36 @@
 {
     "pipeline_params": {
-       "model_path": "experiments/models/spatiotemporal_autoencoder/LATEST",
-       "dataset_path": "experiments/datasets/tf_datasets/avenue_dataset_training/LATEST"
+       "model_path": "C:\\Users\\Krzysztof Kramarz\\Desktop\\DragonEye\\experiments\\models\\SpatioTemporalAutoencoder\\01-08-2022-14-13-59",
+       "dataset_path": "experiments/datasets/tf_datasets/avenue_dataset_testing/LATEST"
         },
     "sink_params": {
-        "path": "experiments/predictions/avenue_dataset/training"
+        "path": "experiments/predictions/avenue_dataset/testing"
         },
-    "source_params": {
-        "batch_size": 8
+    "anomaly_score_params": {
+        "metrics": ["mse", "psnr"]
         },
-    "anomaly_score_params": {}
+    "data_processing_pipeline_params": {
+        "input": "experiments/datasets/avenue-dataset/testing_videos",
+        "video_extentions": ["mp4", "avi", "mov"]
+        },
+    "source_params" : {
+        "batch_size": 4,
+        "fps": 5
+        },
+    "versioner_params": {
+        "project_name": "avenue-experiments",
+        "entity": "polsl-pbl-7",
+        "job_type": "test",
+        "dataset_name": "avenue-dataset",
+        "dataset_path": "experiments/datasets/avenue-dataset",
+        "type": "folder",
+        "tag": "latest",
+        "artifact_type": "dataset",
+        "experiment_name": "test"
+        },
+    "processor_params": {
+        "shape": [227,227],
+        "time_window": 5,
+        "batch_size": 32
+        }
     }
