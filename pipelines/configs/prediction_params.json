@@ -1,16 +1,16 @@
 {
     "pipeline_params": {
-       "model_path": "C:\\Users\\Krzysztof Kramarz\\Desktop\\DragonEye\\experiments\\models\\SpatioTemporalAutoencoder\\01-08-2022-14-13-59",
+       "model_path": "C:\\Users\\Krzysztof Kramarz\\Desktop\\DragonEye\\experiments\\models\\fm\\SpatioTemporalAutoencoder\\01-08-2022-18-54-21",
        "dataset_path": "experiments/datasets/tf_datasets/avenue_dataset_testing/LATEST"
         },
     "sink_params": {
-        "path": "experiments/predictions/avenue_dataset/testing"
+        "path": "experiments/predictions/fm_dataset/testing"
         },
     "anomaly_score_params": {
         "metrics": ["mse", "psnr"]
         },
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/avenue-dataset/testing_videos",
+        "input": "experiments/datasets/fm-dataset/testing",
         "video_extentions": ["mp4", "avi", "mov"]
         },
     "source_params" : {
@@ -21,8 +21,8 @@
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "avenue-dataset",
-        "dataset_path": "experiments/datasets/avenue-dataset",
+        "dataset_name": "fm-dataset",
+        "dataset_path": "experiments/datasets/fm-dataset",
         "type": "folder",
         "tag": "latest",
         "artifact_type": "dataset",
