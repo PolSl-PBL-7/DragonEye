@@ -28,6 +28,19 @@ def training_pipeline(
     from datetime import datetime
     import pickle
 
+    with tf.device('/CPU:0'):
+        if data_processing_pipeline_params and versioner_params and processor_params:
+            dataset = data_processing_pipeline(
+                versioner_params=versioner_params,
+                source_params=source_params,
+                processor_params=processor_params,
+                pipeline_params=data_processing_pipeline_params,
+                sink_params=sink_params)
+        else:
+            source_config = SourceConfig(**source_params)
+            source = LocalTFDataSource(source_config)
+            dataset = source(pipeline_params['dataset_path'])
+
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
         try:
@@ -41,19 +54,10 @@ def training_pipeline(
             # Memory growth must be set before GPUs have been initialized
             print(e)
 
-    if data_processing_pipeline_params and versioner_params and processor_params:
-        dataset = data_processing_pipeline(
-            versioner_params=versioner_params,
-            source_params=source_params,
-            processor_params=processor_params,
-            pipeline_params=data_processing_pipeline_params,
-            sink_params=sink_params)
-    else:
-        source_config = SourceConfig(**source_params)
-        source = LocalTFDataSource(source_config)
-        dataset = source(pipeline_params['dataset_path'])
-
-    train_dataset = tf.data.Dataset.zip((dataset, dataset))
+    dataset = tf.data.Dataset.zip((dataset, dataset))
+    dataset_size = len([0 for _ in dataset])
+    train_dataset = dataset.take(int(dataset_size*0.8))
+    val_dataset = dataset.skip(int(dataset_size*0.8))
 
     compile_config = CompileConfig(**compile_params)
     model_config = SpatioTemporalAutoencoderConfig(**model_params)
@@ -70,7 +74,7 @@ def training_pipeline(
 
     training_params['callbacks'] = [callback if not isinstance(callback, str) else get_callback_by_name(callback) for callback in training_params['callbacks']]
 
-    history = model.fit(train_dataset, **training_params)
+    history = model.fit(train_dataset, **training_params, validation_data = val_dataset, shuffle=True)
 
     model_path = str(pipeline_params['model_path'])
     if pipeline_params['add_date_to_model_path']:

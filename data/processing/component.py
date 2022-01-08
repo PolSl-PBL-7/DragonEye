@@ -1,4 +1,5 @@
 from typing import NamedTuple, Tuple, Sequence, Any, Optional, Iterable, Union
+from copy import deepcopy
 from pathlib import Path
 import itertools
 from tensorflow.python.data.ops.dataset_ops import ConcatenateDataset
@@ -66,23 +67,19 @@ class DataProcessing:
         else:
             return
 
+        # load, preprocess, batch and save to tf dataset
         data = []
         for path in video_paths:
             vid = config.source(path)
+
+            vid = config.processor(vid) if config.processor else Dataset(vid)
+            
             data.append(vid)
 
-        # For each video Processor is called
-        processed_data = []
-        if config.processor and config.processor_config:
-            for vid in data:
-                vid_processed = config.processor(
-                    vid) if config.processor else Dataset(vid)
-                processed_data.append(vid_processed)
-
         # Concatenating single videos to one tf dataset, and saving it with choosen Sink
-        if len(processed_data) > 0:
-            dataset = processed_data[0]
-            for x in processed_data[1:]:
+        if len(data) > 0:
+            dataset = data[0]
+            for x in data[1:]:
                 dataset = dataset.concatenate(x)
             config.sink(
                 dataset=dataset) if config.sink and config.sink_config else None

@@ -1,17 +1,17 @@
 {
     "pipeline_params": {
-        "input": "experiments/datasets/avenue-dataset/training_videos",
+        "input": "experiments/datasets/fm-dataset/testing",
         "video_extentions": ["mp4", "avi", "mov"]
         },
     "sink_params": {
-        "path": "experiments/datasets/tf_datasets/avenue_dataset_training"
+        "path": "experiments/datasets/tf_datasets/fm_dataset_testing"
         },
     "versioner_params": {
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "avenue-dataset",
-        "dataset_path": "experiments/datasets/avenue-dataset",
+        "dataset_name": "fm-dataset",
+        "dataset_path": "experiments/datasets/fm-dataset",
         "type": "folder",
         "tag": "latest",
         "artifact_type": "dataset",
