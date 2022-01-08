@@ -41,7 +41,10 @@ local-ci:
 
 .PHONY: prepare-builder
 prepare-builder:
-	docker buildx create --platform=linux/amd64,linux/arm64 --use
+	docker buildx create \
+		--platform=linux/amd64,linux/arm64 \
+		--driver docker-container \
+		--use
 
 .PHONY: build-ci-base-container
 build-ci-base-container:
