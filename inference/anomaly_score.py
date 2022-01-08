@@ -19,16 +19,16 @@ def peak_signal_noise_ratio(input, output):
         tf.math.reduce_sum(
             tf.math.square(
                 input - output),
-                axis=(1, 2, 3, 4)
-                )
-            )
+            axis=(1, 2, 3, 4)
+        )
+    )
     maximum = tf.math.reduce_max(mse)
-    abnormality_scores = 10*tf.math.log(
+    abnormality_scores = 10 * tf.math.log(
         tf.math.divide(
             maximum,
             mse
-            )
         )
+    )
     return tf.reshape(abnormality_scores, (*abnormality_scores.shape, 1))
 
 
@@ -36,6 +36,7 @@ heuristics = {
     'mse': mse_standarized,
     'psnr': peak_signal_noise_ratio
 }
+
 
 class AnomalyScoreConfig(NamedTuple):
     metrics: list = ['mse', "psnr"]
