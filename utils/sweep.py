@@ -1,5 +1,7 @@
 import wandb
 import os.path as path
+import pprint
+import sys
 
 from pipelines import pipeline_runner as pr
 
@@ -17,27 +19,31 @@ sweep_config = {
         },
         'batch_size': {
             'values': [2, 4, 8]
+        },
+        'fps': {
+            'values': [3, 5, 10]
+        },
+        'time_window': {
+            'values': [3, 5, 10]
         }
     }
 }
 
-wandb.login()
-
-def train(epochs) -> None:
+def train_sweep(config_defaults = None) -> None:
+    pprint.pprint(wandb.init())
+    config = wandb.config
     config_dict = pr.build_config_dict(path.join('.', 'pipelines', 'configs'))
 
-    # TODO: modify config
-
     pipeline = pr.get_pipeline_by_type(pr.PipelineType.training_pipeline)
-    
-    for e in epochs:
-        print(f'TODO: should replace epochs with {e}')
-        print(config_dict)
-        pipeline(**config_dict)
 
-def sweep_train(config_defaults = None) -> None:
-    train([1,2,4])
+    config_dict['training_params']['source_arams']['fps'] = config['fps']
+    config_dict['training_params']['processor_params']['batch_size'] = config['batch_size']
+    config_dict['training_params']['processor_params']['time_window'] = config['time_window']
+    config_dict['training_params']['training_params']['epochs'] = config["epochs"]
 
-sweep_id = wandb.sweep(sweep_config, project=PROJECT)
+    pipeline(**config_dict)
 
-wandb.agent(sweep_id, function=sweep_train, count=NUM_RUNS)
+if __name__ == '__main__':
+    wandb.login()
+    sweep_id = wandb.sweep(sweep_config, project=PROJECT)
+    wandb.agent(sweep_id, function=train_sweep, count=NUM_RUNS)
