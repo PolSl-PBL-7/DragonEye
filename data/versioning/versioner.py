@@ -78,6 +78,7 @@ class WandbDatasetVersioner(DatasetVersioner):
         run.finish()
         wandb.finish()
 
+
 if __name__ == "__main__":
     import argparse
 

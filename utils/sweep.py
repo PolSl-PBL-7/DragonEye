@@ -30,7 +30,8 @@ sweep_config = {
     }
 }
 
-def train_sweep(config_defaults = None) -> None:
+
+def train_sweep(config_defaults=None) -> None:
     wandb.init()
     config = wandb.config
 
@@ -41,9 +42,9 @@ def train_sweep(config_defaults = None) -> None:
 
     pipeline = pr.get_pipeline_by_type(pr.PipelineType.training_pipeline)
 
-    print(10*'=', 'TEMPLATE', 10*'=')
+    print(10 * '=', 'TEMPLATE', 10 * '=')
     pprint.pprint(config_dict)
-    print(10*'=', 'EOF', 10*'=')
+    print(10 * '=', 'EOF', 10 * '=')
 
     try:
         config_dict['source_params']['fps'] = config['fps']
@@ -56,11 +57,12 @@ def train_sweep(config_defaults = None) -> None:
         config_dict['training_params']['processor_params']['time_window'] = config['time_window']
         config_dict['training_params']['training_params']['epochs'] = config["epochs"]
 
-    print(10*'=', 'RECONFIGURED', 10*'=')
+    print(10 * '=', 'RECONFIGURED', 10 * '=')
     pprint.pprint(config_dict)
-    print(10*'=', 'EOF', 10*'=')
+    print(10 * '=', 'EOF', 10 * '=')
 
     pipeline(**config_dict)
+
 
 if __name__ == '__main__':
     if not path.exists(CONFIG_TEMPLATE_LOCATION):

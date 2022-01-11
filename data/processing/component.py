@@ -73,7 +73,7 @@ class DataProcessing:
             vid = config.source(path)
 
             vid = config.processor(vid) if config.processor else Dataset(vid)
-            
+
             data.append(vid)
 
         # Concatenating single videos to one tf dataset, and saving it with choosen Sink
