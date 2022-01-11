@@ -38,7 +38,7 @@ def train_sweep(config_defaults=None) -> None:
     if path.isfile(CONFIG_TEMPLATE_LOCATION):
         config_dict = Json.load(CONFIG_TEMPLATE_LOCATION)
     else:
-        config_dict = pr.build_config_dict(CONFIG_TEMPLATE_LOCATION)
+        config_dict = pr.build_config_dict(CONFIG_TEMPLATE_LOCATION)['training_params']
 
     pipeline = pr.get_pipeline_by_type(pr.PipelineType.training_pipeline)
 
@@ -46,16 +46,10 @@ def train_sweep(config_defaults=None) -> None:
     pprint.pprint(config_dict)
     print(10 * '=', 'EOF', 10 * '=')
 
-    try:
-        config_dict['source_params']['fps'] = config['fps']
-        config_dict['processor_params']['batch_size'] = config['batch_size']
-        config_dict['processor_params']['time_window'] = config['time_window']
-        config_dict['training_params']['epochs'] = config["epochs"]
-    except KeyError:
-        config_dict['training_params']['source_params']['fps'] = config['fps']
-        config_dict['training_params']['processor_params']['batch_size'] = config['batch_size']
-        config_dict['training_params']['processor_params']['time_window'] = config['time_window']
-        config_dict['training_params']['training_params']['epochs'] = config["epochs"]
+    config_dict['source_params']['fps'] = config['fps']
+    config_dict['processor_params']['batch_size'] = config['batch_size']
+    config_dict['processor_params']['time_window'] = config['time_window']
+    config_dict['training_params']['epochs'] = config["epochs"]
 
     print(10 * '=', 'RECONFIGURED', 10 * '=')
     pprint.pprint(config_dict)
@@ -66,7 +60,7 @@ def train_sweep(config_defaults=None) -> None:
 
 if __name__ == '__main__':
     if not path.exists(CONFIG_TEMPLATE_LOCATION):
-        raise ValueError('given config file does not')
+        raise FileNotFoundError('given config file/directory does not exist')
 
     wandb.login()
     sweep_id = wandb.sweep(sweep_config, project=PROJECT)
