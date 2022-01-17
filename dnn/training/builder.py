@@ -6,6 +6,7 @@ from dnn.training.metrics import metrics
 from dnn.training.optimizers import optimizers
 
 from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoder, SpatioTemporalAutoencoderConfig
+from dnn.models.full_models.itae import ITAE, ITAEConfig
 
 
 class CompileConfig(NamedTuple):
@@ -17,5 +18,11 @@ class CompileConfig(NamedTuple):
 
 
 model_builder = {
-    SpatioTemporalAutoencoder.__name__: SpatioTemporalAutoencoder.create_from_configs
+    SpatioTemporalAutoencoder.__name__: SpatioTemporalAutoencoder.create_from_configs,
+    ITAE.__name__: ITAE.create_from_configs
+}
+
+config_builder = {
+    SpatioTemporalAutoencoder.__name__: SpatioTemporalAutoencoderConfig,
+    ITAE.__name__: ITAEConfig
 }
