@@ -29,20 +29,19 @@ def training_pipeline(
     from datetime import datetime
     import pickle
 
-    with tf.device('/CPU:0'):
-        if data_processing_pipeline_params and versioner_params and processor_params:
-            dataset = data_processing_pipeline(
-                versioner_params=versioner_params,
-                source_params=source_params,
-                processor_params=processor_params,
-                pipeline_params=data_processing_pipeline_params,
-                sink_params=sink_params,
-                source_params_dynamic=source_params_dynamic,
-                processor_params_dynamic=processor_params_dynamic)
-        else:
-            source_config = SourceConfig(**source_params)
-            source = LocalTFDataSource(source_config)
-            dataset = source(pipeline_params['dataset_path'])
+    if data_processing_pipeline_params and versioner_params and processor_params:
+        dataset = data_processing_pipeline(
+            versioner_params=versioner_params,
+            source_params=source_params,
+            processor_params=processor_params,
+            pipeline_params=data_processing_pipeline_params,
+            sink_params=sink_params,
+            source_params_dynamic=source_params_dynamic,
+            processor_params_dynamic=processor_params_dynamic)
+    else:
+        source_config = SourceConfig(**source_params)
+        source = LocalTFDataSource(source_config)
+        dataset = source(pipeline_params['dataset_path'])
 
     # Add labels
     if processor_params_dynamic and source_params_dynamic and pipeline_params['model'] == 'ITAE':
