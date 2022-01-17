@@ -44,5 +44,5 @@ class VideoProcessor:
         vid /= 255.
         vid_windowed_and_batched = tf.keras.utils.timeseries_dataset_from_array(
             vid, None, self.time_window, 1, 1, self.batch_size)
-        vid_windowed_and_batched = vid_windowed_and_batched.unbatch().batch(self.batch_size, drop_remainder = True)
+        vid_windowed_and_batched = vid_windowed_and_batched.unbatch().batch(self.batch_size, drop_remainder=True)
         return vid_windowed_and_batched

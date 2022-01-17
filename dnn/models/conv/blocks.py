@@ -15,16 +15,17 @@ class ConvConfig(NamedTuple):
     activation: Callable
     name: Optional[str] = ""
 
+
 class ItaeEncoderBlock(keras.layers.Layer):
 
-    def __init__(self, dynamic_config: ConvConfig, static_config:ConvConfig):
+    def __init__(self, dynamic_config: ConvConfig, static_config: ConvConfig):
         super(ItaeEncoderBlock, self).__init__()
         dc = dynamic_config
         sc = static_config
-        self.dynamic_conv = Conv3D(dc.n_filters, kernel_size=dc.kernel_sizes, strides = dc.strides, activation=dc.activation, name=dc.name, padding='same')
-        self.static_conv = Conv3D(sc.n_filters, kernel_size=sc.kernel_sizes, strides = sc.strides, activation=sc.activation, name=sc.name, padding='same')
-        self.lateral_connection = Conv3D(dc.n_filters, kernel_size=(dc.kernel_sizes[0],1,1), strides=((17-dc.kernel_sizes[0])//4,1,1), activation=dc.activation, name=dc.name+'_lateral')
-        self.concat = Concatenate(axis = -1, name='Concatenate')
+        self.dynamic_conv = Conv3D(dc.n_filters, kernel_size=dc.kernel_sizes, strides=dc.strides, activation=dc.activation, name=dc.name, padding='same')
+        self.static_conv = Conv3D(sc.n_filters, kernel_size=sc.kernel_sizes, strides=sc.strides, activation=sc.activation, name=sc.name, padding='same')
+        self.lateral_connection = Conv3D(dc.n_filters, kernel_size=(dc.kernel_sizes[0], 1, 1), strides=((17 - dc.kernel_sizes[0]) // 4, 1, 1), activation=dc.activation, name=dc.name + '_lateral')
+        self.concat = Concatenate(axis=-1, name='Concatenate')
 
     def call(self, dynamic_input, static_input):
         dc_out = self.dynamic_conv(dynamic_input)
@@ -32,6 +33,7 @@ class ItaeEncoderBlock(keras.layers.Layer):
         lat_out = self.lateral_connection(dc_out)
         cat = self.concat([sc_out, lat_out])
         return dc_out, cat
+
 
 class ItaeDecoderBlock(keras.layers.Layer):
 

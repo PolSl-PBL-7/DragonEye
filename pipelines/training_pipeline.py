@@ -51,8 +51,8 @@ def training_pipeline(
         dataset = tf.data.Dataset.zip((dataset, dataset))
 
     dataset_size = len([0 for _ in dataset])
-    train_dataset = dataset.take(int(dataset_size*0.8))
-    val_dataset = dataset.skip(int(dataset_size*0.8))
+    train_dataset = dataset.take(int(dataset_size * 0.8))
+    val_dataset = dataset.skip(int(dataset_size * 0.8))
 
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
@@ -82,7 +82,7 @@ def training_pipeline(
 
     training_params['callbacks'] = [callback if not isinstance(callback, str) else get_callback_by_name(callback) for callback in training_params['callbacks']]
 
-    history = model.fit(train_dataset, **training_params, validation_data = val_dataset, shuffle=True)
+    history = model.fit(train_dataset, **training_params, validation_data=val_dataset, shuffle=True)
 
     model_path = str(pipeline_params['model_path'])
     if pipeline_params['add_date_to_model_path']:

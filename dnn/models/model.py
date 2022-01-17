@@ -2,7 +2,7 @@ class Model():
 
     def __init__(self):
         raise NotImplementedError("This class can not be instantiated")
-    
+
     def call(self):
         raise NotImplementedError("This class can not be called")
 
