@@ -1,7 +1,17 @@
 NAME = "prediction_pipeline"
 
 
-def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeline_params, data_processing_pipeline_params=None, versioner_params=None, processor_params=None):
+def prediction_pipeline(
+        source_params,
+        anomaly_score_params,
+        sink_params,
+        pipeline_params,
+        data_processing_pipeline_params=None,
+        versioner_params=None,
+        processor_params=None,
+        source_params_dynamic= None,
+        processor_params_dynamic=None,
+    ):
     from inference import anomaly_score, predictor
     from inference.anomaly_score import AnomalyScore
     from inference import Predictor, PredictorConfig, AnomalyScoreHeuristic, AnomalyScoreConfig
@@ -19,7 +29,9 @@ def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeli
             source_params=source_params,
             processor_params=processor_params,
             pipeline_params=data_processing_pipeline_params,
-            sink_params=None)
+            sink_params=None,
+            source_params_dynamic=source_params_dynamic,
+            processor_params_dynamic=processor_params_dynamic)
     else:
         source_config = SourceConfig(**source_params)
         source = LocalTFDataSource(source_config)

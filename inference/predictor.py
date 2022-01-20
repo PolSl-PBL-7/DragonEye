@@ -26,7 +26,7 @@ class Predictor:
 
         anomaly_scores = None
         for batch in dataset:
-            predictions = self.reconstruction_model.predict(batch)
+            predictions = self.reconstruction_model(batch)
 
             scores = self.anomaly_score(batch, predictions)
             if anomaly_scores:
