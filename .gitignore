@@ -227,3 +227,4 @@ wandb/
 datasets
 
 !scripts/colab_template.ipynb
+!.version.env

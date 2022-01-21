@@ -11,7 +11,7 @@ dataset_path_write = CURDIR / "tests/test_versioner_output"
 def test_loading_file_exists():
     db = WandbDatasetVersioner()
     config = VersioningConfig(
-        type='file', dataset_path=dataset_path_read / '16.avi', dataset_name='test_dataset')
+        type='file', dataset_path=dataset_path_read / '15.avi', dataset_name='test_dataset')
     db.save_dataset(config)
     db = WandbDatasetVersioner()
     config = VersioningConfig(
