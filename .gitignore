@@ -225,3 +225,5 @@ wandb/
 *.DS_Store
 
 datasets
+
+!.version.env

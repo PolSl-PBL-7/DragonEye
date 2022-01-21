@@ -39,10 +39,11 @@ platform:
 
 steps:
 - name: run tests
-  image: python:3.9
+  image: shanduur/dragoneye-ci-base:1.0.0
   commands:
   - make deps test
   environment:
+    SKIP: true
     PIP_EXTRA_INDEX_URL: https://snapshots.linaro.org/ldcg/python-cache/
     WANDB_API_KEY:
       from_secret: WANDB_API_KEY
