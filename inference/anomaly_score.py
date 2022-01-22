@@ -6,12 +6,12 @@ import tensorflow as tf
 
 def mse_standarized(input, output):
     abnormality_scores = tf.math.sqrt(tf.math.reduce_sum(
-        tf.math.square(input - output), axis=(1, 2, 3, 4)))
+        tf.math.square(input - output), axis=(2, 3, 4)))
     minimum, maximum = tf.math.reduce_min(
         abnormality_scores), tf.math.reduce_max(abnormality_scores)
     abnormality_scores = tf.math.divide(
         tf.math.subtract(abnormality_scores, minimum), maximum)
-    return tf.reshape(abnormality_scores, (*abnormality_scores.shape, 1))
+    return abnormality_scores
 
 
 def peak_signal_noise_ratio(input, output):
@@ -19,7 +19,7 @@ def peak_signal_noise_ratio(input, output):
         tf.math.reduce_sum(
             tf.math.square(
                 input - output),
-            axis=(1, 2, 3, 4)
+            axis=(2, 3, 4)
         )
     )
     maximum = tf.math.reduce_max(mse)
@@ -29,12 +29,14 @@ def peak_signal_noise_ratio(input, output):
             mse
         )
     )
-    return tf.reshape(abnormality_scores, (*abnormality_scores.shape, 1))
+    return abnormality_scores
 
 
 heuristics = {
     'mse': mse_standarized,
-    'psnr': peak_signal_noise_ratio
+    'mean squared error': mse_standarized,
+    'psnr': peak_signal_noise_ratio,
+    'peak signal noise ratio': peak_signal_noise_ratio
 }
 
 

@@ -1,10 +1,10 @@
 from typing import NamedTuple
 from abc import ABC, abstractmethod
+
 from inference import anomaly_score
-
 from inference.anomaly_score import AnomalyScore, AnomalyScoreHeuristic, AnomalyScoreConfig
+from utils.report_utils import get_stochastic_dataset
 import tensorflow as tf
-
 
 class PredictorConfig(NamedTuple):
     reconstruction_model: tf.keras.Model
@@ -25,14 +25,19 @@ class Predictor:
     def __call__(self, dataset):
 
         anomaly_scores = None
+        predictions = None
+        dataset = get_stochastic_dataset(dataset)
         for batch in dataset:
-            predictions = self.reconstruction_model.predict(batch)
+            batch_predictions = self.reconstruction_model.predict(batch)
 
-            scores = self.anomaly_score(batch, predictions)
-            if anomaly_scores:
+            scores = self.anomaly_score(batch, batch_predictions)
+            if anomaly_scores and predictions:
                 anomaly_scores = anomaly_scores.concatenate(
                     tf.data.Dataset.from_tensor_slices(scores))
+                predictions = predictions.concatenate(
+                    tf.data.Dataset.from_tensor_slices(batch_predictions))
             else:
                 anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
+                predictions = tf.data.Dataset.from_tensor_slices(batch_predictions)
 
-        return anomaly_scores
+        return anomaly_scores.map(lambda x: {self.anomaly_score.config.metrics[i]: x[:,i] for i in range(x.shape[-1])}), predictions

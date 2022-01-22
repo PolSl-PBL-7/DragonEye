@@ -1,7 +1,7 @@
 NAME = "prediction_pipeline"
 
 
-def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeline_params, data_processing_pipeline_params=None, versioner_params=None, processor_params=None):
+def prediction_pipeline(source_params, anomaly_score_params, pipeline_params, sink_params = None, data_processing_pipeline_params=None, versioner_params=None, processor_params=None):
     from inference import anomaly_score, predictor
     from inference.anomaly_score import AnomalyScore
     from inference import Predictor, PredictorConfig, AnomalyScoreHeuristic, AnomalyScoreConfig
@@ -35,10 +35,12 @@ def prediction_pipeline(source_params, anomaly_score_params, sink_params, pipeli
     predictor = Predictor(predictor_config)
 
     # get anomaly scores
-    scores = predictor(dataset=dataset)
+    scores, predictions = predictor(dataset=dataset)
 
     # save predictions as tf dataset file
-    sink_config = SinkConfig(**sink_params)
-    sink = LocalTFDatasetSink(sink_config)
-    sink(scores)
-    return scores
+    if sink_params:
+        sink_config = SinkConfig(**sink_params)
+        sink = LocalTFDatasetSink(sink_config)
+        sink(scores)
+
+    return dataset, predictions, scores
