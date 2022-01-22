@@ -6,6 +6,7 @@ from inference.anomaly_score import AnomalyScore, AnomalyScoreHeuristic, Anomaly
 from utils.report_utils import get_stochastic_dataset
 import tensorflow as tf
 
+
 class PredictorConfig(NamedTuple):
     reconstruction_model: tf.keras.Model
     anomaly_score: AnomalyScore
@@ -40,4 +41,4 @@ class Predictor:
                 anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
                 predictions = tf.data.Dataset.from_tensor_slices(batch_predictions)
 
-        return anomaly_scores.map(lambda x: {self.anomaly_score.config.metrics[i]: x[:,i] for i in range(x.shape[-1])}), predictions
+        return anomaly_scores.map(lambda x: {self.anomaly_score.config.metrics[i]: x[:, i] for i in range(x.shape[-1])}), predictions

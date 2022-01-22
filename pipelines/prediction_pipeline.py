@@ -1,7 +1,7 @@
 NAME = "prediction_pipeline"
 
 
-def prediction_pipeline(source_params, anomaly_score_params, pipeline_params, sink_params = None, data_processing_pipeline_params=None, versioner_params=None, processor_params=None):
+def prediction_pipeline(source_params, anomaly_score_params, pipeline_params, sink_params=None, data_processing_pipeline_params=None, versioner_params=None, processor_params=None):
     from inference import anomaly_score, predictor
     from inference.anomaly_score import AnomalyScore
     from inference import Predictor, PredictorConfig, AnomalyScoreHeuristic, AnomalyScoreConfig

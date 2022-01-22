@@ -10,10 +10,10 @@ def plot_input_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Input frame")
-        return kwargs['ax'].imshow(kwargs['frame'][0,-1,:,:,:]), kwargs['frame'][0,-1,:,:,:]
+        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :]), kwargs['frame'][0, -1, :, :, :]
     else:
-        kwargs['plot'].set_array(kwargs['frame'][0,-1,:,:,:])
-        return kwargs['plot'], kwargs['frame'][0,-1,:,:,:]
+        kwargs['plot'].set_array(kwargs['frame'][0, -1, :, :, :])
+        return kwargs['plot'], kwargs['frame'][0, -1, :, :, :]
 
 
 def plot_predicted_frame(**kwargs):
@@ -24,10 +24,10 @@ def plot_predicted_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Predicted frame")
-        return kwargs['ax'].imshow(kwargs['pred'][0,-1,:,:,:]), kwargs['pred'][0,-1,:,:,:]
+        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :]), kwargs['pred'][0, -1, :, :, :]
     else:
-        kwargs['plot'].set_array(kwargs['pred'][0,-1,:,:,:])
-        return kwargs['plot'], kwargs['pred'][0,-1,:,:,:]
+        kwargs['plot'].set_array(kwargs['pred'][0, -1, :, :, :])
+        return kwargs['plot'], kwargs['pred'][0, -1, :, :, :]
 
 
 metric_names = {
@@ -43,7 +43,7 @@ def plot_anomaly_metric(**kwargs):
 
     Returns:
         plt.lines.Line2D: plot history
-    """    
+    """
     metric = kwargs['plot_name']
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title(f'{metric_names[metric]} anomaly score')
@@ -58,6 +58,7 @@ def plot_anomaly_metric(**kwargs):
         y.append(kwargs['score'][metric][0])
         kwargs['plot'].set_data(x, y)
         return kwargs['plot'], [x, y]
+
 
 plotter = {
     "mse": plot_anomaly_metric,
