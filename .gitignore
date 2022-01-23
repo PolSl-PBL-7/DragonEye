@@ -225,3 +225,6 @@ wandb/
 *.DS_Store
 
 datasets
+
+!scripts/colab_template.ipynb
+!.version.env
