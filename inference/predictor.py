@@ -28,7 +28,7 @@ class Predictor:
         predictions = tf.data.Dataset.from_tensors(self.reconstruction_model.predict(dataset)).unbatch()
         try:
             dataset = dataset.map(lambda x: x['Input_Dynamic'])
-        except:
+        except Exception:
             print("X is not of type <<class dict>>")
 
         batch_size = [batch.shape[0] for batch in dataset.take(1)][0]
