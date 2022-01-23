@@ -23,7 +23,7 @@ def prediction_pipeline(
         # get reconstruction model
         try:
             model = tf.keras.models.load_model(str(f"{pipeline_params['model_path']}\model"))
-        except:
+        except Exception:
             model = tf.keras.models.load_model(str(f"{pipeline_params['model_path']}\model"), compile=False)
             model.compile(loss='mse', optimizer='adam')
         # get dataset
