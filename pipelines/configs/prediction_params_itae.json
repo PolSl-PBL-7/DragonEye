@@ -1,25 +1,25 @@
 {
     "pipeline_params": {
-       "model_path": "experiments/models/avenue/ITAE/01-17-2022-21-53-03",
+       "model_path": "experiments/models/fm/ITAE/01-23-2022-15-56-30",
        "dataset_path": ""
         },
 
     "sink_params": {
-        "path": "experiments/predictions/avenue_dataset/testing"
+        "path": "experiments/predictions/fm_dataset/testing"
         },
     "anomaly_score_params": {
         "metrics": ["mse", "psnr"]
         },
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/avenue-dataset/testing_videos",
+        "input": "experiments/datasets/fm-dataset/testing",
         "video_extentions": ["mp4", "avi", "mov"]
         },
     "versioner_params": {
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "avenue-dataset",
-        "dataset_path": "experiments/datasets/avenue-dataset"
+        "dataset_name": "fm-dataset",
+        "dataset_path": "experiments/datasets/fm-dataset"
         },
     "source_params" : {
         "batch_size": 4,

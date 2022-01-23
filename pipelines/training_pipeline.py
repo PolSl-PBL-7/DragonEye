@@ -19,6 +19,8 @@ def training_pipeline(
     from dnn.training.builder import CompileConfig, model_builder, config_builder
     from data import LocalTFDataSource, SourceConfig
     from pipelines.data_processing_pipeline import data_processing_pipeline
+    from dnn.training.losses import losses
+    from dnn.training.metrics import metrics
 
     import tensorflow as tf
 
@@ -72,6 +74,7 @@ def training_pipeline(
         model_config=model_config,
         compile_config=compile_config
     )
+    print("model created")
 
     for callback in training_params['callbacks']:
         if callback == CallbackName.wandb_training_loss.value:

@@ -25,10 +25,18 @@ class Predictor:
     def __call__(self, dataset):
 
         anomaly_scores = None
-        for batch in dataset:
-            predictions = self.reconstruction_model(batch)
+        predictions = tf.data.Dataset.from_tensors(self.reconstruction_model.predict(dataset)).unbatch()
+        try:
+            dataset = dataset.map(lambda x: x['Input_Dynamic'])
+        except:
+            print("X is not of type <<class dict>>")
 
-            scores = self.anomaly_score(batch, predictions)
+        batch_size = [batch.shape[0] for batch in dataset.take(1)][0]
+        predictions.batch(batch_size)
+
+        for batch, pred in tf.data.Dataset.zip((dataset, predictions)):
+
+            scores = self.anomaly_score(batch, pred)
             if anomaly_scores:
                 anomaly_scores = anomaly_scores.concatenate(
                     tf.data.Dataset.from_tensor_slices(scores))
