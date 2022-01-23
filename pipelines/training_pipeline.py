@@ -29,14 +29,16 @@ def training_pipeline(
     import pickle
 
     with tf.device('/CPU:0'):
-        if data_processing_pipeline_params and versioner_params and processor_params:
+        if pipeline_params['dataset_path'] == "":
+            print("Preprocessing dataset ...")
             dataset = data_processing_pipeline(
                 versioner_params=versioner_params,
                 source_params=source_params,
                 processor_params=processor_params,
                 pipeline_params=data_processing_pipeline_params,
-                sink_params=sink_params)
+                sink_params=None)
         else:
+            print("Creating dataset from local tf data source ...")
             source_config = SourceConfig(**source_params)
             source = LocalTFDataSource(source_config)
             dataset = source(pipeline_params['dataset_path'])
