@@ -34,10 +34,11 @@ class VideoReport(Report):
         super().__init__(config)
 
     def __call__(self, dataset: Dataset, predictions: Dataset, scores: Dataset) -> None:
-
+        
         dataset = get_stochastic_dataset(dataset)
         predictions = get_stochastic_dataset(predictions)
         scores = get_stochastic_dataset(scores, force=True)
+
         data = iter(tf.data.Dataset.zip((dataset, predictions, scores)))
 
         m, n = get_figure_subplot_shape(len(self.config.plots))
@@ -48,6 +49,7 @@ class VideoReport(Report):
         axes = axes.flatten()
 
         dataset_size = get_dataset_len(dataset)
+        self.i = 0
 
         def animation_init():
             frame, pred, score = next(data)

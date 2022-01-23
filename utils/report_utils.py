@@ -27,10 +27,7 @@ def get_figure_subplot_shape(n_plots: int):
 
 
 def get_dataset_len(dataset):
-    i = 0
-    for batch in dataset:
-        i += 1
-    return i
+    return len([0 for _ in dataset])
 
 
 def min_max_scores(scores):

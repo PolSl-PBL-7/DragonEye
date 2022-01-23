@@ -2,10 +2,9 @@
     "pipeline_params" : {
         "dataset_path": "",
         "shuffle_dataset": true,
-        "model_type": "reconstruction",
         "model": "SpatioTemporalAutoencoder",
         "add_date_to_model_path": true,
-        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder",
+        "model_path": "experiments/models/avenue/SpatioTemporalAutoencoder",
         "project": "trainings",
         "entity": "polsl-pbl-7",
         "magic": true
@@ -19,50 +18,28 @@
         "metric_list": ["mae", "msle", "mape"]
         },
 
-    "model_params" : {
-        "filter_sizes_encoder": [11, 5],
-        "strides_encoder": [4, 2],
-        "n_filters_encoder": [128, 64],
-        "dropout_encoder": 0,
-        "add_batchnorm_encoder": false,
-        "filter_sizes_bottleneck": [3, 3, 3],
-        "n_filters_bottleneck": [64, 32, 64],
-        "strides_bottleneck": [1, 1, 1],
-        "dropout_bottleneck": 0,
-        "recurrent_dropout": 0,
-        "bottleneck_layers": 2,
-        "filter_sizes_decoder": [5, 11],
-        "n_filters_decoder": [128, 3],
-        "strides_decoder": [2, 4],
-        "dropout_decoder": 0,
-        "add_batchnorm_decoder": false
-        },
+    "model_params" : {},
     
     "training_params" : {
             "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 10
+            "epochs": 50
         },
     
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/fm-dataset/training",
+        "input": "experiments/datasets/avenue-dataset/training_videos",
         "video_extentions": ["mp4", "avi", "mov"]
         },
 
     "source_params" : {
-        "batch_size": 4,
-        "fps": 5
+        "fps": 3
         },
 
     "versioner_params": {
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "fm-dataset",
-        "dataset_path": "experiments/datasets/fm-dataset",
-        "type": "folder",
-        "tag": "latest",
-        "artifact_type": "dataset",
-        "experiment_name": "test"
+        "dataset_name": "avenue-dataset",
+        "dataset_path": "experiments/datasets/avenue-dataset"
         },
 
     "processor_params": {
