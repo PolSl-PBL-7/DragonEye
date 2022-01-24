@@ -27,7 +27,6 @@ class Predictor:
 
         anomaly_scores = None
         predictions = None
-        dataset = get_stochastic_dataset(dataset)
         for batch in dataset:
             batch_predictions = self.reconstruction_model.predict(batch)
 
