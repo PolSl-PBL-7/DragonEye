@@ -3,7 +3,8 @@ ignore =
     E501,
     F401,
     F811,
-    W605
+    W605,
+    C901
 exclude = 
     .git,
     __pycache__,

@@ -11,13 +11,16 @@ def training_pipeline(
     dict = None,
     versioner_params: dict = None,
     processor_params: dict = None,
-    sink_params: dict = None
+    sink_params: dict = None,
+    source_params_dynamic: dict = None,
+    processor_params_dynamic: dict = None,
 ):
 
-    from dnn.training.builder import CompileConfig, model_builder
-    from dnn.models.full_models.spatiotemporal_autoencoder import SpatioTemporalAutoencoderConfig, SpatioTemporalAutoencoder
+    from dnn.training.builder import CompileConfig, model_builder, config_builder
     from data import LocalTFDataSource, SourceConfig
     from pipelines.data_processing_pipeline import data_processing_pipeline
+    from dnn.training.losses import losses
+    from dnn.training.metrics import metrics
 
     import tensorflow as tf
 
@@ -28,18 +31,29 @@ def training_pipeline(
     from datetime import datetime
     import pickle
 
-    with tf.device('/CPU:0'):
-        if data_processing_pipeline_params and versioner_params and processor_params:
-            dataset = data_processing_pipeline(
-                versioner_params=versioner_params,
-                source_params=source_params,
-                processor_params=processor_params,
-                pipeline_params=data_processing_pipeline_params,
-                sink_params=sink_params)
-        else:
-            source_config = SourceConfig(**source_params)
-            source = LocalTFDataSource(source_config)
-            dataset = source(pipeline_params['dataset_path'])
+    if data_processing_pipeline_params and versioner_params and processor_params:
+        dataset = data_processing_pipeline(
+            versioner_params=versioner_params,
+            source_params=source_params,
+            processor_params=processor_params,
+            pipeline_params=data_processing_pipeline_params,
+            sink_params=sink_params,
+            source_params_dynamic=source_params_dynamic,
+            processor_params_dynamic=processor_params_dynamic)
+    else:
+        source_config = SourceConfig(**source_params)
+        source = LocalTFDataSource(source_config)
+        dataset = source(pipeline_params['dataset_path'])
+
+    # Add labels
+    if processor_params_dynamic and source_params_dynamic and pipeline_params['model'] == 'ITAE':
+        dataset = dataset.map(lambda x: (x, x['Input_Dynamic']))
+    else:
+        dataset = tf.data.Dataset.zip((dataset, dataset))
+
+    dataset_size = len([0 for _ in dataset])
+    train_dataset = dataset.take(int(dataset_size * 0.8))
+    val_dataset = dataset.skip(int(dataset_size * 0.8))
 
     gpus = tf.config.list_physical_devices('GPU')
     if gpus:
@@ -54,17 +68,13 @@ def training_pipeline(
             # Memory growth must be set before GPUs have been initialized
             print(e)
 
-    dataset = tf.data.Dataset.zip((dataset, dataset))
-    dataset_size = len([0 for _ in dataset])
-    train_dataset = dataset.take(int(dataset_size * 0.8))
-    val_dataset = dataset.skip(int(dataset_size * 0.8))
-
     compile_config = CompileConfig(**compile_params)
-    model_config = SpatioTemporalAutoencoderConfig(**model_params)
+    model_config = config_builder[pipeline_params['model']](**model_params)
     model = model_builder[pipeline_params['model']](
         model_config=model_config,
         compile_config=compile_config
     )
+    print("model created")
 
     for callback in training_params['callbacks']:
         if callback == CallbackName.wandb_training_loss.value:
@@ -73,6 +83,11 @@ def training_pipeline(
                        magic=pipeline_params['magic'])
 
     training_params['callbacks'] = [callback if not isinstance(callback, str) else get_callback_by_name(callback) for callback in training_params['callbacks']]
+    # training_params['callbacks'].append(
+    #     tf.keras.callbacks.EarlyStopping(
+    #         monitor="val_loss",
+    #         patience=3,
+    #         ))
 
     history = model.fit(train_dataset, **training_params, validation_data=val_dataset, shuffle=True)
 
@@ -83,6 +98,6 @@ def training_pipeline(
     if pipeline_params['model_path']:
         model.save(model_path + '/model')
         with open(model_path + '/history', 'wb') as f:
-            pickle.dump(history, f)
+            pickle.dump(history.history, f)
 
     return model, history
