@@ -26,6 +26,7 @@ class Predictor:
     def __call__(self, dataset):
 
         anomaly_scores = None
+        print("get predictions")
         predictions = tf.data.Dataset.from_tensors(self.reconstruction_model.predict(dataset))
         try:
             dataset = dataset.map(lambda x: x['Input_Dynamic'])
@@ -35,13 +36,14 @@ class Predictor:
         batch_size = [batch.shape[0] for batch in dataset.take(1)][0]
         predictions = predictions.unbatch().batch(batch_size)
 
-        # anomaly_scores = tf.data.Dataset.zip((dataset, predictions)).map(self.anomaly_score)
-        for batch, pred in tf.data.Dataset.zip((dataset, predictions)):
-            scores = self.anomaly_score(batch, pred)
-            if anomaly_scores:
-                anomaly_scores = anomaly_scores.concatenate(
-                    tf.data.Dataset.from_tensor_slices(scores))
-            else:
-                anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
+        print("calculate scores")
+        anomaly_scores = tf.data.Dataset.zip((dataset, predictions)).map(lambda x,y : self.anomaly_score(x, y))
+        # for batch, pred in tf.data.Dataset.zip((dataset, predictions)):
+        #     scores = self.anomaly_score(batch, pred)
+        #     if anomaly_scores:
+        #         anomaly_scores = anomaly_scores.concatenate(
+        #             tf.data.Dataset.from_tensor_slices(scores))
+        #     else:
+        #         anomaly_scores = tf.data.Dataset.from_tensor_slices(scores)
 
-        return dataset, predictions, anomaly_scores.map(lambda x: {self.anomaly_score.config.metrics[i]: x[:, i] for i in range(x.shape[-1])})
+        return dataset, predictions, anomaly_scores.map(lambda x: {self.anomaly_score.config.metrics[i]: x[:, i] for i in range(x.shape[1])})

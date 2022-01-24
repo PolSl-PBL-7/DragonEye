@@ -62,4 +62,5 @@ class AnomalyScoreHeuristic(AnomalyScore):
         self.config = config
 
     def __call__(self, input, output):
-        return tf.transpose([heuristics[m](input, output) for m in self.config.metrics])
+        metrics = tf.transpose([heuristics[m](input, output) for m in self.config.metrics])
+        return tf.reshape(metrics, (-1, metrics.shape[-1]))

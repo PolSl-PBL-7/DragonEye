@@ -22,7 +22,7 @@
     
     "training_params" : {
             "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 100
+            "epochs": 10
         },
     
     "data_processing_pipeline_params": {

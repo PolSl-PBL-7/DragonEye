@@ -50,7 +50,6 @@ class VideoReport(Report):
         dataset = get_stochastic_dataset(dataset)
         predictions = get_stochastic_dataset(predictions)
         scores = get_stochastic_dataset(scores, force=True)
-
         data = iter(tf.data.Dataset.zip((dataset, predictions, scores)))
 
         m, n = get_figure_subplot_shape(len(self.config.plots))
