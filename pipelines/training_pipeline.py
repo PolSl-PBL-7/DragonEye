@@ -83,6 +83,11 @@ def training_pipeline(
                        magic=pipeline_params['magic'])
 
     training_params['callbacks'] = [callback if not isinstance(callback, str) else get_callback_by_name(callback) for callback in training_params['callbacks']]
+    # training_params['callbacks'].append(
+    #     tf.keras.callbacks.EarlyStopping(
+    #         monitor="val_loss",
+    #         patience=3,
+    #         ))
 
     history = model.fit(train_dataset, **training_params, validation_data=val_dataset, shuffle=True)
 

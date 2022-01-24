@@ -75,8 +75,6 @@ def data_processing_pipeline(
 
             dataset = tf.data.Dataset.zip((static_dataset, dynamic_dataset)).map(lambda s, d: {"Input_Static": s, "Input_Dynamic": d})
             print('finished job "create ITAE dataset"')
-            for batch in dataset.take(1):
-                print("Static: ", batch["Input_Static"].shape, "Dynamic: ", batch["Input_Dynamic"].shape)
         else:
             # create normal dataset
             print('starting job "create dataset"')
@@ -98,5 +96,4 @@ def data_processing_pipeline(
             data_processing = DataProcessing()
             dataset = data_processing(config=data_processing_config)
             print('finished job "create dataset"')
-
     return dataset
