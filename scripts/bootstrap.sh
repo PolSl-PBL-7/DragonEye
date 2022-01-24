@@ -15,16 +15,16 @@ if [[ "${SKIP}" == "false" ]]; then
     # update repositories
     $SUDO apt-get update -y
 
-    python3 -m pip --version || sudo apt-get install -y python3-pip
+    # python3 -m pip --version || sudo apt-get install -y python3-pip
 
-    if [[ "$(python3 --version)" != *"3.9."* ]]
-    then
-        sudo apt-get install -y python3.9
-        PYTHON3=$(which python3)
-        PYTHON39=$(which python3.9)
-        mv $PYTHON3 $PYTHON3.bak
-        mv $PYTHON39 $PYTHON3
-    fi
+    # if [[ "$(python3 --version)" != *"3.9."* ]]
+    # then
+    #     sudo apt-get install -y python3.9
+    #     PYTHON3=$(which python3)
+    #     PYTHON39=$(which python3.9)
+    #     mv $PYTHON3 $PYTHON3.bak
+    #     mv $PYTHON39 $PYTHON3
+    # fi
 
     # install all dependencies
     cat debian.depends | $SUDO xargs apt-get install -y --no-install-recommends
@@ -33,7 +33,7 @@ if [[ "${SKIP}" == "false" ]]; then
     # any repository by default
     sh -c ./scripts/install-non-depends.sh
 
-    python3 ./scripts/bootstrap.py
+    # python3 ./scripts/bootstrap.py
 fi
 
 python3 -m pip install -r ./requirements.txt
