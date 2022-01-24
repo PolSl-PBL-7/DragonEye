@@ -3,10 +3,11 @@ from abc import ABC, abstractmethod
 
 import tensorflow as tf
 
-def mse_standarized(input, output):
+def mse(input, output):
     input = input[:,-1,:,:,:]
     output = output[:,-1,:,:,:]
-    abnormality_scores = tf.math.reduce_sum(tf.math.abs(input - output), axis=(1,2,3))/(input.shape[1]*input.shape[2]*input.shape[3])
+    mae = tf.math.abs(input - output)
+    abnormality_scores = tf.math.reduce_sum(mae, axis=(1,2,3))/(input.shape[1]*input.shape[2]*input.shape[3])
     return tf.reshape(abnormality_scores, (abnormality_scores.shape[0], 1))
 
 
@@ -31,8 +32,8 @@ def peak_signal_noise_ratio(input, output):
 
 
 heuristics = {
-    'mse': mse_standarized,
-    'mean squared error': mse_standarized,
+    'mse': mse,
+    'mean squared error': mse,
     'psnr': peak_signal_noise_ratio,
     'peak signal noise ratio': peak_signal_noise_ratio
 }

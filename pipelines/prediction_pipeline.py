@@ -51,10 +51,7 @@ def prediction_pipeline(
         predictor = Predictor(predictor_config)
 
         # get anomaly scores
-        scores = predictor(dataset=dataset)
-
-    # get anomaly scores
-    scores, predictions = predictor(dataset=dataset)
+        dataset, predictions, scores = predictor(dataset=dataset)
 
     # save predictions as tf dataset file
     if sink_params:
