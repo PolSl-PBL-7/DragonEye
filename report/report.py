@@ -9,6 +9,8 @@ import matplotlib.animation as animation
 import tensorflow as tf
 import os
 
+import numpy as np
+
 
 class ReportConfig(NamedTuple):
     name: str
@@ -33,8 +35,18 @@ class VideoReport(Report):
     def __init__(self, config: ReportConfig):
         super().__init__(config)
 
+    def _get_levels(self, signal):
+
+        third_quartile = np.quantile(signal, .9)
+        first_quartile = np.quantile(signal, .1)
+        median = np.quantile(signal, 0.5)
+        IQR = third_quartile - first_quartile
+        top_error_margin = third_quartile + 1.5 * IQR 
+
+        return {"lower": first_quartile, "median": median, "upper": third_quartile, "top_error_margin": top_error_margin}
+
     def __call__(self, dataset: Dataset, predictions: Dataset, scores: Dataset) -> None:
-        
+
         dataset = get_stochastic_dataset(dataset)
         predictions = get_stochastic_dataset(predictions)
         scores = get_stochastic_dataset(scores, force=True)
