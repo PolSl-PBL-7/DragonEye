@@ -2,9 +2,9 @@
     "pipeline_params" : {
         "dataset_path": "",
         "shuffle_dataset": true,
-        "model": "SpatioTemporalAutoencoder",
+        "model": "ITAE",
         "add_date_to_model_path": true,
-        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder",
+        "model_path": "experiments/models/avenue/ITAE",
         "project": "trainings",
         "entity": "polsl-pbl-7",
         "magic": true
@@ -26,26 +26,37 @@
         },
     
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/fm-dataset/training",
+        "input": "experiments/datasets/avenue-dataset/training_videos",
         "video_extentions": ["mp4", "avi", "mov"]
-        },
-
-    "source_params" : {
-        "batch_size": 4,
-        "fps": 5
         },
 
     "versioner_params": {
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "fm-dataset",
-        "dataset_path": "experiments/datasets/fm-dataset"
+        "dataset_name": "avenue-dataset",
+        "dataset_path": "experiments/datasets/avenue-dataset"
+        },
+
+    "source_params" : {
+        "batch_size": 4,
+        "fps": 5
+        },
+        
+    "source_params_dynamic" : {
+        "batch_size": 4,
+        "fps": 20
         },
 
     "processor_params": {
-        "shape": [227,227],
-        "time_window": 5,
-        "batch_size": 8
+        "shape": [256,256],
+        "time_window": 4,
+        "batch_size": 4
+        },
+
+    "processor_params_dynamic": {
+        "shape": [256,256],
+        "time_window": 16,
+        "batch_size": 4
         }
     }

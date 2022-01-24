@@ -2,9 +2,9 @@
     "pipeline_params" : {
         "dataset_path": "",
         "shuffle_dataset": true,
-        "model": "SpatioTemporalAutoencoder",
+        "model": "ITAE",
         "add_date_to_model_path": true,
-        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder",
+        "model_path": "experiments/models/fm/ITAE",
         "project": "trainings",
         "entity": "polsl-pbl-7",
         "magic": true
@@ -12,27 +12,22 @@
 
     "compile_params" : {
         "optimizer_params": {},
-        "loss_params": {},
-        "loss": "mse",
+        "loss_params": {"weighted_mse_params": {}, "gradient_params": {}},
+        "loss": "gradient_mse",
         "optimizer": "adam",
-        "metric_list": ["mae", "msle", "mape"]
+        "metric_list": ["mae", "mape"]
         },
 
     "model_params" : {},
     
     "training_params" : {
             "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 10
+            "epochs": 100
         },
     
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/fm-dataset/training",
+        "input": "experiments/datasets/fm-dataset/testing",
         "video_extentions": ["mp4", "avi", "mov"]
-        },
-
-    "source_params" : {
-        "batch_size": 4,
-        "fps": 5
         },
 
     "versioner_params": {
@@ -43,9 +38,23 @@
         "dataset_path": "experiments/datasets/fm-dataset"
         },
 
+    "source_params" : {
+        "fps": 4
+        },
+        
+    "source_params_dynamic" : {
+        "fps": 16
+        },
+
     "processor_params": {
-        "shape": [227,227],
-        "time_window": 5,
-        "batch_size": 8
+        "shape": [256,256],
+        "time_window": 4,
+        "batch_size": 4
+        },
+
+    "processor_params_dynamic": {
+        "shape": [256,256],
+        "time_window": 16,
+        "batch_size": 4
         }
     }

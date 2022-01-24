@@ -3,6 +3,7 @@ from typing import Sequence, Callable, NamedTuple, Tuple, Optional
 import tensorflow as tf
 
 from dnn.models.conv.blocks import ChongTayEncoder, ChongTayConvLstmBottleneckBlock, ChongTayDecoder
+from dnn.models.model import Model
 
 # TODO: change config name, add __init__
 
@@ -31,7 +32,7 @@ class SpatioTemporalAutoencoderConfig(NamedTuple):
     activation: Callable = tf.nn.relu
 
 
-class SpatioTemporalAutoencoder(tf.keras.Model):
+class SpatioTemporalAutoencoder(tf.keras.Model, Model):
     def __init__(self, config: SpatioTemporalAutoencoderConfig):
         super(SpatioTemporalAutoencoder, self).__init__()
         self.model = tf.keras.Sequential()
@@ -63,17 +64,3 @@ class SpatioTemporalAutoencoder(tf.keras.Model):
 
     def call(self, input):
         return self.model(input)
-
-    @classmethod
-    def create_from_configs(cls, model_config, compile_config):
-        from dnn.training.losses import losses
-        from dnn.training.metrics import metrics
-        from dnn.training.optimizers import optimizers
-
-        model = cls(model_config)
-        model.compile(
-            loss=losses[compile_config.loss](**compile_config.loss_params),
-            optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
-            metrics=[metrics[key] for key in compile_config.metric_list]
-        )
-        return model
