@@ -87,7 +87,7 @@ def training_pipeline(
         tf.keras.callbacks.EarlyStopping(
             monitor="val_loss",
             patience=3,
-            ))
+        ))
 
     history = model.fit(train_dataset, **training_params, validation_data=val_dataset, shuffle=True)
 

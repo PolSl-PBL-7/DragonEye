@@ -37,7 +37,7 @@ class Predictor:
         predictions = predictions.unbatch().batch(batch_size)
 
         print("calculate scores")
-        anomaly_scores = tf.data.Dataset.zip((dataset, predictions)).map(lambda x,y : self.anomaly_score(x, y))
+        anomaly_scores = tf.data.Dataset.zip((dataset, predictions)).map(lambda x, y: self.anomaly_score(x, y))
         # for batch, pred in tf.data.Dataset.zip((dataset, predictions)):
         #     scores = self.anomaly_score(batch, pred)
         #     if anomaly_scores:

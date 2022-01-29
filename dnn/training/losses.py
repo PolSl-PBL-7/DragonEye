@@ -58,9 +58,11 @@ class GradientMSE(tf.keras.losses.Loss):
         super(GradientMSE, self).__init__(reduction='none')
         self.mse = MeanSquaredError(**mse_params)
         self.gradient = GradientLoss(**gradient_params)
+
     def call(self, y_true, y_pred):
         return tf.math.reduce_sum([self.mse(y_true, y_pred), self.gradient(y_true, y_pred)])
-    
+
+
 losses = {
     'mse': MeanSquaredError,
     "gradient_loss": GradientLoss,

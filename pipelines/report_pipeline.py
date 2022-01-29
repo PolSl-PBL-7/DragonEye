@@ -7,7 +7,6 @@ def report_pipeline(pipeline_params, video_report_params, prediction_params):
     from datetime import datetime
     import tensorflow as tf
 
-
     print("starting job prediction pipeline")
     dataset, predictions, scores = prediction_pipeline(**prediction_params)
     print("finished job prediction pipeline")

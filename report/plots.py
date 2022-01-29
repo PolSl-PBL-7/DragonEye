@@ -10,7 +10,7 @@ def plot_input_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Input frame")
-        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap = 'grey'), kwargs['frame'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap='grey'), kwargs['frame'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['frame'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['frame'][0, -1, :, :, :]
@@ -24,7 +24,7 @@ def plot_predicted_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Predicted frame")
-        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap = 'grey'), kwargs['pred'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap='grey'), kwargs['pred'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['pred'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['pred'][0, -1, :, :, :]
@@ -51,7 +51,7 @@ def plot_anomaly_metric(**kwargs):
         kwargs['ax'].set_ylabel(metric)
         kwargs['ax'].set_xlim(0, kwargs['data_size'])
         kwargs['ax'].set_ylim(0, kwargs['max_score'])
-        return kwargs['ax'].plot([], [], label = metric_names[metric])[0], [[], []]
+        return kwargs['ax'].plot([], [], label=metric_names[metric])[0], [[], []]
     else:
         x, y = kwargs['history']
         x.append(len(x))

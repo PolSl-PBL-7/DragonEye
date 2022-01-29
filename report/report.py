@@ -41,7 +41,7 @@ class VideoReport(Report):
         first_quartile = np.quantile(signal, .1)
         median = np.quantile(signal, 0.5)
         IQR = third_quartile - first_quartile
-        top_error_margin = third_quartile + 1.5 * IQR 
+        top_error_margin = third_quartile + 1.5 * IQR
 
         return {"lower": first_quartile, "median": median, "upper": third_quartile, "top_error_margin": top_error_margin}
 

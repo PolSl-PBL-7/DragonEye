@@ -19,7 +19,6 @@ def prediction_pipeline(
     from pipelines.data_processing_pipeline import data_processing_pipeline
     import tensorflow as tf
 
-    
     # get reconstruction model
     try:
         model = tf.keras.models.load_model(str(f"{pipeline_params['model_path']}\model"))
