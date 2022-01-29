@@ -21,7 +21,7 @@
     "model_params" : {},
     
     "training_params" : {
-            "callbacks": ["wandb_training_loss_callback"],
+            "callbacks": ["wandb_training_loss_callback","ten_epoch_stop_callback"],
             "epochs": 10
         },
     
