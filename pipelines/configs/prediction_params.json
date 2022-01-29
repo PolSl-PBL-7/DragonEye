@@ -14,7 +14,7 @@
         "video_extentions": ["mp4", "avi", "mov"]
         },
     "source_params" : {
-        "batch_size": 4,
+        "batch_size": 32,
         "fps": 5
         },
     "versioner_params": {

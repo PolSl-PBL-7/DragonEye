@@ -41,6 +41,7 @@ class VideoProcessor:
             BatchDataset: Tensorflow Dataset
         """
         vid = tf.image.resize(vid, self.shape)
+        vid = tf.image.rgb_to_grayscale(vid)
         vid /= 255.
         vid_windowed_and_batched = tf.keras.utils.timeseries_dataset_from_array(
             vid, None, self.time_window, 1, 1, self.batch_size)

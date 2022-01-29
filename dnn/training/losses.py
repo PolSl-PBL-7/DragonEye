@@ -53,10 +53,21 @@ class GradientWeightedMSE(tf.keras.losses.Loss):
         return tf.math.reduce_sum([self.weighted_mse(y_true, y_pred), self.gradient(y_true, y_pred)])
 
 
+class GradientMSE(tf.keras.losses.Loss):
+    def __init__(self, mse_params, gradient_params):
+        super(GradientMSE, self).__init__(reduction='none')
+        self.mse = MeanSquaredError(**mse_params)
+        self.gradient = GradientLoss(**gradient_params)
+
+    def call(self, y_true, y_pred):
+        return tf.math.reduce_sum([self.mse(y_true, y_pred), self.gradient(y_true, y_pred)])
+
+
 losses = {
     'mse': MeanSquaredError,
     "gradient_loss": GradientLoss,
     "weighted_mse": Weighted_MSE,
     "combined_loss": CombinedLoss,
-    "gradient_mse": GradientWeightedMSE
+    "gradient_weighted_mse": GradientWeightedMSE,
+    "gradient_mse": GradientMSE
 }

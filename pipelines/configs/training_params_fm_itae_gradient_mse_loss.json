@@ -21,8 +21,8 @@
     "model_params" : {},
     
     "training_params" : {
-            "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 100
+            "callbacks": ["wandb_training_loss_callback","ten_epoch_stop_callback"],
+            "epochs": 10
         },
     
     "data_processing_pipeline_params": {

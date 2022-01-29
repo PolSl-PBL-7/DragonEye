@@ -31,7 +31,7 @@ class ITAE(tf.keras.Model, Model):
         dec_1 = ConvConfig(256, (3, 3, 3), (1, 1, 1), activation=relu, name='Decoder_Conv_Transpose_1')
         dec_2 = ConvConfig(128, (3, 3, 3), (2, 2, 2), activation=relu, name='Decoder_Conv_Transpose_2')
         dec_3 = ConvConfig(96, (3, 3, 3), (2, 2, 2), activation=relu, name='Decoder_Conv_Transpose_3')
-        dec_4 = ConvConfig(3, (3, 3, 3), (1, 2, 2), activation=sigmoid, name='Decoder_Conv_Transpose_4')
+        dec_4 = ConvConfig(1, (3, 3, 3), (1, 2, 2), activation=sigmoid, name='Decoder_Conv_Transpose_4')
 
         self.encoder_block_1 = ItaeEncoderBlock(dc_1, sc_1)
         self.encoder_block_2 = ItaeEncoderBlock(dc_2, sc_2)

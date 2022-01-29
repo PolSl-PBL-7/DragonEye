@@ -4,7 +4,7 @@
         "shuffle_dataset": true,
         "model": "SpatioTemporalAutoencoder",
         "add_date_to_model_path": true,
-        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder",
+        "model_path": "experiments/models/avenue/SpatioTemporalAutoencoder",
         "project": "trainings",
         "entity": "polsl-pbl-7",
         "magic": true
@@ -22,16 +22,15 @@
     
     "training_params" : {
             "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 10
+            "epochs": 50
         },
     
     "data_processing_pipeline_params": {
-        "input": "experiments/datasets/fm-dataset/training",
+        "input": "experiments/datasets/avenue-dataset/training_videos",
         "video_extentions": ["mp4", "avi", "mov"]
         },
 
     "source_params" : {
-        "batch_size": 4,
         "fps": 5
         },
 
@@ -39,8 +38,8 @@
         "project_name": "avenue-experiments",
         "entity": "polsl-pbl-7",
         "job_type": "test",
-        "dataset_name": "fm-dataset",
-        "dataset_path": "experiments/datasets/fm-dataset"
+        "dataset_name": "avenue-dataset",
+        "dataset_path": "experiments/datasets/avenue-dataset"
         },
 
     "processor_params": {
