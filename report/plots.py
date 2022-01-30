@@ -10,7 +10,7 @@ def plot_input_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Input frame")
-        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap='grey'), kwargs['frame'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap='gray'), kwargs['frame'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['frame'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['frame'][0, -1, :, :, :]
@@ -24,7 +24,7 @@ def plot_predicted_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Predicted frame")
-        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap='grey'), kwargs['pred'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap='gray'), kwargs['pred'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['pred'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['pred'][0, -1, :, :, :]

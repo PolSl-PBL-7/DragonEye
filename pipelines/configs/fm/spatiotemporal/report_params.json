@@ -1,7 +1,7 @@
 {
     "prediction_params": {
         "pipeline_params": {
-            "model_path": "C:\\Users\\Krzysztof Kramarz\\Desktop\\DragonEye\\experiments\\models\\fm\\SpatioTemporalAutoencoder\\01-16-2022-19-43-14"
+            "model_path": "experiments\\models\\fm\\SpatioTemporalAutoencoder\\01-30-2022-21-53-59"
             },
         "anomaly_score_params": {
             "metrics": ["mse", "psnr"]

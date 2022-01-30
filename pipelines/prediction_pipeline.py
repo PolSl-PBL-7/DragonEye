@@ -17,14 +17,12 @@ def prediction_pipeline(
     from inference import Predictor, PredictorConfig, AnomalyScoreHeuristic, AnomalyScoreConfig
     from data import LocalTFDataSource, SourceConfig, LocalTFDatasetSink, SinkConfig
     from pipelines.data_processing_pipeline import data_processing_pipeline
+    from dnn.models.model import load_model
     import tensorflow as tf
 
     # get reconstruction model
-    try:
-        model = tf.keras.models.load_model(str(f"{pipeline_params['model_path']}\model"))
-    except Exception:
-        model = tf.keras.models.load_model(str(f"{pipeline_params['model_path']}\model"), compile=False)
-        model.compile(loss='mse', optimizer='adam')
+    model = load_model(str(f"{pipeline_params['model_path']}\model"))
+
     # get dataset
     if data_processing_pipeline_params and versioner_params and processor_params:
         dataset = data_processing_pipeline(
