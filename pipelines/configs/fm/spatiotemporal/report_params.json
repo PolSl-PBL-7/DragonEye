@@ -4,7 +4,7 @@
             "model_path": "experiments\\models\\fm\\SpatioTemporalAutoencoder\\01-30-2022-21-53-59"
             },
         "anomaly_score_params": {
-            "metrics": ["mse", "psnr"]
+            "metrics": ["mse", "ssim"]
             },
         "data_processing_pipeline_params": {
             "input": "experiments/datasets/fm-dataset/testing",
@@ -30,7 +30,7 @@
     "video_report_params":{
         "name": "video_report",
         "path": "experiments/reports/fm_dataset/testing",
-        "plots": ["input", "prediction", "mse", "psnr"],
+        "plots": ["input", "prediction", "mse", "ssim"],
         "figure_params": {
             "figsize": [15,15]
             },
