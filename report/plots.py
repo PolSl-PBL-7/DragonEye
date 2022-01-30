@@ -10,7 +10,7 @@ def plot_input_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Input frame")
-        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap='grey'), kwargs['frame'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['frame'][0, -1, :, :, :], cmap='gray'), kwargs['frame'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['frame'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['frame'][0, -1, :, :, :]
@@ -24,7 +24,7 @@ def plot_predicted_frame(**kwargs):
     """
     if 'ax' in list(kwargs.keys()):
         kwargs['ax'].set_title("Predicted frame")
-        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap='grey'), kwargs['pred'][0, -1, :, :, :]
+        return kwargs['ax'].imshow(kwargs['pred'][0, -1, :, :, :], cmap='gray'), kwargs['pred'][0, -1, :, :, :]
     else:
         kwargs['plot'].set_array(kwargs['pred'][0, -1, :, :, :])
         return kwargs['plot'], kwargs['pred'][0, -1, :, :, :]
@@ -34,7 +34,8 @@ metric_names = {
     'mse': 'Mean Squared Error (MSE)',
     'mean squared error': 'Mean Squared Error (MSE)',
     'psnr': 'Peak Signal Noise Ratio (PSNR)',
-    'peak signal noise ratio': 'Peak Signal Noise Ratio (PSNR)'
+    'peak signal noise ratio': 'Peak Signal Noise Ratio (PSNR)',
+    'ssim': 'Structural Similarity Index Measure (SSIM)'
 }
 
 
@@ -50,7 +51,7 @@ def plot_anomaly_metric(**kwargs):
         kwargs['ax'].set_xlabel('frame')
         kwargs['ax'].set_ylabel(metric)
         kwargs['ax'].set_xlim(0, kwargs['data_size'])
-        kwargs['ax'].set_ylim(0, kwargs['max_score'])
+        kwargs['ax'].set_ylim(0, 2 * kwargs['max_score'])
         return kwargs['ax'].plot([], [], label=metric_names[metric])[0], [[], []]
     else:
         x, y = kwargs['history']
@@ -63,6 +64,7 @@ def plot_anomaly_metric(**kwargs):
 plotter = {
     "mse": plot_anomaly_metric,
     "psnr": plot_anomaly_metric,
+    'ssim': plot_anomaly_metric,
     "input": plot_input_frame,
     "prediction": plot_predicted_frame
 }

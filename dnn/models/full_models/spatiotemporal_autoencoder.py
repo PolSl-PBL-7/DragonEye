@@ -1,4 +1,4 @@
-from typing import Sequence, Callable, NamedTuple, Tuple, Optional
+from typing import Any, Sequence, Callable, NamedTuple, Tuple, Optional
 
 import tensorflow as tf
 
@@ -32,9 +32,12 @@ class SpatioTemporalAutoencoderConfig(NamedTuple):
     activation: Callable = tf.nn.relu
 
 
-class SpatioTemporalAutoencoder(tf.keras.Model, Model):
-    def __init__(self, config: SpatioTemporalAutoencoderConfig):
-        super(SpatioTemporalAutoencoder, self).__init__()
+class SpatioTemporalAutoencoder(Model):
+    def __init__(self, model_config: SpatioTemporalAutoencoderConfig, compile_config: Any):
+        super(SpatioTemporalAutoencoder, self).__init__(model_config, compile_config)
+        self.model_type = __class__
+        print(__class__)
+        config = model_config
         self.model = tf.keras.Sequential()
         self.model.add(ChongTayEncoder(
             filter_sizes=config.filter_sizes_encoder,

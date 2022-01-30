@@ -1,7 +1,5 @@
-__version__ = "0.1.0"
-
-from data.processing.component import DataProcessing, DataProcessingConfig
-from data.processing.sinks import Sink, LocalTFDatasetSink, SinkConfig
-from data.processing.source import Source, LocalTFDataSource, LocalVideoSource, SourceConfig
-from data.processing.process import VideoProcessor, ProcessorConfig
-from data.versioning.versioner import DatasetVersioner, WandbDatasetVersioner, VersioningConfig
+from data.processing.component import DataProcessingConfig, DataProcessing
+from data.processing.process import ProcessorConfig, VideoProcessor
+from data.processing.source import SourceConfig, Source, LocalVideoSource, LocalTFDataSource
+from data.processing.sinks import SinkConfig, Sink, LocalTFDatasetSink
+from data.versioning.versioner import VersioningConfig, WandbDatasetVersioner

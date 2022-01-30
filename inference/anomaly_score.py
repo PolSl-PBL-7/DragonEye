@@ -32,11 +32,43 @@ def peak_signal_noise_ratio(input, output):
     return tf.reshape(abnormality_scores, (abnormality_scores.shape[0], 1))
 
 
+def ssim(input, output, c1=0.01, c2=0.03):
+    input = input[:, -1, :, :, :]
+    output = output[:, -1, :, :, :]
+    in_mean = tf.reduce_mean(input, axis=(1, 2, 3))
+    out_mean = tf.reduce_mean(output, axis=(1, 2, 3))
+    in_variance = tf.math.pow(tf.math.reduce_std(input, axis=(1, 2, 3)), 2)
+    out_variance = tf.math.pow(tf.math.reduce_std(output, axis=(1, 2, 3)), 2)
+    covariance = tf.multiply(
+        tf.reduce_mean(input - tf.reduce_mean(input, axis=(1, 2, 3)), axis=(1, 2, 3)),
+        tf.reduce_mean(output - tf.reduce_mean(output, axis=(1, 2, 3)), axis=(1, 2, 3)),
+    )
+    numerator = tf.multiply(
+        2 * tf.multiply(in_mean, out_mean) + c1,
+        2 * covariance + c2,
+    )
+    denominator = tf.multiply(
+        tf.add(
+            tf.math.pow(in_mean, 2),
+            tf.math.pow(out_mean, 2),
+        ) + c1,
+        tf.add(
+            tf.math.pow(in_variance, 2),
+            tf.math.pow(out_variance, 2),
+        ) + c2
+
+    )
+    metric = tf.math.divide(numerator, denominator)
+    print(metric, metric.shape)
+    return tf.reshape(metric, [-1, 1])
+
+
 heuristics = {
     'mse': mse,
     'mean squared error': mse,
     'psnr': peak_signal_noise_ratio,
-    'peak signal noise ratio': peak_signal_noise_ratio
+    'peak signal noise ratio': peak_signal_noise_ratio,
+    'ssim': ssim
 }
 
 

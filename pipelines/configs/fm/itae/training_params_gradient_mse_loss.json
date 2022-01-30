@@ -12,7 +12,7 @@
 
     "compile_params" : {
         "optimizer_params": {},
-        "loss_params": {"weighted_mse_params": {}, "gradient_params": {}},
+        "loss_params": {"mse_params": {}, "gradient_params": {}},
         "loss": "gradient_mse",
         "optimizer": "adam",
         "metric_list": ["mae", "mape"]

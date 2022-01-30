@@ -1,4 +1,4 @@
-from typing import Sequence, Callable, NamedTuple, Tuple, Optional
+from typing import Any, Sequence, Callable, NamedTuple, Tuple, Optional
 
 import tensorflow as tf
 from tensorflow.keras.layers import Input, Conv3D, Concatenate, Conv3DTranspose
@@ -13,9 +13,11 @@ class ITAEConfig(NamedTuple):
     pass
 
 
-class ITAE(tf.keras.Model, Model):
-    def __init__(self, config: ITAEConfig):
-        super(ITAE, self).__init__()
+class ITAE(Model):
+    def __init__(self, model_config: ITAEConfig, compile_config: Any):
+        super(ITAE, self).__init__(model_config, compile_config)
+        self.model_type = __class__
+        print(self.model_type)
         self.__name__ = 'ITAE'
 
         dc_1 = ConvConfig(12, (5, 3, 3), (1, 2, 2), relu, "Dynamic_Block_1")

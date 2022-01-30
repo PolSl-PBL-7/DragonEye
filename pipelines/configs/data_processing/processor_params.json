@@ -1,5 +1,0 @@
-{
-    "shape": [64, 64],
-    "time_window": 5,
-    "batch_size": 16
-}

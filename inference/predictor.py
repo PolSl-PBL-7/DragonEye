@@ -27,7 +27,7 @@ class Predictor:
 
         anomaly_scores = None
         print("get predictions")
-        predictions = tf.data.Dataset.from_tensors(self.reconstruction_model.predict(dataset))
+        predictions = self.reconstruction_model.predict(dataset)
         try:
             dataset = dataset.map(lambda x: x['Input_Dynamic'])
         except Exception:
