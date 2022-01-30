@@ -51,7 +51,7 @@ def plot_anomaly_metric(**kwargs):
         kwargs['ax'].set_xlabel('frame')
         kwargs['ax'].set_ylabel(metric)
         kwargs['ax'].set_xlim(0, kwargs['data_size'])
-        kwargs['ax'].set_ylim(0, 2*kwargs['max_score'])
+        kwargs['ax'].set_ylim(0, 2 * kwargs['max_score'])
         return kwargs['ax'].plot([], [], label=metric_names[metric])[0], [[], []]
     else:
         x, y = kwargs['history']
