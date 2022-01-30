@@ -30,6 +30,7 @@ def training_pipeline(
     from utils.callbacks import CallbackName, get_callback_by_name
     from datetime import datetime
     import pickle
+    import gc
 
     if data_processing_pipeline_params and versioner_params and processor_params:
         dataset = data_processing_pipeline(
@@ -99,5 +100,7 @@ def training_pipeline(
         model.save(model_path + '/model')
         with open(model_path + '/history', 'wb') as f:
             pickle.dump(history.history, f)
+
+    gc.collect()
 
     return model, history
