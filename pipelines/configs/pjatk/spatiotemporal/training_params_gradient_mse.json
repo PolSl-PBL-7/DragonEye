@@ -1,0 +1,50 @@
+{
+    "pipeline_params" : {
+        "dataset_path": "",
+        "shuffle_dataset": true,
+        "model": "SpatioTemporalAutoencoder",
+        "add_date_to_model_path": true,
+        "model_path": "experiments/models/pjatk/SpatioTemporalAutoencoder",
+        "project": "trainings",
+        "entity": "polsl-pbl-7",
+        "magic": true
+        },
+
+    "compile_params" : {
+        "optimizer_params": {},
+        "loss_params": {"mse_params":{}, "gradient_params":{}},
+        "loss": "gradient_mse",
+        "optimizer": "adam",
+        "metric_list": ["mae", "msle", "mape"]
+        },
+
+    "model_params" : {},
+    
+    "training_params" : {
+            "callbacks": ["wandb_training_loss_callback", "three_epoch_stop_callback"],
+            "epochs": 50
+        },
+    
+    "data_processing_pipeline_params": {
+        "input": "experiments/datasets/pjatk-dataset/training_videos/31_03_17_part1-004",
+        "video_extentions": ["mp4", "avi", "mov"]
+        },
+
+    "source_params" : {
+        "fps": 5
+        },
+
+    "versioner_params": {
+        "project_name": "trainings",
+        "entity": "polsl-pbl-7",
+        "job_type": "test",
+        "dataset_name": "PJATK",
+        "dataset_path": "experiments/datasets/pjatk-dataset"
+        },
+
+    "processor_params": {
+        "shape": [227,227],
+        "time_window": 5,
+        "batch_size": 8
+        }
+    }

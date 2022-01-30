@@ -10,7 +10,7 @@ import tensorflow as tf
 import os
 
 import numpy as np
-
+import tqdm
 
 class ReportConfig(NamedTuple):
     name: str
@@ -46,10 +46,13 @@ class VideoReport(Report):
         return {"lower": first_quartile, "median": median, "upper": third_quartile, "top_error_margin": top_error_margin}
 
     def __call__(self, dataset: Dataset, predictions: Dataset, scores: Dataset) -> None:
-
+        print("Getting dataset")
         dataset = get_stochastic_dataset(dataset)
+        print("Getting predictions")
         predictions = get_stochastic_dataset(predictions)
+        print("Getting scores")
         scores = get_stochastic_dataset(scores, force=True)
+        print("Preparing data")
         data = iter(tf.data.Dataset.zip((dataset, predictions, scores)))
 
         m, n = get_figure_subplot_shape(len(self.config.plots))
@@ -58,11 +61,12 @@ class VideoReport(Report):
         histories = {plot_name: None for plot_name in self.config.plots}
         fig, axes = plt.subplots(m, n, **self.config.figure_params)
         axes = axes.flatten()
-
         dataset_size = get_dataset_len(dataset)
+        # self.tqdm = tqdm.tqdm(total=dataset_size)
         self.i = 0
 
         def animation_init():
+            print("Animation init")
             frame, pred, score = next(data)
             for ax, plot_name in zip(axes, self.config.plots):
                 plot, history = plotter[plot_name](
@@ -82,6 +86,7 @@ class VideoReport(Report):
 
         def animation_update(*args, **kwargs):
             frame, pred, score = next(data)
+            # self.tqdm.update(1)
             for plot_name in self.config.plots:
                 plots[plot_name], histories[plot_name] = plotter[plot_name](
                     frame=frame,
@@ -108,7 +113,8 @@ class VideoReport(Report):
                 os.mkdir('/'.join(path[:i + 1]))
             except FileExistsError:
                 pass
-
+            
+        # self.tqdm.close()
         ani.save(self.config.path + f'/{self.config.name}.mp4')
 
         return
