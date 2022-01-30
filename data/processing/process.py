@@ -21,7 +21,6 @@ class VideoProcessor:
         """
         Object used to adjust shape, create time windows and batch data.
         In the future it may be extended with different masks/filters.
-
         Args:
             shape (tuple, optional): Width and height that video should be adjusted to. Defaults to (320, 320).
             time_window (int, optional): Nuber of frames per example. Defaults to 10.
@@ -33,10 +32,8 @@ class VideoProcessor:
 
     def __call__(self, vid: np.ndarray) -> BatchDataset:
         """Method for applying preprocessing per recording.
-
         Args:
             vid (np.ndarray): Video in the form of numpy array, of shape (frames, height, width, channels)
-
         Returns:
             BatchDataset: Tensorflow Dataset
         """
