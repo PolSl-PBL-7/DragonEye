@@ -29,7 +29,7 @@
         },
     "video_report_params":{
         "name": "video_report",
-        "path": "experiments/reports/fm_dataset/testing/mse",
+        "path": "experiments/reports/fm_dataset/testing/gradient_mse",
         "plots": ["input", "prediction", "mse", "ssim"],
         "figure_params": {
             "figsize": [15,15]

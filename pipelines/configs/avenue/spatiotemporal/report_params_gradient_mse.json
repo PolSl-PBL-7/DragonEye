@@ -1,13 +1,13 @@
 {
     "prediction_params": {
         "pipeline_params": {
-            "model_path": "/content/DragonEye/experiments/models/fm/SpatioTemporalAutoencoder/02-06-2022-19-02-13"
+            "model_path": ""
             },
         "anomaly_score_params": {
             "metrics": ["mse", "ssim"]
             },
         "data_processing_pipeline_params": {
-            "input": "experiments/datasets/fm-dataset/testing",
+            "input": "experiments/datasets/avenue-dataset/testing_videos",
             "video_extentions": ["mp4", "avi", "mov"]
             },
         "source_params" : {
@@ -18,8 +18,8 @@
             "project_name": "avenue-experiments",
             "entity": "polsl-pbl-7",
             "job_type": "test",
-            "dataset_name": "fm-dataset",
-            "dataset_path": "experiments/datasets/fm-dataset"
+            "dataset_name": "avenue-dataset",
+            "dataset_path": "experiments/datasets/avenue-dataset"
             },
         "processor_params": {
             "shape": [227,227],
@@ -29,7 +29,7 @@
         },
     "video_report_params":{
         "name": "video_report",
-        "path": "experiments/reports/fm_dataset/testing/mse",
+        "path": "experiments/reports/avenue_dataset/testing/gradient_mse",
         "plots": ["input", "prediction", "mse", "ssim"],
         "figure_params": {
             "figsize": [15,15]

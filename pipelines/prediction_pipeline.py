@@ -21,7 +21,7 @@ def prediction_pipeline(
     import tensorflow as tf
 
     # get reconstruction model
-    model = load_model(str(f"{pipeline_params['model_path']}\model"))
+    model = load_model(str(f"{pipeline_params['model_path']}/model"))
 
     # get dataset
     if data_processing_pipeline_params and versioner_params and processor_params:

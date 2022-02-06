@@ -234,19 +234,19 @@ class Model(tf.keras.Model):
         return outputs
 
     def save(self, path):
-        self.save_weights(f'{path}\weights')
-        Pickle.save(self.model_config, f'{path}\model_config')
-        Pickle.save(self.compile_config, f'{path}\compile_config')
-        Pickle.save(self.model_type, f'{path}\model_type')
+        self.save_weights(f'{path}/weights')
+        Pickle.save(self.model_config, f'{path}/model_config')
+        Pickle.save(self.compile_config, f'{path}/compile_config')
+        Pickle.save(self.model_type, f'{path}/model_type')
 
 
 def load_model(path):
     from dnn.training.losses import losses
     from dnn.training.metrics import metrics
     from dnn.training.optimizers import optimizers
-    model_config = Pickle.load(f'{path}\model_config')
-    compile_config = Pickle.load(f'{path}\compile_config')
-    model_type = Pickle.load(f'{path}\model_type')
+    model_config = Pickle.load(f'{path}/model_config')
+    compile_config = Pickle.load(f'{path}/compile_config')
+    model_type = Pickle.load(f'{path}/model_type')
     model = model_type(model_config, compile_config)
     print(type(model))
     model.compile(
@@ -254,5 +254,5 @@ def load_model(path):
         optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
         metrics=[metrics[key] for key in compile_config.metric_list]
     )
-    model.load_weights(f'{path}\weights')
+    model.load_weights(f'{path}/weights')
     return model
