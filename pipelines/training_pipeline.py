@@ -103,4 +103,4 @@ def training_pipeline(
 
     gc.collect()
 
-    return model, history
+    return model, history, model_path

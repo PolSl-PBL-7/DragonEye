@@ -20,3 +20,4 @@ def report_pipeline(pipeline_params, video_report_params, prediction_params):
         video_report = VideoReport(video_report_config)
         video_report(dataset, predictions, scores)
         print("finished job report pipeline")
+        return dataset, prediction, scores

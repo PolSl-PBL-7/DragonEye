@@ -4,7 +4,7 @@
         "shuffle_dataset": true,
         "model": "SpatioTemporalAutoencoder",
         "add_date_to_model_path": true,
-        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder",
+        "model_path": "experiments/models/fm/SpatioTemporalAutoencoder/gradient_mse",
         "project": "trainings",
         "entity": "polsl-pbl-7",
         "magic": true
@@ -12,8 +12,8 @@
 
     "compile_params" : {
         "optimizer_params": {},
-        "loss_params": {},
-        "loss": "mse",
+        "loss_params": {"mse_params":{}, "gradient_params": {}},
+        "loss": "gradient_mse",
         "optimizer": "adam",
         "metric_list": ["mae", "msle", "mape"]
         },
@@ -39,7 +39,7 @@
         "entity": "polsl-pbl-7",
         "job_type": "test",
         "dataset_name": "fm-dataset",
-        "dataset_path": "experiments/datasets/fm-dataset"
+        "dataset_path": "experiments/datasets/fmavenue-dataset"
         },
 
     "processor_params": {
