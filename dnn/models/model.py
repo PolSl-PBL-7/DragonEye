@@ -61,7 +61,7 @@ class Model(tf.keras.Model):
         model.compile(
             loss=losses[compile_config.loss](**compile_config.loss_params),
             optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
-            metrics=[metrics[key] for key in compile_config.metric_list]
+            metrics=[metrics[key](**compile_config.metrics[key]) for key in list(compile_config.metrics.keys())]
         )
         return model
 
@@ -251,7 +251,7 @@ def load_model(path):
     model.compile(
         loss=losses[compile_config.loss](**compile_config.loss_params),
         optimizer=optimizers[compile_config.optimizer](**compile_config.optimizer_params),
-        metrics=[metrics[key] for key in compile_config.metric_list]
+        metrics=[metrics[key](**compile_config.metrics[key]) for key in list(compile_config.metrics.keys())]
     )
     model.load_weights(f'{path}/weights')
     return model

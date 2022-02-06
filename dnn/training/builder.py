@@ -1,5 +1,5 @@
 import tensorflow as tf
-from typing import NamedTuple, Union, List, Optional
+from typing import NamedTuple, Union, List, Optional, Dict
 
 from dnn.training.losses import losses
 from dnn.training.metrics import metrics
@@ -14,7 +14,7 @@ class CompileConfig(NamedTuple):
     loss_params: dict = {}
     loss: str = 'mse'
     optimizer: str = 'adam'
-    metric_list: List[str] = ['mae', 'msle', 'mape']
+    metrics: dict = {'mse': {}, 'msle': {}, 'mape': {}}
 
 
 model_builder = {

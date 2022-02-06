@@ -15,7 +15,7 @@
         "loss_params": {},
         "loss": "mse",
         "optimizer": "adam",
-        "metric_list": ["mae", "msle", "mape"]
+        "metrics": {"mae":{}, "msle":{}, "mape":{}}
         },
 
     "model_params" : {},

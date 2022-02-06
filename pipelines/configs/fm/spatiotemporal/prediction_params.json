@@ -1,13 +1,16 @@
 {
     "pipeline_params": {
-       "model_path": "C:\\Users\\Krzysztof Kramarz\\Desktop\\DragonEye\\experiments\\models\\fm\\SpatioTemporalAutoencoder\\01-08-2022-18-54-21",
+       "model_path": "experiments/models/fm/SpatioTemporalAutoencoder/02-01-2022-19-02-38",
        "dataset_path": "experiments/datasets/tf_datasets/avenue_dataset_testing/LATEST"
         },
-    "sink_params": {
-        "path": "experiments/predictions/fm_dataset/testing"
-        },
     "anomaly_score_params": {
-        "metrics": ["mse", "psnr"]
+        "metrics": {
+            "mse": {},
+            "ssim": {},
+            "window_mse":{
+                "image_shape": [227, 227]
+                }
+            }
         },
     "data_processing_pipeline_params": {
         "input": "experiments/datasets/fm-dataset/testing",

@@ -1,60 +1,41 @@
 from typing import NamedTuple, List, Dict, Optional
 from tensorflow.python.data.ops.dataset_ops import Dataset
-
 from utils.report_utils import get_stochastic_dataset, get_figure_subplot_shape, get_dataset_len, min_max_scores
 from report.plots import plotter
-
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import tensorflow as tf
 import os
-
 import numpy as np
-import tqdm
-
 class ReportConfig(NamedTuple):
     name: str
     path: str
     plots: Optional[List[str]] = None
     figure_params: Optional[Dict] = None
     fps: Optional[int] = None
-
-
 class Report:
     config: ReportConfig
-
     def __init__(self, config: ReportConfig):
         self.config = config
-
     def call(self):
         raise NotImplementedError("object of type report interface cannot be called, please implement your own call")
-
-
 class VideoReport(Report):
-
     def __init__(self, config: ReportConfig):
         super().__init__(config)
-
     def _get_levels(self, signal):
-
         third_quartile = np.quantile(signal, .9)
         first_quartile = np.quantile(signal, .1)
         median = np.quantile(signal, 0.5)
         IQR = third_quartile - first_quartile
-        top_error_margin = third_quartile + 1.5 * IQR
+        top_error_margin = third_quartile + 1.5 * IQR 
 
         return {"lower": first_quartile, "median": median, "upper": third_quartile, "top_error_margin": top_error_margin}
 
     def __call__(self, dataset: Dataset, predictions: Dataset, scores: Dataset) -> None:
-        print("Getting dataset")
         dataset = get_stochastic_dataset(dataset)
-        print("Getting predictions")
         predictions = get_stochastic_dataset(predictions)
-        print("Getting scores")
         scores = get_stochastic_dataset(scores, force=True)
-        print("Preparing data")
         data = iter(tf.data.Dataset.zip((dataset, predictions, scores)))
-
         m, n = get_figure_subplot_shape(len(self.config.plots))
         min_scores, max_scores = min_max_scores(scores)
         plots = {plot_name: None for plot_name in self.config.plots}
@@ -62,11 +43,8 @@ class VideoReport(Report):
         fig, axes = plt.subplots(m, n, **self.config.figure_params)
         axes = axes.flatten()
         dataset_size = get_dataset_len(dataset)
-        # self.tqdm = tqdm.tqdm(total=dataset_size)
         self.i = 0
-
         def animation_init():
-            print("Animation init")
             frame, pred, score = next(data)
             for ax, plot_name in zip(axes, self.config.plots):
                 plot, history = plotter[plot_name](
@@ -81,12 +59,9 @@ class VideoReport(Report):
                 )
                 plots[plot_name] = plot
                 histories[plot_name] = history
-
             return tuple(plots.values())
-
         def animation_update(*args, **kwargs):
             frame, pred, score = next(data)
-            # self.tqdm.update(1)
             for plot_name in self.config.plots:
                 plots[plot_name], histories[plot_name] = plotter[plot_name](
                     frame=frame,
@@ -97,7 +72,6 @@ class VideoReport(Report):
                     plot_name=plot_name,
                 )
             return tuple(plots.values())
-
         ani = animation.FuncAnimation(
             fig=fig,
             init_func=animation_init,
@@ -106,15 +80,11 @@ class VideoReport(Report):
             interval=int(1000 / self.config.fps),
             frames=dataset_size - 1
         )
-
         path = (self.config.path + f'/{self.config.name}').split('/')
         for i in range(len(path) - 1):
             try:
                 os.mkdir('/'.join(path[:i + 1]))
             except FileExistsError:
                 pass
-            
-        # self.tqdm.close()
         ani.save(self.config.path + f'/{self.config.name}.mp4')
-
         return

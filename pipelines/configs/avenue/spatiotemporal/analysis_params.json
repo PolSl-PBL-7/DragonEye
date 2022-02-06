@@ -1,0 +1,58 @@
+{"training_dataset_prediction_params":{
+        "pipeline_params": {
+            "model_path": "experiments/models/avenue/SpatioTemporalAutoencoder/01-30-2022-22-55-51"
+            },
+        "anomaly_score_params": {
+            "metrics": {"mse":{}, "ssim":{}}
+            },
+        "data_processing_pipeline_params": {
+            "input": "experiments/datasets/avenue-dataset/training_videos",
+            "video_extentions": ["mp4", "avi", "mov"]
+            },
+        "source_params" : {
+            "batch_size": 4,
+            "fps": 5
+            },
+        "versioner_params": {
+            "project_name": "avenue-experiments",
+            "entity": "polsl-pbl-7",
+            "job_type": "test",
+            "dataset_name": "avenue-dataset",
+            "dataset_path": "experiments/datasets/avenue-dataset"
+            },
+        "processor_params": {
+            "shape": [227,227],
+            "time_window": 5,
+            "batch_size": 32
+            }
+},
+
+"testing_dataset_prediction_params":{
+        "pipeline_params": {
+            "model_path": "experiments/models/avenue/SpatioTemporalAutoencoder/01-30-2022-22-55-51"
+            },
+        "anomaly_score_params": {
+            "metrics": {"mse":{}, "ssim":{}}
+            },
+        "data_processing_pipeline_params": {
+            "input": "experiments/datasets/avenue-dataset/testing_videos",
+            "video_extentions": ["mp4", "avi", "mov"]
+            },
+        "source_params" : {
+            "batch_size": 4,
+            "fps": 5
+            },
+        "versioner_params": {
+            "project_name": "avenue-experiments",
+            "entity": "polsl-pbl-7",
+            "job_type": "test",
+            "dataset_name": "avenue-dataset",
+            "dataset_path": "experiments/datasets/avenue-dataset"
+            },
+        "processor_params": {
+            "shape": [227,227],
+            "time_window": 5,
+            "batch_size": 32
+            }
+}
+}

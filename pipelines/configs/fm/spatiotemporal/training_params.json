@@ -15,14 +15,17 @@
         "loss_params": {},
         "loss": "mse",
         "optimizer": "adam",
-        "metric_list": ["mae", "msle", "mape"]
+        "metrics": {
+            "mae": {}, 
+            "mape": {}
+            }
         },
 
     "model_params" : {},
     
     "training_params" : {
             "callbacks": ["wandb_training_loss_callback"],
-            "epochs": 1
+            "epochs": 5
         },
     
     "data_processing_pipeline_params": {

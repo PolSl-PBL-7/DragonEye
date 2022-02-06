@@ -31,16 +31,16 @@ def get_dataset_len(dataset):
 
 
 def min_max_scores(scores):
-    min = None
-    max = None
+    min_ = None
+    max_ = None
     for batch in scores:
-        if min:
-            min = {key: batch[key][0].numpy() if batch[key][0].numpy() < min[key] else min[key] for key in list(batch.keys())}
+        if min_:
+            min_ = {key: batch[key][0].numpy() if batch[key][0].numpy() < min_[key] else min_[key] for key in list(batch.keys())}
         else:
-            min = {key: batch[key][0].numpy() for key in list(batch.keys())}
-        if max:
-            max = {key: batch[key][0].numpy() if batch[key][0].numpy() > max[key] else max[key] for key in list(batch.keys())}
+            min_ = {key: batch[key][0].numpy() for key in list(batch.keys())}
+        if max_:
+            max_ = {key: batch[key][0].numpy() if batch[key][0].numpy() > max_[key] else max_[key] for key in list(batch.keys())}
         else:
-            max = {key: batch[key][0].numpy() for key in list(batch.keys())}
+            max_ = {key: batch[key][0].numpy() for key in list(batch.keys())}
 
-    return min, max
+    return min_, max_

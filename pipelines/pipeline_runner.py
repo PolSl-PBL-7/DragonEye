@@ -9,6 +9,7 @@ from pipelines import data_processing_pipeline
 from pipelines import training_pipeline
 from pipelines import prediction_pipeline
 from pipelines import report_pipeline
+from pipelines import analysis_pipeline
 
 import argparse
 import logging
@@ -22,6 +23,7 @@ class PipelineType(Enum):
     training_pipeline = training_pipeline.NAME
     prediction_pipeline = prediction_pipeline.NAME
     report_pipeline = report_pipeline.NAME
+    analysis_pipeline = analysis_pipeline.NAME
 
 
 def build_config_dict(path):
@@ -45,6 +47,8 @@ def get_pipeline_by_type(pipeline_type: PipelineType):
         return prediction_pipeline.prediction_pipeline
     if pipeline_type == pipeline_type.report_pipeline:
         return report_pipeline.report_pipeline
+    if pipeline_type == pipeline_type.analysis_pipeline:
+        return analysis_pipeline.analysis_pipeline
 
 
 if __name__ == "__main__":
