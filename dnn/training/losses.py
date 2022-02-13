@@ -19,7 +19,7 @@ class GradientLoss(tf.keras.losses.Loss):
         return concatenated
 
     def call(self, y_true, y_pred):
-        norm = tf.norm(self._get_gradients(y_true) - self._get_gradients(y_pred)) 
+        norm = tf.norm(self._get_gradients(y_true) - self._get_gradients(y_pred))
         return norm / tf.math.reduce_prod(tf.cast(tf.shape(y_pred), tf.float32))
 
 

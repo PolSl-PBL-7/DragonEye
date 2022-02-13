@@ -1,6 +1,6 @@
 FROM shanduur/dragoneye-ci-base:1.0.0
 
-RUN mkdir /work
+RUN mkdir -p /work
 COPY . /work
 WORKDIR /work
 

@@ -26,8 +26,7 @@ def _disallow_inside_tf_function(method_name):
 
 
 def _is_tpu_multi_host(strategy):
-    return (backend.is_tpu_strategy(strategy) and
-            strategy.extended.num_hosts > 1)
+    return (backend.is_tpu_strategy(strategy) and strategy.extended.num_hosts > 1)
 
 
 def concat(tensors, axis=0):
